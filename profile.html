@@ -38,19 +38,18 @@
         align-items: center;
         gap: 8px;
         margin: 4px 0 12px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #9db2bb;
       }
       .brand .logo {
-        width: 20px;
-        height: 20px;
-        background: #e4002b;
-        border-radius: 50%;
+        width: 30px;
+        height: 30px;
         display: inline-block;
       }
       .section-title {
         font-weight: 700;
         font-size: 22px;
         padding-bottom: 8px;
-        border-bottom: 2px solid #9db2bb;
         margin: 8px 0 16px;
       }
       .form-group label {
@@ -66,14 +65,52 @@
       .modal-footer .btn {
         min-width: 120px;
       }
+      .form-group.is-invalid .invalid-feedback {
+        display: block;
+        color: #dc3545;
+      }
+
+      /* これ以降は、入力項目を白色に保つためもものなので、CSSの最後に置いて！ */
+      /* 常に白固定（テキスト/セレクト/テキストエリア） */
+      input.form-control,
+      select.form-control,
+      textarea.form-control {
+        background-color: #fff !important;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+      input.form-control:focus,
+      select.form-control:focus,
+      textarea.form-control:focus,
+      input.form-control.is-invalid,
+      select.form-control.is-invalid,
+      textarea.form-control.is-invalid,
+      input.form-control.is-valid,
+      select.form-control.is-valid,
+      textarea.form-control.is-valid {
+        background-color: #fff !important;
+      }
+      /* WebKit系（Chrome/Edge/Safari/Android）のオートフィルで黄/灰になるのを白で塗りつぶす */
+      input.form-control:-webkit-autofill,
+      input.form-control:-webkit-autofill:hover,
+      input.form-control:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+        box-shadow: 0 0 0 1000px #fff inset !important;
+        -webkit-text-fill-color: #212529 !important;
+      }
+      /* iOS Safari の強めのフォーカス背景対策（保険） */
+      @supports (-webkit-touch-callout: none) {
+        input.form-control,
+        input.form-control:focus {
+          background-color: #fff !important;
+        }
+      }
     </style>
   </head>
   <body>
-    <div class="page-title">プロフィール登録</div>
-
     <div class="card-like">
       <div class="brand">
-        <span class="logo" aria-hidden="true"></span>
+        <img class="logo" src="logo.png" alt="キュリオグラフ2025" />
         <strong>キュリオグラフ2025</strong>
       </div>
 
@@ -81,9 +118,7 @@
 
       <form id="profileForm" novalidate>
         <div class="form-group">
-          <label for="name"
-            >名前 <span class="small-note">（必須／最大2000文字）</span></label
-          >
+          <label for="name">名前 </label>
           <input
             type="text"
             class="form-control"
@@ -92,12 +127,11 @@
             required
             maxlength="2000"
           />
+          <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-group">
-          <label for="favorite"
-            >推し <span class="small-note">（必須／最大2000文字）</span></label
-          >
+          <label for="favorite">推し </label>
           <input
             type="text"
             class="form-control"
@@ -106,12 +140,11 @@
             required
             maxlength="2000"
           />
+          <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-group">
-          <label for="hobby"
-            >趣味 <span class="small-note">（必須／最大2000文字）</span></label
-          >
+          <label for="hobby">趣味</label>
           <input
             type="text"
             class="form-control"
@@ -120,10 +153,11 @@
             required
             maxlength="2000"
           />
+          <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-group">
-          <label for="age">年代 <span class="small-note">（必須）</span></label>
+          <label for="age">年代 </label>
           <select class="form-control" id="age" name="age" required>
             <option value="" selected disabled>選択してください</option>
             <option>10代</option>
@@ -136,10 +170,11 @@
             <option>80代</option>
             <option>90代</option>
           </select>
+          <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-group">
-          <label>性別 <span class="small-note">（必須）</span></label>
+          <label>性別 </label>
           <div class="custom-control custom-radio">
             <input
               type="radio"
@@ -173,12 +208,11 @@
             />
             <label class="custom-control-label" for="sex-o">その他</label>
           </div>
+          <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-group">
-          <label for="address"
-            >お住まい <span class="small-note">（必須）</span></label
-          >
+          <label for="address">お住まい </label>
           <select class="form-control" id="address" name="address" required>
             <option value="" selected disabled>選択してください</option>
             <option>北海道</option>
@@ -229,6 +263,7 @@
             <option>鹿児島県</option>
             <option>沖縄県</option>
           </select>
+          <div class="invalid-feedback"></div>
         </div>
 
         <div class="footer-button">
@@ -331,11 +366,58 @@
           const sex = $('input[name="sex"]:checked').val();
           const address = $("#address").val();
 
-          // 簡易バリデーション
-          if (!name || !favorite || !hobby || !age || !sex || !address) {
-            alert("すべての項目を入力してください。");
-            return;
+          $(".invalid-feedback").text("");
+          $(".form-control, .custom-control-input").removeClass("is-invalid");
+
+          let hasError = false;
+
+          // 各項目のチェック
+          if (!name) {
+            $("#name").addClass("is-invalid");
+            $("#name")
+              .siblings(".invalid-feedback")
+              .text("名前を入力してください");
+            hasError = true;
           }
+          if (!favorite) {
+            $("#favorite").addClass("is-invalid");
+            $("#favorite")
+              .siblings(".invalid-feedback")
+              .text("推しを入力してください");
+            hasError = true;
+          }
+          if (!hobby) {
+            $("#hobby").addClass("is-invalid");
+            $("#hobby")
+              .siblings(".invalid-feedback")
+              .text("趣味を入力してください");
+            hasError = true;
+          }
+          if (!age) {
+            $("#age").addClass("is-invalid");
+            $("#age")
+              .siblings(".invalid-feedback")
+              .text("年代を選択してください");
+            hasError = true;
+          }
+          if (!sex) {
+            const $group = $('input[name="sex"]').closest(".form-group");
+            $group.addClass("is-invalid");
+            $group
+              .find(".invalid-feedback")
+              .text("性別を選択してください")
+              .show();
+            hasError = true;
+          }
+          if (!address) {
+            $("#address").addClass("is-invalid");
+            $("#address")
+              .siblings(".invalid-feedback")
+              .text("お住まいを選択してください");
+            hasError = true;
+          }
+
+          if (hasError) return;
 
           const msg =
             `プロフィール登録\n` +
