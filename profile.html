@@ -328,6 +328,41 @@
       </div>
     </div>
 
+    <!-- 登録済みモーダル -->
+    <div
+      class="modal fade"
+      id="alreadyModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="alreadyTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body text-center">
+            <div style="font-weight: 700; margin-bottom: 6px">
+              登録が完了しています ✅
+            </div>
+            <div>あなたのプロフィール：</div>
+            <div style="margin-top: 10px">
+              <a href="#" id="profileLink" class="btn btn-primary btn-sm"
+                >プロフィールを開く</a
+              >
+            </div>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              id="closeLiffBtn2"
+            >
+              とじる
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script
@@ -372,12 +407,57 @@
         return true;
       }
 
+      async function checkRegisteredAndMaybeShowModal() {
+        const GAS_ENDPOINT =
+          "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
+        const idToken = liff.getIDToken();
+        if (!idToken) return;
+
+        const res = await fetch(
+          `${GAS_ENDPOINT}?action=check&id_token=${encodeURIComponent(idToken)}`
+        );
+
+        if (!res.ok) return;
+        const json = await res.json();
+
+        if (json.registered) {
+          document.querySelector(".card-like").style.display = "none";
+          const a = document.getElementById("profileLink");
+          a.href = json.profileUrl || "#";
+
+          a.addEventListener("click", function (ev) {
+            ev.preventDefault();
+            if (json.profileUrl) {
+              // LIFF内で開く or 外部で開くは選べます。外部で開くなら external: true
+              liff.openWindow({ url: json.profileUrl, external: false });
+            }
+            // 先に開いてからLIFFを閉じる
+            if (liff.closeWindow) liff.closeWindow();
+          });
+
+          document
+            .getElementById("closeLiffBtn2")
+            .addEventListener("click", function () {
+              if (liff.closeWindow) liff.closeWindow();
+              else $("#alreadyModal").modal("hide");
+            });
+
+          $("#alreadyModal")
+            .modal({ backdrop: "static", keyboard: false })
+            .modal("show");
+        }
+      }
+
       $(async function () {
         const LIFF_ID = "2008071727-vLPLr6Gx";
         try {
           await liff.init({ liffId: LIFF_ID });
           const ready = await ensureLoginAndScopes();
           if (!ready) return; // リダイレクトしたのでここで終了（復帰後にまた実行される）
+
+          // ★ここで登録済みチェックを実行（フォームを出す前に）
+          await checkRegisteredAndMaybeShowModal();
+
           bindFormSubmit();
         } catch (e) {
           console.error("LIFF init failed", e);
