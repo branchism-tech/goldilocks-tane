@@ -118,6 +118,37 @@
 
       <form id="profileForm" novalidate>
         <div class="form-group">
+          <label>LINEアイコン表示</label>
+          <div class="custom-control custom-radio">
+            <input
+              type="radio"
+              id="lineicon-on"
+              name="lineicon"
+              value="表示する"
+              class="custom-control-input"
+              required
+            />
+            <label class="custom-control-label" for="lineicon-on"
+              >表示する</label
+            >
+          </div>
+          <div class="custom-control custom-radio">
+            <input
+              type="radio"
+              id="lineicon-off"
+              name="lineicon"
+              value="表示しない"
+              class="custom-control-input"
+              required
+            />
+            <label class="custom-control-label" for="lineicon-off"
+              >表示しない</label
+            >
+          </div>
+          <div class="invalid-feedback"></div>
+        </div>
+
+        <div class="form-group">
           <label for="name">名前 </label>
           <input
             type="text"
@@ -125,7 +156,7 @@
             id="name"
             name="name"
             required
-            maxlength="2000"
+            maxlength="24"
           />
           <div class="invalid-feedback"></div>
         </div>
@@ -359,6 +390,7 @@
           e.preventDefault();
 
           // 値の取得
+          const lineicon = $('input[name="lineicon"]:checked').val();
           const name = $("#name").val().trim();
           const favorite = $("#favorite").val().trim();
           const hobby = $("#hobby").val().trim();
@@ -372,6 +404,15 @@
           let hasError = false;
 
           // 各項目のチェック
+          if (!lineicon) {
+            const $group = $('input[name="lineicon"]').closest(".form-group");
+            $group.addClass("is-invalid");
+            $group
+              .find(".invalid-feedback")
+              .text("LINEアイコン表示を選択してください")
+              .show();
+            hasError = true;
+          }
           if (!name) {
             $("#name").addClass("is-invalid");
             $("#name")
@@ -421,6 +462,7 @@
 
           const msg =
             `プロフィール登録\n` +
+            `LINEアイコン表示：${lineicon}\n` +
             `名前：${name}\n` +
             `推し：${favorite}\n` +
             `趣味：${hobby}\n` +
