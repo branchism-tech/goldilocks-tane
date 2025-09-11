@@ -250,15 +250,20 @@
 
       // ====== 共通：ログイン＆スコープ確認 ======
       async function ensureLoginAndScopes() {
+        // 1) 未ログインならログイン
         if (!liff.isLoggedIn()) {
           await liff.login({ scope: ["profile", "openid"], prompt: "consent" });
-          return false;
+          return false; // リダイレクトするのでここで終了
         }
+
+        // 2) idToken が無ければ再同意（OpenID）
         const idToken = liff.getIDToken();
         if (!idToken) {
           await liff.login({ scope: ["profile", "openid"], prompt: "consent" });
           return false;
         }
+
+        // 3) profile スコープ確認（getProfile が成功すればOK）
         try {
           await liff.getProfile();
         } catch {
@@ -270,7 +275,7 @@
 
       const params = new URL(location.href).searchParams;
       const taneId = params.get("taneId"); // 有無でモード分岐
-      Å;
+
       $(async function () {
         try {
           await liff.init({ liffId: LIFF_ID });
