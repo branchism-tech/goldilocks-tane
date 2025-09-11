@@ -414,16 +414,13 @@
           //   console.error(err);
           //   alert("送信に失敗しました：" + (err?.message || err));
           // }
-          const msg = taneId
-            ? `タネ編集ページ\n`
-            : `タネ投稿ページ\n` +
-              `カテゴリー：${category}\n` +
-              `タイトル：${title}\n` +
-              `コメント：${comment}\n` +
-              `こんな人にきて欲しい、集まれ！：${kind_person}\n` +
-              taneId
-            ? `タネID:${taneId}\n`
-            : `タネID:\n`;
+          const msg =
+            (taneId != null ? `タネ編集ページ\n` : `タネ投稿ページ\n`) +
+            `カテゴリー：${category}\n` +
+            `タイトル：${title}\n` +
+            `コメント：${comment}\n` +
+            `こんな人にきて欲しい、集まれ！：${kind_person}\n` +
+            (taneId != null ? `タネID:${taneId}\n` : `タネID:\n`);
 
           // 送信
           liff
