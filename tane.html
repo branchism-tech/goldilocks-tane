@@ -227,6 +227,32 @@
       </div>
     </div>
 
+    <!-- ローディングオーバーレイ -->
+    <div
+      id="loadingOverlay"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        z-index: 1050;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <div
+        class="spinner-border text-primary"
+        role="status"
+        style="width: 3rem; height: 3rem"
+      >
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script
@@ -292,19 +318,36 @@
             const url = `${GAS_ENDPOINT}?action=tane_get&taneId=${encodeURIComponent(
               taneId
             )}&id_token=${encodeURIComponent(idToken)}`;
-            const res = await fetch(url);
-            if (res.ok) {
-              const json = await res.json();
-              if (json.ok && json.record) {
-                $("#category").val(json.record.category || "");
-                $("#title").val(json.record.title || "");
-                $("#comment").val(json.record.comment || "");
-                $("#kind_person").val(json.record.kind_person || "");
+            $("#loadingOverlay").show();
+
+            try {
+              const res = await fetch(url);
+              if (res.ok) {
+                const json = await res.json();
+                if (json.ok && json.record) {
+                  const cat = (json.record.category || "").trim();
+                  const $cats = $('input[name="category"]');
+                  const $hit = $cats.filter(function () {
+                    return $(this).val() === cat;
+                  });
+
+                  if ($hit.length) {
+                    $hit.prop("checked", true).trigger("change");
+                  }
+                  $("#title").val(json.record.title || "");
+                  $("#comment").val(json.record.comment || "");
+                  $("#kind_person").val(json.record.kind_person || "");
+                } else {
+                  alert("タネ情報の取得に失敗しました");
+                }
               } else {
                 alert("タネ情報の取得に失敗しました");
               }
-            } else {
-              alert("タネ情報の取得に失敗しました");
+            } catch (e) {
+              console.error(e);
+              alert("タネ情報の取得でエラーが発生しました");
+            } finally {
+              $("#loadingOverlay").hide();
             }
           }
           bindFormSubmit();
@@ -420,7 +463,7 @@
             `タイトル：${title}\n` +
             `コメント：${comment}\n` +
             `こんな人にきて欲しい、集まれ！：${kind_person}\n` +
-            (taneId != null ? `タネID:${taneId}\n` : `タネID:\n`);
+            (taneId != null ? `タネID:${taneId}\n` : ``);
 
           // 送信
           liff
