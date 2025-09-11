@@ -18,13 +18,6 @@
       body {
         background: #f5f7f9;
       }
-      .page-title {
-        font-size: 28px;
-        font-weight: 700;
-        color: #555;
-        text-align: center;
-        margin: 24px 0 12px;
-      }
       .card-like {
         max-width: 560px;
         margin: 0 auto 48px;
@@ -350,15 +343,6 @@
               >
             </div>
           </div>
-          <!-- <div class="modal-footer justify-content-center">
-            <button
-              type="button"
-              class="btn btn-outline-secondary"
-              id="closeLiffBtn2"
-            >
-              とじる
-            </button>
-          </div> -->
         </div>
       </div>
     </div>
@@ -437,13 +421,6 @@
             if (liff.closeWindow) liff.closeWindow();
           });
 
-          // document
-          //   .getElementById("closeLiffBtn2")
-          //   .addEventListener("click", function () {
-          //     if (liff.closeWindow) liff.closeWindow();
-          //     else $("#alreadyModal").modal("hide");
-          //   });
-
           $("#alreadyModal")
             .modal({ backdrop: "static", keyboard: false })
             .modal("show");
@@ -501,6 +478,13 @@
             $("#name")
               .siblings(".invalid-feedback")
               .text("名前を入力してください");
+            hasError = true;
+          }
+          if (name.length > 24) {
+            $("#name")
+              .addClass("is-invalid")
+              .siblings(".invalid-feedback")
+              .text("名前は24文字以内です");
             hasError = true;
           }
           if (!favorite) {
@@ -565,7 +549,6 @@
             });
         });
 
-        // 「とじる」でウィンドウを閉じる
         $("#closeLiffBtn").on("click", function () {
           if (liff.closeWindow) liff.closeWindow();
           else $("#doneModal").modal("hide");
