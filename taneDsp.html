@@ -136,7 +136,7 @@
       const LIFF_ID = "2008071727-prQWbK4R";
       const GAS_ENDPOINT =
         "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
-      const DUMMY_ICON_URL = 'https://placehold.jp/40x40.png?text=%E2%98%BA%EF%B8%8F';
+      const DUMMY_ICON_URL = 'https://placehold.jp/40x40.png?text=DUMMY';
 
       const taneId = new URL(location.href).searchParams.get("taneId");
 
@@ -223,9 +223,11 @@
           $("#kindText").text(j.record.kind_person || "");
           $("#ownerIcon").attr("src", j.ownerIcon || DUMMY_ICON_URL);
 
-          // いいね描画＆自身が済ならボタン状態を確定
+          alert('loadPage 1');
           renderLikes(j.likes || []);
+          alert('loadPage 2');
           if (j.alreadyLiked) setLiked();
+          alert('loadPage 3');
         } catch (e) {
           console.error(e);
           toast("読み込みエラーが発生しました");
@@ -249,8 +251,11 @@
             toast(j.error || "いいねに失敗しました");
             return;
           }
+          alert('likeAction 1');
           setLiked();
+          alert('likeAction 2');
           renderLikes(j.list || []);
+          alert('likeAction 3');
         } catch (e) {
           console.error(e);
           toast("いいね処理でエラー");
