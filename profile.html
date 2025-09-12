@@ -297,6 +297,7 @@
       </form>
     </div>
 
+    <!-- 完了モーダル -->
     <div
       class="modal fade"
       id="doneModal"
@@ -313,6 +314,30 @@
               type="button"
               class="btn btn-outline-dark"
               id="closeLiffBtn"
+            >
+              とじる
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- エラーモーダル -->
+    <div
+      class="modal fade"
+      id="errorModal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body text-center" id="errorModalBody"></div>
+          <div class="modal-footer justify-content-center">
+            <button
+              type="button"
+              class="btn btn-outline-dark"
+              id="errorCloseBtn"
             >
               とじる
             </button>
@@ -391,6 +416,20 @@
         return true;
       }
 
+      function showErrorAndClose(message) {
+        $("#errorModalBody").text(message);
+        $("#errorModal")
+          .modal({ backdrop: "static", keyboard: false })
+          .modal("show");
+
+        $("#errorCloseBtn")
+          .off("click")
+          .on("click", function () {
+            if (liff.closeWindow) liff.closeWindow();
+            else $("#errorModal").modal("hide");
+          });
+      }
+
       async function checkRegisteredAndMaybeShowModal() {
         const GAS_ENDPOINT =
           "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
@@ -440,7 +479,7 @@
           bindFormSubmit();
         } catch (e) {
           console.error("LIFF init failed", e);
-          alert("LIFFの初期化に失敗しました");
+          showErrorAndClose("LIFFの初期化に失敗しました");
         }
       });
 
@@ -545,7 +584,7 @@
             })
             .catch((err) => {
               console.error(err);
-              alert("送信に失敗しました：" + err);
+              showErrorAndClose("送信に失敗しました：" + err);
             });
         });
 

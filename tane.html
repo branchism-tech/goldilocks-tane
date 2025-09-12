@@ -227,6 +227,30 @@
       </div>
     </div>
 
+    <!-- エラーモーダル -->
+    <div
+      class="modal fade"
+      id="errorModal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body text-center" id="errorModalBody"></div>
+          <div class="modal-footer justify-content-center">
+            <button
+              type="button"
+              class="btn btn-outline-dark"
+              id="errorCloseBtn"
+            >
+              とじる
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ローディングオーバーレイ -->
     <div
       id="loadingOverlay"
@@ -299,6 +323,20 @@
         return true;
       }
 
+      function showErrorAndClose(message) {
+        $("#errorModalBody").text(message);
+        $("#errorModal")
+          .modal({ backdrop: "static", keyboard: false })
+          .modal("show");
+
+        $("#errorCloseBtn")
+          .off("click")
+          .on("click", function () {
+            if (liff.closeWindow) liff.closeWindow();
+            else $("#errorModal").modal("hide");
+          });
+      }
+
       const params = new URL(location.href).searchParams;
       const taneId = params.get("taneId"); // 有無でモード分岐
 
@@ -340,18 +378,18 @@
                   $("#kind_person").val(json.record.kind_person || "");
                 } else {
                   $("#loadingOverlay").hide();
-                  alert("タネ情報は非表示になっています");
+                  showErrorAndClose("タネ情報は非表示になっています");
                   if (liff.closeWindow) liff.closeWindow();
                 }
               } else {
                 $("#loadingOverlay").hide();
-                alert("タネ情報の取得に失敗しました");
+                showErrorAndClose("タネ情報の取得に失敗しました");
                 if (liff.closeWindow) liff.closeWindow();
               }
             } catch (e) {
               console.error(e);
               $("#loadingOverlay").hide();
-              alert("タネ情報の取得でエラーが発生しました");
+              showErrorAndClose("タネ情報の取得でエラーが発生しました");
               if (liff.closeWindow) liff.closeWindow();
             } finally {
               $("#loadingOverlay").hide();
@@ -360,7 +398,7 @@
           bindFormSubmit();
         } catch (e) {
           console.error("LIFF init failed", e);
-          alert("LIFFの初期化に失敗しました");
+          showErrorAndClose("LIFFの初期化に失敗しました");
         }
       });
 
@@ -435,7 +473,7 @@
             })
             .catch((err) => {
               console.error(err);
-              alert("送信に失敗しました：" + err);
+              showErrorAndClose("送信に失敗しました：" + err);
             });
         });
 
