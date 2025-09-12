@@ -350,7 +350,9 @@
           if (taneId != null) {
             $("#pageTitle").text("タネ編集ページ");
             $("#submitBtn").text("保存する");
-            $("#doneText").text("保存完了しました。");
+            $("#doneText").text(
+              "保存完了しました。<br />返信されたメッセージから編集できます。"
+            );
 
             // 既存データ取得
             const idToken = liff.getIDToken();
