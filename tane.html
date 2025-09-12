@@ -308,6 +308,7 @@
           const ready = await ensureLoginAndScopes();
           if (!ready) return;
 
+          $("#loadingOverlay").hide();
           if (taneId != null) {
             $("#pageTitle").text("タネ編集ページ");
             $("#submitBtn").text("保存する");
