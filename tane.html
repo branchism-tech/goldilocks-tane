@@ -339,15 +339,18 @@
                   $("#comment").val(json.record.comment || "");
                   $("#kind_person").val(json.record.kind_person || "");
                 } else {
-                  alert("タネ情報の取得に失敗しました");
+                  $("#loadingOverlay").hide();
+                  alert("タネ情報は非表示になっています");
                   if (liff.closeWindow) liff.closeWindow();
                 }
               } else {
-                alert("タネ情報は非表示になっています");
+                $("#loadingOverlay").hide();
+                alert("タネ情報の取得に失敗しました");
                 if (liff.closeWindow) liff.closeWindow();
               }
             } catch (e) {
               console.error(e);
+              $("#loadingOverlay").hide();
               alert("タネ情報の取得でエラーが発生しました");
               if (liff.closeWindow) liff.closeWindow();
             } finally {
