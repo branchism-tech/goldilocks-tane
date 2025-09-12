@@ -37,14 +37,6 @@
       .avatar { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #aaa; object-fit: cover; }
 
       .field-label { font-weight: 700; margin-top: 12px; margin-bottom: 6px; }
-      .field-box {
-        background: #fff;
-        border: 1px solid #ddd; 
-        border-radius: 6px;  
-        padding: 10px 12px;
-        white-space: pre-wrap;
-        word-break: break-word;
-      }
 
       /* いいね！ */
       .likes-header { display: flex; align-items: baseline; gap: 8px; margin: 10px 0 6px; }
@@ -222,11 +214,8 @@
           $("#kindText").text(j.record.kind_person || "");
           $("#ownerIcon").attr("src", j.ownerIcon || DUMMY_ICON_URL);
 
-          alert('loadPage 1');
           renderLikes(j.likes || []);
-          alert('loadPage 2');
           if (j.alreadyLiked) setLiked();
-          alert('loadPage 3');
         } catch (e) {
           console.error(e);
           toast("読み込みエラーが発生しました");
@@ -250,11 +239,8 @@
             toast(j.error || "いいねに失敗しました");
             return;
           }
-          alert('likeAction 1');
           setLiked();
-          alert('likeAction 2');
           renderLikes(j.list || []);
-          alert('likeAction 3');
         } catch (e) {
           console.error(e);
           toast("いいね処理でエラー");
