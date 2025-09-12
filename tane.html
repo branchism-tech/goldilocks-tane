@@ -308,7 +308,7 @@
           const ready = await ensureLoginAndScopes();
           if (!ready) return;
 
-          if (taneId) {
+          if (taneId != null) {
             $("#pageTitle").text("タネ編集ページ");
             $("#submitBtn").text("保存する");
             $("#doneText").text("保存完了しました。");
