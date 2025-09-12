@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>タネ詳細</title>
+    <title>タネをみる</title>
 
     <link
       rel="stylesheet"
@@ -30,84 +30,54 @@
         padding-bottom: 8px;
         border-bottom: 2px solid #bcad97;
       }
-      .brand .logo {
-        width: 30px;
-        height: 30px;
-        display: inline-block;
-      }
-      .section-title {
-        font-weight: 700;
-        font-size: 22px;
-        padding-bottom: 8px;
-        margin: 8px 0 16px;
-      }
-      .seed-title-wrap {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-      .avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        border: 1px solid #aaa;
-        object-fit: cover;
-      }
-      .field-label {
-        font-weight: 700;
-        margin-top: 10px;
-      }
+      .brand .logo { width: 30px; height: 30px; display: inline-block; }
+      .section-title { font-weight: 700; font-size: 22px; padding-bottom: 8px; margin: 8px 0 16px; }
+
+      .seed-title-wrap { display: flex; align-items: center; gap: 12px; }
+      .avatar { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #aaa; object-fit: cover; }
+
+      .field-label { font-weight: 700; margin-top: 12px; margin-bottom: 6px; }
       .field-box {
         background: #fff;
-        border: 1px solid #cbb79b;
-        border-radius: 4px;
-        padding: 12px;
+        border: 1px solid #ddd; 
+        border-radius: 6px;  
+        padding: 10px 12px;
         white-space: pre-wrap;
-      }
-      .likes-row {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: wrap;
-      }
-      .likes-avatars {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-      }
-      .like-btn {
-        min-width: 120px;
-      }
-      .btn-liked {
-        pointer-events: none;
-        opacity: 0.8;
-      }
-      .hint {
-        color: #666;
-        font-size: 12px;
+        word-break: break-word;
       }
 
-      #loadingOverlay {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(255, 255, 255, 0.85);
-        z-index: 1050;
+      /* いいね！ */
+      .likes-header { display: flex; align-items: baseline; gap: 8px; margin: 10px 0 6px; }
+      .likes-title { font-weight: 700; }
+      .likes-count { color: #666; font-size: 13px; }
+
+      .likes-avatars {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      .likes-avatars img {
+        width: 36px; height: 36px; object-fit: cover;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+      }
+
+      .like-btn-row { display: flex; justify-content: flex-end; }
+      .like-btn { min-width: 120px; }
+      .like-btn[disabled] { background: #adb5bd; border-color: #adb5bd; cursor: default; }
+      .btn-liked { pointer-events: none; opacity: 0.8; }
+
+      .hint { color: #666; font-size: 12px; }
+
+      /* オーバーレイ／トースト */
+      #loadingOverlay {
+        position: fixed; inset: 0; background: rgba(255,255,255,0.85);
+        z-index: 1050; display: none; justify-content: center; align-items: center;
       }
       #errToast {
-        display: none;
-        position: fixed;
-        left: 50%;
-        bottom: 24px;
-        transform: translateX(-50%);
-        background: #222;
-        color: #fff;
-        padding: 10px 14px;
-        border-radius: 6px;
-        z-index: 1100;
+        display: none; position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+        background: #222; color: #fff; padding: 10px 14px; border-radius: 6px; z-index: 1100;
       }
     </style>
   </head>
@@ -135,14 +105,18 @@
       <div id="kindText" class="field-box">…</div>
 
       <hr />
-      <div class="likes-row mb-2">
-        <button id="likeBtn" class="btn btn-outline-primary like-btn">
-          いいね！
-        </button>
-        <span class="hint" id="likeCountHint">(0件)</span>
+
+      <div class="likes-header">
+        <div class="likes-title">いいね！</div>
+        <div class="likes-count" id="likeCountHint">(0件)</div>
       </div>
+
       <div id="likesAvatars" class="likes-avatars"></div>
-    </div>
+
+      <div class="like-btn-row">
+        <button id="likeBtn" class="btn btn-primary like-btn">いいね！</button>
+      </div>
+
 
     <div id="loadingOverlay">
       <div
@@ -164,7 +138,7 @@
       const LIFF_ID = "2008071727-prQWbK4R";
       const GAS_ENDPOINT =
         "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
-      const DUMMY_ICON_URL = "smile.png";
+      const DUMMY_ICON_URL = 'https://placehold.jp/40x40.png?text=%E2%98%BA%EF%B8%8F';
 
       const taneId = new URL(location.href).searchParams.get("taneId");
 
@@ -179,34 +153,45 @@
       };
 
       function renderLikes(list) {
-        const box = $("#likesAvatars").empty();
-        (list || []).forEach((u) => {
-          $("<img>", { class: "avatar", alt: "like" })
-            .attr("src", u.iconUrl || DUMMY_ICON_URL)
-            .appendTo(box);
+        // list: [{userId, iconUrl, createdAt}, ...] 作成日順
+        const wrap = document.getElementById('likesAvatars');
+        wrap.innerHTML = '';
+        (list || []).forEach(x => {
+          const img = document.createElement('img');
+          img.src = x.iconUrl || DUMMY_ICON_URL;
+          img.alt = 'like-user';
+          wrap.appendChild(img);
         });
-        $("#likeCountHint").text(`(${(list || []).length}件)`);
-      }
-      function setLiked() {
-        $("#likeBtn")
-          .text("いいね済み")
-          .removeClass("btn-outline-primary")
-          .addClass("btn-secondary btn-liked");
+        document.getElementById('likeCountHint').textContent = `(${(list || []).length}件)`;
       }
 
-      async function ensureLogin() {
+      function setLiked() {
+        const btn = document.getElementById('likeBtn');
+        btn.textContent = 'いいね済み';
+        btn.disabled = true;
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-secondary');
+      }
+
+      // ====== 共通：ログイン＆スコープ確認 ======
+      async function ensureLoginAndScopes() {
+        // 1) 未ログインならログイン
         if (!liff.isLoggedIn()) {
           await liff.login({ scope: ["profile", "openid"], prompt: "consent" });
-          return false;
+          return false; // リダイレクトするのでここで終了
         }
-        const idt = liff.getIDToken();
-        if (!idt) {
+
+        // 2) idToken が無ければ再同意（OpenID）
+        const idToken = liff.getIDToken();
+        if (!idToken) {
           await liff.login({ scope: ["profile", "openid"], prompt: "consent" });
           return false;
         }
+
+        // 3) profile スコープ確認（getProfile が成功すればOK）
         try {
           await liff.getProfile();
-        } catch (_) {
+        } catch {
           await liff.login({ scope: ["profile", "openid"], prompt: "consent" });
           return false;
         }
@@ -240,7 +225,7 @@
           $("#kindText").text(j.record.kind_person || "");
           $("#ownerIcon").attr("src", j.ownerIcon || DUMMY_ICON_URL);
 
-          // いいね
+          // いいね描画＆自身が済ならボタン状態を確定
           renderLikes(j.likes || []);
           if (j.alreadyLiked) setLiked();
         } catch (e) {
@@ -276,13 +261,18 @@
         }
       }
 
-      (async () => {
-        await liff.init({ liffId: LIFF_ID });
-        const ok = await ensureLogin();
-        if (!ok) return;
-        await loadPage();
-        $("#likeBtn").on("click", likeAction);
-      })();
+     $(async function () {
+        try {
+          await liff.init({ liffId: LIFF_ID });
+          const ready = await  ensureLoginAndScopes();
+          if (!ready) return;
+          await loadPage();
+          $("#likeBtn").on("click", likeAction);
+        } catch (e) {
+          console.error("LIFF init failed", e);
+          showErrorAndClose("LIFFの初期化に失敗しました");
+        }
+      });
     </script>
   </body>
 </html>
