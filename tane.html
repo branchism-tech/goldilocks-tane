@@ -340,13 +340,16 @@
                   $("#kind_person").val(json.record.kind_person || "");
                 } else {
                   alert("タネ情報の取得に失敗しました");
+                  if (liff.closeWindow) liff.closeWindow();
                 }
               } else {
-                alert("タネ情報の取得に失敗しました");
+                alert("タネ情報は非表示になっています");
+                if (liff.closeWindow) liff.closeWindow();
               }
             } catch (e) {
               console.error(e);
               alert("タネ情報の取得でエラーが発生しました");
+              if (liff.closeWindow) liff.closeWindow();
             } finally {
               $("#loadingOverlay").hide();
             }
@@ -413,51 +416,6 @@
           }
           if (hasError) return;
 
-          // try {
-          //   const idToken = liff.getIDToken();
-          //   if (!idToken) {
-          //     alert("idToken not found");
-          //     return;
-          //   }
-
-          //   const body = new URLSearchParams({
-          //     id_token: idToken,
-          //     action: "tane_save",
-          //     taneId: taneId || "",
-          //     category,
-          //     title,
-          //     comment,
-          //     kind_person,
-          //   }).toString();
-
-          //   const res = await fetch(GAS_ENDPOINT, {
-          //     method: "POST",
-          //     headers: {
-          //       "Content-Type":
-          //         "application/x-www-form-urlencoded; charset=UTF-8",
-          //     },
-          //     body,
-          //   });
-
-          //   const text = await res.text();
-          //   let json = {};
-          //   try {
-          //     json = JSON.parse(text);
-          //   } catch {}Å
-          //   if (res.ok && json.ok) {
-          //     // 新規時はレスから確定taneIdを受け取って編集リンクに使える
-          //     if (!taneId && json.taneId) {
-          //       // 以後編集で戻る場合などに使うならここでlocation置換も可
-          //     }
-          //     $("#doneModal").modal("show");
-          //   } else {
-          //     console.error("save error:", res.status, text);
-          //     alert("送信に失敗しました：" + (json.error || res.status));
-          //   }
-          // } catch (err) {
-          //   console.error(err);
-          //   alert("送信に失敗しました：" + (err?.message || err));
-          // }
           const msg =
             (taneId != null ? `タネ編集ページ\n` : `タネ投稿ページ\n`) +
             `カテゴリー：${category}\n` +
