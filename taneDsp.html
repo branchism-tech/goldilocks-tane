@@ -251,7 +251,6 @@
           renderLikes(j.likes || []);
           if (j.alreadyLiked) setLiked();
           debugTxt += "loadPage end=" + formatNow() + "\n";
-          alert(debugTxt);
 
         } catch (e) {
           console.error(e);
@@ -288,11 +287,16 @@
 
      $(async function () {
         try {
+          debugTxt += "async function () start=" + formatNow() + "\n";
           await liff.init({ liffId: LIFF_ID });
+          debugTxt += "async function () liff.init後=" + formatNow() + "\n";
           const ready = await  ensureLoginAndScopes();
+          debugTxt += "async function () ensureLoginAndScopes後=" + formatNow() + "\n";
           if (!ready) return;
           await loadPage();
           $("#likeBtn").on("click", likeAction);
+          alert(debugTxt);
+
         } catch (e) {
           console.error("LIFF init failed", e);
           showErrorAndClose("LIFFの初期化に失敗しました");
