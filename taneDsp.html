@@ -140,6 +140,20 @@
     <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
 
     <script>
+      function formatNow() {
+        const d = new Date();
+
+        const yyyy = d.getFullYear();
+        const MM = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        const HH = String(d.getHours()).padStart(2, "0");
+        const mm = String(d.getMinutes()).padStart(2, "0");
+        const ss = String(d.getSeconds()).padStart(2, "0");
+
+        return `${yyyy}/${MM}/${dd} ${HH}:${mm}:${ss}`;
+      }
+
+      var debugTxt = "最初=" + formatNow() + "\n";
       // ===== 設定 =====
       const LIFF_ID = "2008071727-prQWbK4R";
       const GAS_ENDPOINT =
@@ -204,6 +218,7 @@
       }
 
       async function loadPage() {
+         debugTxt = "loadPage start=" + formatNow() + "\n";
         if (!taneId) {
           toast("taneId がありません");
           return;
@@ -211,12 +226,15 @@
         loading.on();
         try {
           const idToken = liff.getIDToken();
+         debugTxt = "loadPage idToken後=" + formatNow() + "\n";
 
           const r = await fetch(
             `${GAS_ENDPOINT}?action=tane_public_bundle&taneId=${encodeURIComponent(
               taneId
             )}&id_token=${encodeURIComponent(idToken)}`
           );
+         debugTxt = "loadPage fetch後=" + formatNow() + "\n";
+
           const j = r.ok ? await r.json() : { ok: false };
           if (!j.ok || !j.record) {
             toast(j.error || "タネが見つかりません");
@@ -232,6 +250,9 @@
 
           renderLikes(j.likes || []);
           if (j.alreadyLiked) setLiked();
+          debugTxt = "loadPage end=" + formatNow() + "\n";
+          alert(debugTxt);
+
         } catch (e) {
           console.error(e);
           toast("読み込みエラーが発生しました");
