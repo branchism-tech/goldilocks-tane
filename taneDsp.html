@@ -218,7 +218,7 @@
       }
 
       async function loadPage() {
-         debugTxt = "loadPage start=" + formatNow() + "\n";
+         debugTxt += "loadPage start=" + formatNow() + "\n";
         if (!taneId) {
           toast("taneId がありません");
           return;
@@ -226,14 +226,14 @@
         loading.on();
         try {
           const idToken = liff.getIDToken();
-         debugTxt = "loadPage idToken後=" + formatNow() + "\n";
+         debugTxt += "loadPage idToken後=" + formatNow() + "\n";
 
           const r = await fetch(
             `${GAS_ENDPOINT}?action=tane_public_bundle&taneId=${encodeURIComponent(
               taneId
             )}&id_token=${encodeURIComponent(idToken)}`
           );
-         debugTxt = "loadPage fetch後=" + formatNow() + "\n";
+         debugTxt += "loadPage fetch後=" + formatNow() + "\n";
 
           const j = r.ok ? await r.json() : { ok: false };
           if (!j.ok || !j.record) {
@@ -250,7 +250,7 @@
 
           renderLikes(j.likes || []);
           if (j.alreadyLiked) setLiked();
-          debugTxt = "loadPage end=" + formatNow() + "\n";
+          debugTxt += "loadPage end=" + formatNow() + "\n";
           alert(debugTxt);
 
         } catch (e) {
