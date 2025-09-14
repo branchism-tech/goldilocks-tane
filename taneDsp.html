@@ -9,6 +9,7 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     />
+    <script src="./utils.js"></script>
 
     <style>
       body {
@@ -140,19 +141,6 @@
     <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
 
     <script>
-      function formatNow() {
-        const d = new Date();
-
-        const yyyy = d.getFullYear();
-        const MM = String(d.getMonth() + 1).padStart(2, "0");
-        const dd = String(d.getDate()).padStart(2, "0");
-        const HH = String(d.getHours()).padStart(2, "0");
-        const mm = String(d.getMinutes()).padStart(2, "0");
-        const ss = String(d.getSeconds()).padStart(2, "0");
-
-        return `${yyyy}/${MM}/${dd} ${HH}:${mm}:${ss}`;
-      }
-
       var debugTxt = "最初=" + formatNow() + "\n";
       // ===== 設定 =====
       const LIFF_ID = "2008071727-prQWbK4R";
@@ -295,7 +283,7 @@
           if (!ready) return;
           await loadPage();
           $("#likeBtn").on("click", likeAction);
-          // alert(debugTxt);
+          alert(debugTxt);
 
         } catch (e) {
           console.error("LIFF init failed", e);
