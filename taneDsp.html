@@ -9,7 +9,6 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     />
-    <script src="./utils.js"></script>
 
     <style>
       body {
@@ -139,6 +138,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <script src="./utils.js?ver=1.00"></script>
 
     <script>
       var debugTxt = "最初=" + formatNow() + "\n";
@@ -149,16 +149,6 @@
       const DUMMY_ICON_URL = 'https://placehold.jp/40x40.png?text=DUMMY';
 
       const taneId = new URL(location.href).searchParams.get("taneId");
-
-      function toast(msg) {
-        $("#errText").text(msg);
-        $("#errToast").fadeIn(150);
-        setTimeout(() => $("#errToast").fadeOut(300), 2200);
-      }
-      const loading = {
-        on: () => $("#loadingOverlay").show(),
-        off: () => $("#loadingOverlay").hide(),
-      };
 
       function renderLikes(list) {
         // list: [{userId, iconUrl, createdAt}, ...] 作成日順
@@ -178,31 +168,6 @@
         btn.disabled = true;
         btn.classList.remove('btn-primary');
         btn.classList.add('btn-secondary');
-      }
-
-      // ====== 共通：ログイン＆スコープ確認 ======
-      async function ensureLoginAndScopes() {
-        // 1) 未ログインならログイン
-        if (!liff.isLoggedIn()) {
-          await liff.login({ scope: ["profile", "openid"], prompt: "consent" });
-          return false; // リダイレクトするのでここで終了
-        }
-
-        // 2) idToken が無ければ再同意（OpenID）
-        const idToken = liff.getIDToken();
-        if (!idToken) {
-          await liff.login({ scope: ["profile", "openid"], prompt: "consent" });
-          return false;
-        }
-
-        // 3) profile スコープ確認（getProfile が成功すればOK）
-        try {
-          await liff.getProfile();
-        } catch {
-          await liff.login({ scope: ["profile", "openid"], prompt: "consent" });
-          return false;
-        }
-        return true;
       }
 
       async function loadPage() {
@@ -283,7 +248,7 @@
           if (!ready) return;
           await loadPage();
           $("#likeBtn").on("click", likeAction);
-          alert(debugTxt);
+          // alert(debugTxt);
 
         } catch (e) {
           console.error("LIFF init failed", e);

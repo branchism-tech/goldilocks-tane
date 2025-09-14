@@ -291,37 +291,13 @@
       src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"
       charset="utf-8"
     ></script>
+    <script src="./utils.js?ver=1.00"></script>
 
     <script>
       // ====== 環境定数 ======
       const LIFF_ID = "2008071727-ypMm7WGE";
       const GAS_ENDPOINT =
         "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
-
-      // ====== 共通：ログイン＆スコープ確認 ======
-      async function ensureLoginAndScopes() {
-        // 1) 未ログインならログイン
-        if (!liff.isLoggedIn()) {
-          await liff.login({ scope: ["profile", "openid"], prompt: "consent" });
-          return false; // リダイレクトするのでここで終了
-        }
-
-        // 2) idToken が無ければ再同意（OpenID）
-        const idToken = liff.getIDToken();
-        if (!idToken) {
-          await liff.login({ scope: ["profile", "openid"], prompt: "consent" });
-          return false;
-        }
-
-        // 3) profile スコープ確認（getProfile が成功すればOK）
-        try {
-          await liff.getProfile();
-        } catch {
-          await liff.login({ scope: ["profile", "openid"], prompt: "consent" });
-          return false;
-        }
-        return true;
-      }
 
       function showErrorAndClose(message) {
         $("#errorModalBody").text(message);
@@ -346,7 +322,7 @@
           const ready = await ensureLoginAndScopes();
           if (!ready) return;
 
-          $("#loadingOverlay").hide();
+          loading.off();
           if (taneId != null) {
             $("#pageTitle").text("タネ編集ページ");
             $("#submitBtn").text("保存する");
@@ -359,7 +335,7 @@
             const url = `${GAS_ENDPOINT}?action=tane_get&taneId=${encodeURIComponent(
               taneId
             )}&id_token=${encodeURIComponent(idToken)}`;
-            $("#loadingOverlay").show();
+            loading.on();
 
             try {
               const res = await fetch(url);
@@ -379,22 +355,22 @@
                   $("#comment").val(json.record.comment || "");
                   $("#kind_person").val(json.record.kind_person || "");
                 } else {
-                  $("#loadingOverlay").hide();
+                  loading.off();
                   showErrorAndClose("タネ情報は非表示になっています");
                   return;
                 }
               } else {
-                $("#loadingOverlay").hide();
+                loading.off();
                 showErrorAndClose("タネ情報の取得に失敗しました");
                 return;
               }
             } catch (e) {
               console.error(e);
-              $("#loadingOverlay").hide();
+              loading.off();
               showErrorAndClose("タネ情報の取得でエラーが発生しました");
               return;
             } finally {
-              $("#loadingOverlay").hide();
+              loading.off();
             }
           }
           bindFormSubmit();
