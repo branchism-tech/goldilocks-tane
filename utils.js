@@ -25,8 +25,8 @@ function toast(msg) {
 }
 
 const loading = {
-  on: () => $("#loadingOverlay").show(),
-  off: () => $("#loadingOverlay").hide(),
+  on: () => $("#loadingOverlay").addClass("show"),
+  off: () => $("#loadingOverlay").removeClass("show"),
 };
 
 function formatNow() {
@@ -157,8 +157,9 @@ async function profileLikeActionForTaneDsp() {
     const r = await fetch(
       `${GAS_ENDPOINT}?action=like_user&taneId=${encodeURIComponent(
         taneId
-      )}&userId=${encodeURIComponent(userId)}&
-      )}&id_token=${encodeURIComponent(idt)}`
+      )}&userId=${encodeURIComponent(userId)}&id_token=${encodeURIComponent(
+        idt
+      )}`
     );
     const j = r.ok ? await r.json() : { ok: false };
     if (!j.ok) {
