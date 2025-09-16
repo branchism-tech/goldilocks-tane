@@ -69,7 +69,7 @@ function fillProfileDetail(profile) {
   setText("profile-age", profile.age);
   setText("profile-sex", profile.sex);
   setText("profile-address", profile.address);
-  if (profile.likeUserFlg) {
+  if (!profile.likeUserFlg) {
     const btn = document.getElementById("profile-like-btn");
     btn.disabled = false;
     btn.classList.add("btn-primary");
