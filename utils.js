@@ -149,8 +149,8 @@ async function profileLikeActionForTaneDsp() {
   const $btn = $("#profile-like-btn");
   if ($btn.hasClass("btn-liked") || $btn.prop("disabled")) return;
 
+  loading.on();
   try {
-    loading.on();
     const userId = $("#profile-userId").val();
     const idt = liff.getIDToken();
     const r = await fetch(
