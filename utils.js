@@ -71,7 +71,7 @@ function fillProfileDetail(profile) {
   setText("profile-address", profile.address);
   if (!profile.likeUserFlg) {
     const btn = document.getElementById("profile-like-btn");
-    btn.textContent = "いいね";
+    btn.textContent = "いいね！";
     btn.disabled = false;
     btn.classList.remove("btn-secondary", "btn-liked");
     btn.classList.add("btn-primary");
