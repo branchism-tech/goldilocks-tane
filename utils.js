@@ -82,17 +82,17 @@ function fillProfileDetail(profile) {
 
 // 画面切り替え
 function showProfileScreen() {
-  // screen1 を隠し、screen2 を表示
   const s1 = document.getElementById("screen1");
   const s2 = document.getElementById("screen2");
   if (s1) s1.style.display = "none";
-  if (s2) s2.style.left = "0";
+  if (s2) s2.style.display = "block";
 }
+
 function hideProfileScreen() {
   const s1 = document.getElementById("screen1");
   const s2 = document.getElementById("screen2");
   if (s1) s1.style.display = "block";
-  if (s2) s2.style.left = "-9999px";
+  if (s2) s2.style.display = "none";
 }
 
 // profiles: 直近の likes の配列（renderLikesとセットで呼ぶ想定）
@@ -150,6 +150,7 @@ async function profileLikeActionForTaneDsp() {
   if ($btn.hasClass("btn-liked") || $btn.prop("disabled")) return;
 
   try {
+    loading.on();
     const userId = $("#profile-userId").val();
     const idt = liff.getIDToken();
     const r = await fetch(
