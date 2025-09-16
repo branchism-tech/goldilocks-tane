@@ -132,6 +132,7 @@ function addListenerProfileDetailSingle(
   if ($el.length === 0) return;
 
   // 多重バインド防止（名前空間）
+
   $el.off("click.ownerNs").on("click.ownerNs", function (ev) {
     ev.preventDefault();
     fillProfileDetail(profile);
