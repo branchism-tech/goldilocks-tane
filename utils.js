@@ -69,6 +69,14 @@ function fillProfileDetail(profile) {
   setText("profile-age", profile.age);
   setText("profile-sex", profile.sex);
   setText("profile-address", profile.address);
+  if (profile.likeUserFlg) {
+    const btn = document.getElementById("profile-like-btn");
+    btn.disabled = false;
+    btn.classList.add("btn-primary");
+    btn.classList.add("like-btn", "btn");
+  } else {
+    setProfileLiked();
+  }
 }
 
 // 画面切り替え
@@ -154,7 +162,7 @@ async function profileLikeActionForTaneDsp() {
       return;
     }
     renderLikes(j.likes || []);
-    if (j.likeUserFlg) setProfileLiked();
+    setProfileLiked();
 
     // クリックでプロフィール詳細（owner単体）
     addListenerProfileDetailSingle(
