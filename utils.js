@@ -143,8 +143,9 @@ async function profileLikeActionForTaneDsp() {
     const userId = $("#profile-userId").val();
     const idt = liff.getIDToken();
     const r = await fetch(
-      `${GAS_ENDPOINT}?action=like_user&userId=${encodeURIComponent(
-        userId
+      `${GAS_ENDPOINT}?action=like_user&taneId=${encodeURIComponent(
+        taneId
+      )}&userId=${encodeURIComponent(userId)}&
       )}&id_token=${encodeURIComponent(idt)}`
     );
     const j = r.ok ? await r.json() : { ok: false };
