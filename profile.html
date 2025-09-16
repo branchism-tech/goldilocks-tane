@@ -63,6 +63,36 @@
         color: #dc3545;
       }
 
+      .field-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .field-label-2 {
+        font-weight: 700;
+        min-width: 60px;
+        margin-top: 12px;
+        margin-bottom: 6px;
+      }
+
+      .like-btn-row {
+        display: flex;
+        justify-content: flex-end;
+      }
+      .like-btn {
+        min-width: 120px;
+      }
+      .like-btn[disabled] {
+        background: #adb5bd;
+        border-color: #adb5bd;
+        cursor: default;
+      }
+      .btn-liked {
+        pointer-events: none;
+        opacity: 0.8;
+      }
+
       /* これ以降は、入力項目を白色に保つためもものなので、CSSの最後に置いて！ */
       /* 常に白固定（テキスト/セレクト/テキストエリア） */
       input.form-control,

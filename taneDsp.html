@@ -30,18 +30,64 @@
         padding-bottom: 8px;
         border-bottom: 2px solid #bcad97;
       }
-      .brand .logo { width: 30px; height: 30px; display: inline-block; }
-      .section-title { font-weight: 700; font-size: 22px; padding-bottom: 8px; margin: 8px 0 16px; }
+      .brand .logo {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+      }
+      .section-title {
+        font-weight: 700;
+        font-size: 22px;
+        padding-bottom: 8px;
+        margin: 8px 0 16px;
+      }
 
-      .seed-title-wrap { display: flex; align-items: center; gap: 12px; }
-      .avatar { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #aaa; object-fit: cover; }
+      .seed-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid #aaa;
+        object-fit: cover;
+      }
 
-      .field-label { font-weight: 700; margin-top: 12px; margin-bottom: 6px; }
+      .field-label {
+        font-weight: 700;
+        margin-top: 12px;
+        margin-bottom: 6px;
+      }
+
+      .field-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .field-label-2 {
+        font-weight: 700;
+        min-width: 60px;
+        margin-top: 12px;
+        margin-bottom: 6px;
+      }
 
       /* いいね！ */
-      .likes-header { display: flex; align-items: baseline; gap: 8px; margin: 10px 0 6px; }
-      .likes-title { font-weight: 700; }
-      .likes-count { color: #666; font-size: 13px; }
+      .likes-header {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        margin: 10px 0 6px;
+      }
+      .likes-title {
+        font-weight: 700;
+      }
+      .likes-count {
+        color: #666;
+        font-size: 13px;
+      }
 
       .likes-avatars {
         display: flex;
@@ -50,31 +96,61 @@
         margin-bottom: 12px;
       }
       .likes-avatars img {
-        width: 36px; height: 36px; object-fit: cover;
+        width: 36px;
+        height: 36px;
+        object-fit: cover;
         border-radius: 50%;
         border: 1px solid #ccc;
       }
 
-      .like-btn-row { display: flex; justify-content: flex-end; }
-      .like-btn { min-width: 120px; }
-      .like-btn[disabled] { background: #adb5bd; border-color: #adb5bd; cursor: default; }
-      .btn-liked { pointer-events: none; opacity: 0.8; }
+      .like-btn-row {
+        display: flex;
+        justify-content: flex-end;
+      }
+      .like-btn {
+        min-width: 120px;
+      }
+      .like-btn[disabled] {
+        background: #adb5bd;
+        border-color: #adb5bd;
+        cursor: default;
+      }
+      .btn-liked {
+        pointer-events: none;
+        opacity: 0.8;
+      }
 
-      .hint { color: #666; font-size: 12px; }
+      .hint {
+        color: #666;
+        font-size: 12px;
+      }
 
       /* オーバーレイ／トースト */
       #loadingOverlay {
-        position: fixed; inset: 0; background: rgba(255,255,255,0.85);
-        z-index: 1050; display: none; justify-content: center; align-items: center;
+        position: fixed;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.85);
+        z-index: 1050;
+        display: none;
+        justify-content: center;
+        align-items: center;
       }
       #errToast {
-        display: none; position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
-        background: #222; color: #fff; padding: 10px 14px; border-radius: 6px; z-index: 1100;
+        display: none;
+        position: fixed;
+        left: 50%;
+        bottom: 24px;
+        transform: translateX(-50%);
+        background: #222;
+        color: #fff;
+        padding: 10px 14px;
+        border-radius: 6px;
+        z-index: 1100;
       }
     </style>
   </head>
   <body>
-    <div class="card-like">
+    <div class="card-like" id="screen1">
       <div class="brand">
         <img class="logo" src="logo.png" alt="キュリオグラフ2025" />
         <strong>キュリオグラフ2025</strong>
@@ -93,7 +169,7 @@
       <div id="commentText">…</div>
 
       <div class="field-label">きて欲しい人</div>
-      <div id="kindText" >…</div>
+      <div id="kindText">…</div>
 
       <hr />
 
@@ -106,6 +182,11 @@
       <div class="like-btn-row">
         <button id="likeBtn" class="btn btn-primary like-btn">いいね！</button>
       </div>
+    </div>
+
+    <div id="screen2" style="position: absolute; left: -9999px">
+      <div id="profiledsp_common_section_placeholder"></div>
+    </div>
 
     <!-- ローディングオーバーレイ -->
     <div
@@ -141,37 +222,50 @@
     <script src="./utils.js?ver=1.00"></script>
 
     <script>
-      var debugTxt = "最初=" + formatNow() + "\n";
       // ===== 設定 =====
       const LIFF_ID = "2008071727-prQWbK4R";
       const GAS_ENDPOINT =
         "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
-      const DUMMY_ICON_URL = 'https://placehold.jp/40x40.png?text=DUMMY';
+      const DUMMY_ICON_URL = "https://placehold.jp/40x40.png?text=DUMMY";
 
       const taneId = new URL(location.href).searchParams.get("taneId");
 
+      let likesProfileMap = {};
+
       function renderLikes(list) {
-        // list: [{userId, iconUrl, createdAt}, ...] 作成日順
-        const wrap = document.getElementById('likesAvatars');
-        wrap.innerHTML = '';
-        (list || []).forEach(x => {
-          const img = document.createElement('img');
-          img.src = x.iconUrl || DUMMY_ICON_URL;
-          img.alt = 'like-user';
+        const wrap = document.getElementById("likesAvatars");
+        if (!wrap) return;
+
+        wrap.innerHTML = "";
+        likesProfileMap = {}; // 毎回作り直し
+
+        (list || []).forEach((x, i) => {
+          const img = document.createElement("img");
+          const idNum = String(i + 1).padStart(3, "0");
+          const domId = `likesAvatar_${idNum}`;
+
+          img.id = domId;
+          img.src =
+            (x.likeProfile && x.likeProfile.ownerIcon) || DUMMY_ICON_URL;
+          img.alt = "like-user";
           wrap.appendChild(img);
+
+          // クリック時に引くためのプロフィールを記録
+          likesProfileMap[domId] = x.likeProfile || {};
         });
       }
 
       function setLiked() {
-        const btn = document.getElementById('likeBtn');
-        btn.textContent = 'いいね済み';
+        const btn = document.getElementById("likeBtn");
+        if (!btn) return;
+        if (btn.classList.contains("btn-liked")) return; // すでに済なら何もしない
+        btn.textContent = "いいね済み";
         btn.disabled = true;
-        btn.classList.remove('btn-primary');
-        btn.classList.add('btn-secondary');
+        btn.classList.remove("btn-primary");
+        btn.classList.add("btn-secondary", "btn-liked");
       }
 
       async function loadPage() {
-         debugTxt += "loadPage start=" + formatNow() + "\n";
         if (!taneId) {
           toast("taneId がありません");
           return;
@@ -179,32 +273,46 @@
         loading.on();
         try {
           const idToken = liff.getIDToken();
-         debugTxt += "loadPage idToken後=" + formatNow() + "\n";
-
           const r = await fetch(
             `${GAS_ENDPOINT}?action=tane_public_bundle&taneId=${encodeURIComponent(
               taneId
             )}&id_token=${encodeURIComponent(idToken)}`
           );
-         debugTxt += "loadPage fetch後=" + formatNow() + "\n";
-
           const j = r.ok ? await r.json() : { ok: false };
           if (!j.ok || !j.record) {
             toast(j.error || "タネが見つかりません");
             return;
           }
 
-          // 本体
+          // 本体表示
           $("#categoryText").text(`カテゴリ：${j.record.category || ""}`);
           $("#titleText").text(j.record.title || "");
           $("#commentText").text(j.record.comment || "");
           $("#kindText").text(j.record.kind_person || "");
-          $("#ownerIcon").attr("src", j.ownerIcon || DUMMY_ICON_URL);
+          $("#ownerIcon").attr(
+            "src",
+            (j.ownerProfile && j.ownerProfile.ownerIcon) || DUMMY_ICON_URL
+          );
 
+          // いいね一覧
           renderLikes(j.likes || []);
           if (j.alreadyLiked) setLiked();
-          debugTxt += "loadPage end=" + formatNow() + "\n";
 
+          // クリックでプロフィール詳細（owner単体）
+          addListenerProfileDetailSingle(
+            "ownerIcon",
+            j.ownerProfile || {},
+            true,
+            true
+          );
+
+          // クリックでプロフィール詳細（likes 複数）
+          const likeProfiles = (j.likes || []).map((x) => x.likeProfile || {});
+          addListenerProfileDetail(likeProfiles, "likesAvatar", true, true);
+
+          $("#profile-like-btn").on("click", profileLikeActionForTaneDsp);
+          // 戻るボタン
+          addListenerProfileDetailRtnBtn();
         } catch (e) {
           console.error(e);
           toast("読み込みエラーが発生しました");
@@ -214,7 +322,9 @@
       }
 
       async function likeAction() {
-        if ($("#likeBtn").hasClass("btn-liked")) return;
+        const $btn = $("#likeBtn");
+        if ($btn.hasClass("btn-liked") || $btn.prop("disabled")) return;
+
         loading.on();
         try {
           const idt = liff.getIDToken();
@@ -229,7 +339,17 @@
             return;
           }
           setLiked();
-          renderLikes(j.list || []);
+          renderLikes(j.likes || []);
+
+          addListenerProfileDetailSingle(
+            "ownerIcon",
+            j.ownerProfile || {},
+            true,
+            true
+          );
+
+          const likeProfiles = (j.likes || []).map((x) => x.likeProfile || {});
+          addListenerProfileDetail(likeProfiles, "likesAvatar", true, true);
         } catch (e) {
           console.error(e);
           toast("いいね処理でエラー");
@@ -238,21 +358,25 @@
         }
       }
 
-     $(async function () {
+      $(async function () {
         try {
-          debugTxt += "async function () start=" + formatNow() + "\n";
+          // 共通部分（プロフィール表示）の読み込み
+          const response1 = await fetch("profileDspCommHtml.html");
+          const commonSection1 = await response1.text();
+          document.getElementById(
+            "profiledsp_common_section_placeholder"
+          ).innerHTML = commonSection1;
+          await waiteCreateDom(PROFILE_DSP_COMM_HTML_DSP_IDS);
+
           await liff.init({ liffId: LIFF_ID });
-          debugTxt += "async function () liff.init後=" + formatNow() + "\n";
-          const ready = await  ensureLoginAndScopes();
-          debugTxt += "async function () ensureLoginAndScopes後=" + formatNow() + "\n";
+          const ready = await ensureLoginAndScopes();
           if (!ready) return;
+
           await loadPage();
           $("#likeBtn").on("click", likeAction);
-          // alert(debugTxt);
-
         } catch (e) {
           console.error("LIFF init failed", e);
-          showErrorAndClose("LIFFの初期化に失敗しました");
+          toast("LIFFの初期化に失敗しました");
         }
       });
     </script>
