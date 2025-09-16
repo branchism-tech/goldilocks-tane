@@ -72,6 +72,7 @@ function fillProfileDetail(profile) {
   if (!profile.likeUserFlg) {
     const btn = document.getElementById("profile-like-btn");
     btn.disabled = false;
+    btn.classList.remove("btn-secondary", "btn-liked");
     btn.classList.add("btn-primary");
     btn.classList.add("like-btn", "btn");
   } else {
