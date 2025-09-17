@@ -146,46 +146,78 @@ function addListenerProfileDetailSingle(
   });
 }
 
-async function profileLikeActionForTaneDsp() {
+function profileLikeActionForTaneDsp() {
   const $btn = $("#profile-like-btn");
   if ($btn.hasClass("btn-liked") || $btn.prop("disabled")) return;
+  const userId = $("#profile-userId").val();
+  // ---- 元の状態を保存（ロールバック用）----
+  const prevOwnerProfile = { ...rtnData.ownerProfile };
+  const prevLikes = JSON.parse(JSON.stringify(rtnData.likes || []));
 
-  loading.on();
-  try {
-    const userId = $("#profile-userId").val();
-    const idt = liff.getIDToken();
-    const r = await fetch(
-      `${GAS_ENDPOINT}?action=like_user&taneId=${encodeURIComponent(
-        taneId
-      )}&userId=${encodeURIComponent(userId)}&id_token=${encodeURIComponent(
-        idt
-      )}`
-    );
-    const j = r.ok ? await r.json() : { ok: false };
-    if (!j.ok) {
-      toast(j.error || "いいねに失敗しました");
-      return;
-    }
-    renderLikes(j.likes || []);
-    setProfileLiked();
-
-    // クリックでプロフィール詳細（owner単体）
+  // ---- 楽観的にUI更新 ----
+  if (prevOwnerProfile.userId === userId) {
+    rtnData.ownerProfile.likeUserFlg = true;
     addListenerProfileDetailSingle(
       "ownerIcon",
-      j.ownerProfile || {},
+      rtnData.ownerProfile || {},
       true,
       true
     );
-
-    // 再バインド（再描画後）
-    const likeProfiles = (j.likes || []).map((x) => x.likeProfile || {});
-    addListenerProfileDetail(likeProfiles, "likesAvatar", true, true);
-  } catch (e) {
-    console.error(e);
-    toast("いいね処理でエラー");
-  } finally {
-    loading.off();
   }
+  (rtnData.likes || []).some((like) => {
+    if (like.likeProfile && like.likeProfile.userId === userId) {
+      like.likeProfile.likeUserFlg = true;
+      return true;
+    }
+    return false;
+  });
+  setProfileLiked();
+  renderLikes(rtnData.likes || []);
+  const likeProfiles = (rtnData.likes || []).map((x) => x.likeProfile || {});
+  addListenerProfileDetail(likeProfiles, "likesAvatar", true, true);
+
+  // ---- 非同期でサーバーへ投げっぱなし ----
+  const idt = liff.getIDToken();
+  const url = `${GAS_ENDPOINT}?action=like_user&taneId=${encodeURIComponent(
+    taneId
+  )}&userId=${encodeURIComponent(userId)}&id_token=${encodeURIComponent(idt)}`;
+
+  fetch(url)
+    .then((r) =>
+      r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))
+    )
+    .then((j) => {
+      if (!j.ok) throw new Error(j.error || "like failed");
+      // 成功なら何もしない（すでにUI更新済み）
+    })
+    .catch((err) => {
+      console.error(err);
+      toast("いいねに失敗しました");
+
+      // ---- ロールバック ----
+      rtnData.ownerProfile = prevOwnerProfile;
+      rtnData.likes = prevLikes;
+      renderLikes(rtnData.likes || []);
+      if (prevOwnerProfile.userId === userId) {
+        addListenerProfileDetailSingle(
+          "ownerIcon",
+          rtnData.ownerProfile || {},
+          true,
+          true
+        );
+      }
+      const likeProfiles2 = (rtnData.likes || []).map(
+        (x) => x.likeProfile || {}
+      );
+      addListenerProfileDetail(likeProfiles2, "likesAvatar", true, true);
+
+      // ボタン表示も元へ
+      const btn = document.getElementById("profile-like-btn");
+      btn.textContent = "いいね！";
+      btn.disabled = false;
+      btn.classList.remove("btn-secondary", "btn-liked");
+      btn.classList.add("btn-primary", "like-btn");
+    });
 }
 
 function setProfileLiked() {
