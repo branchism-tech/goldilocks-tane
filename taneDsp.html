@@ -368,6 +368,7 @@
           ? [...prevLikes]
           : [...prevLikes, rtnData.myLike];
 
+        alert("rtnData.likesのlength=" + rtnData.likes.length());
         setLiked(); // ボタンを“いいね済み”に
         renderLikes(rtnData.likes || []);
         const likeProfiles = (rtnData.likes || []).map(
