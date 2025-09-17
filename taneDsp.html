@@ -355,12 +355,13 @@
         // ---- 元の状態を保存（ロールバック用）----
         const prevAlreadyLiked = rtnData.alreadyLiked;
         const prevLikes = [...(rtnData.likes || [])];
-
+        alert("prevLikesのlength=" + prevLikes.length);
         // ---- 楽観的にUI更新 ----
         rtnData.alreadyLiked = true;
 
         // 二重追加防止（同じ userId が既に並んでいれば追加しない）
         const myUid = rtnData.myLike?.likeProfile?.userId;
+        alert("myUid=" + myUid);
         const exists = (rtnData.likes || []).some(
           (x) => x?.likeProfile?.userId === myUid
         );
