@@ -178,9 +178,9 @@ function profileLikeActionForTaneDsp() {
 
   // ---- 非同期でサーバーへ投げっぱなし ----
   const idt = liff.getIDToken();
-  const url = `${GAS_ENDPOINT}?action=like_user&taneId=${encodeURIComponent(
-    taneId
-  )}&userId=${encodeURIComponent(userId)}&id_token=${encodeURIComponent(idt)}`;
+  const url = `${GAS_ENDPOINT}?action=like_user&userId=${encodeURIComponent(
+    userId
+  )}&id_token=${encodeURIComponent(idt)}`;
 
   fetch(url)
     .then((r) =>
