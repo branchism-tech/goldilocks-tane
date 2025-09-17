@@ -302,7 +302,7 @@
               taneId
             )}&id_token=${encodeURIComponent(idToken)}`
           );
-          const rtnData = r.ok ? await r.json() : { ok: false };
+          rtnData = r.ok ? await r.json() : { ok: false };
           if (!rtnData.ok || !rtnData.record) {
             toast(rtnData.error || "タネが見つかりません");
             return;
