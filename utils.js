@@ -91,24 +91,26 @@ function renderTaneList(containerId, list) {
   wrap.innerHTML = "";
 
   (list || []).forEach((t) => {
-    const li = document.createElement("li");
-    li.className = "list-group-item";
-    li.textContent = `${t.title || "（無題）"} / ${t.category || ""}`;
+    if (!!t.title) {
+      const li = document.createElement("li");
+      li.className = "list-group-item";
+      li.textContent = `${t.title || "（無題）"} / ${t.category || ""}`;
 
-    // 植木　ここはPG的に考える必要がある！ window.location.hrefは戻れない！　start
-    // // 詳細ページへのリンクボタン
-    // const btn = document.createElement("button");
-    // btn.className = "btn btn-sm btn-outline-primary float-right";
-    // btn.textContent = "詳細";
-    // btn.onclick = () => {
-    //   // taneDsp.html をオーバーレイで開くなどの処理
-    //   window.location.href = `taneDsp.html?taneId=${encodeURIComponent(
-    //     t.taneId
-    //   )}`;
-    // };
-    // li.appendChild(btn);
-    // 植木　ここはPG的に考える必要がある！ window.location.hrefは戻れない！ end
-    wrap.appendChild(li);
+      // 植木　ここはPG的に考える必要がある！ window.location.hrefは戻れない！　start
+      // // 詳細ページへのリンクボタン
+      // const btn = document.createElement("button");
+      // btn.className = "btn btn-sm btn-outline-primary float-right";
+      // btn.textContent = "詳細";
+      // btn.onclick = () => {
+      //   // taneDsp.html をオーバーレイで開くなどの処理
+      //   window.location.href = `taneDsp.html?taneId=${encodeURIComponent(
+      //     t.taneId
+      //   )}`;
+      // };
+      // li.appendChild(btn);
+      // 植木　ここはPG的に考える必要がある！ window.location.hrefは戻れない！ end
+      wrap.appendChild(li);
+    }
   });
 }
 
