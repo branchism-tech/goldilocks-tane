@@ -368,13 +368,13 @@
           ? [...prevLikes]
           : [...prevLikes, rtnData.myLike];
 
-        alert("rtnData.likesのlength=" + rtnData.likes.length());
+        alert("rtnData.likesのlength=" + rtnData.likes.length);
         setLiked(); // ボタンを“いいね済み”に
         renderLikes(rtnData.likes || []);
         const likeProfiles = (rtnData.likes || []).map(
           (x) => x.likeProfile || {}
         );
-        alert("likeProfilesのlength=" + likeProfiles.length());
+        alert("likeProfilesのlength=" + likeProfiles.length);
         addListenerProfileDetail(likeProfiles, "likesAvatar", true, true);
         alert("laddListenerProfileDetailの後");
 
