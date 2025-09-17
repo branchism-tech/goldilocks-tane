@@ -373,7 +373,9 @@
         const likeProfiles = (rtnData.likes || []).map(
           (x) => x.likeProfile || {}
         );
+        alert("likeProfilesのlength=" + likeProfiles.length());
         addListenerProfileDetail(likeProfiles, "likesAvatar", true, true);
+        alert("laddListenerProfileDetailの後");
 
         // ---- 非同期でサーバーへ投げっぱなし ----
         const idt = liff.getIDToken();
