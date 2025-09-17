@@ -55,7 +55,8 @@ async function waiteCreateDom(ids, timeoutMs = 4000, intervalMs = 50) {
 function fillProfileDetail(profile) {
   // 画像
   const icon = document.getElementById("profile-owner-icon");
-  if (icon) icon.src = profile.ownerIcon || "smile.png";
+  if (icon)
+    icon.src = profile.ownerIcon || "https://placehold.jp/40x40.png?text=DUMMY";
 
   // テキスト
   const setText = (id, val) => {
@@ -69,16 +70,46 @@ function fillProfileDetail(profile) {
   setText("profile-age", profile.age);
   setText("profile-sex", profile.sex);
   setText("profile-address", profile.address);
+  renderTaneList("profile-tane-list", profile.taneList || []);
+  renderTaneList("profile-tane-like-list", profile.taneLikeList || []);
+
   if (!profile.likeUserFlg) {
     const btn = document.getElementById("profile-like-btn");
     btn.textContent = "いいね！";
     btn.disabled = false;
     btn.classList.remove("btn-secondary", "btn-liked");
-    btn.classList.add("btn-primary");
-    btn.classList.add("like-btn");
+    btn.classList.add("btn-primary", "like-btn");
   } else {
     setProfileLiked();
   }
+}
+
+// タネリスト描画用の共通関数
+function renderTaneList(containerId, list) {
+  const wrap = document.getElementById(containerId);
+  if (!wrap) return;
+  wrap.innerHTML = "";
+
+  (list || []).forEach((t) => {
+    const li = document.createElement("li");
+    li.className = "list-group-item";
+    li.textContent = `${t.title || "（無題）"} / ${t.category || ""}`;
+
+    // 植木　ここはPG的に考える必要がある！ window.location.hrefは戻れない！　start
+    // // 詳細ページへのリンクボタン
+    // const btn = document.createElement("button");
+    // btn.className = "btn btn-sm btn-outline-primary float-right";
+    // btn.textContent = "詳細";
+    // btn.onclick = () => {
+    //   // taneDsp.html をオーバーレイで開くなどの処理
+    //   window.location.href = `taneDsp.html?taneId=${encodeURIComponent(
+    //     t.taneId
+    //   )}`;
+    // };
+    // li.appendChild(btn);
+    // 植木　ここはPG的に考える必要がある！ window.location.hrefは戻れない！ end
+    wrap.appendChild(li);
+  });
 }
 
 // 画面切り替え
