@@ -360,13 +360,13 @@
         rtnData.alreadyLiked = true;
 
         // 二重追加防止（同じ userId が既に並んでいれば追加しない）
-        const myUid = rtnData.myProfile?.likeProfile?.userId;
+        const myUid = rtnData.myLike?.likeProfile?.userId;
         const exists = (rtnData.likes || []).some(
           (x) => x?.likeProfile?.userId === myUid
         );
         rtnData.likes = exists
           ? [...prevLikes]
-          : [...prevLikes, rtnData.myProfile];
+          : [...prevLikes, rtnData.myLike];
 
         setLiked(); // ボタンを“いいね済み”に
         renderLikes(rtnData.likes || []);
