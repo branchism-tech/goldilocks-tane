@@ -65,7 +65,7 @@ function fillProfileDetail(profile) {
   };
   $("#profile-userId").val(profile.userId);
   setText("profile-name", profile.name);
-  setText("profile-favorite", profile.favorite);
+  setText("profile-job", profile.job);
   setText("profile-hobby", profile.hobby);
   setText("profile-age", profile.age);
   setText("profile-sex", profile.sex);
@@ -272,7 +272,7 @@ function addListenerProfileDetailRtnBtn() {
 const PROFILE_DSP_COMM_HTML_DSP_IDS = [
   "profile-owner-icon",
   "profile-name",
-  "profile-favorite",
+  "profile-job",
   "profile-hobby",
   "profile-age",
   "profile-sex",

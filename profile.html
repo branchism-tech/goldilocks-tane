@@ -186,20 +186,24 @@
         </div>
 
         <div class="form-group">
-          <label for="favorite">推し </label>
+          <label for="job">職業 </label>
           <input
             type="text"
             class="form-control"
-            id="favorite"
-            name="favorite"
+            id="job"
+            name="job"
             required
             maxlength="2000"
+            aria-describedby="jobHelp"
           />
+          <small id="jobHelp" class="form-text text-muted">
+            例：会社員、学生、フリーランスなど
+          </small>
           <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-group">
-          <label for="hobby">趣味</label>
+          <label for="hobby">推し＆趣味</label>
           <input
             type="text"
             class="form-control"
@@ -498,7 +502,7 @@
           // 値の取得
           const lineicon = $('input[name="lineicon"]:checked').val();
           const name = $("#name").val().trim();
-          const favorite = $("#favorite").val().trim();
+          const job = $("#job").val().trim();
           const hobby = $("#hobby").val().trim();
           const age = $("#age").val();
           const sex = $('input[name="sex"]:checked').val();
@@ -533,18 +537,18 @@
               .text("名前は24文字以内です");
             hasError = true;
           }
-          if (!favorite) {
-            $("#favorite").addClass("is-invalid");
-            $("#favorite")
+          if (!job) {
+            $("#job").addClass("is-invalid");
+            $("#job")
               .siblings(".invalid-feedback")
-              .text("推しを入力してください");
+              .text("職業を入力してください");
             hasError = true;
           }
           if (!hobby) {
             $("#hobby").addClass("is-invalid");
             $("#hobby")
               .siblings(".invalid-feedback")
-              .text("趣味を入力してください");
+              .text("推し＆趣味を入力してください");
             hasError = true;
           }
           if (!age) {
@@ -577,8 +581,8 @@
             `プロフィール登録\n` +
             `LINEアイコン表示：${lineicon}\n` +
             `名前：${name}\n` +
-            `推し：${favorite}\n` +
-            `趣味：${hobby}\n` +
+            `職業：${job}\n` +
+            `推し＆趣味：${hobby}\n` +
             `年代：${age}\n` +
             `性別：${sex}\n` +
             `お住まい：${address}`;
