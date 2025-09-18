@@ -13,28 +13,27 @@
     <style>
       html,
       body {
-        height: 100%; /* 高さを画面全体に */
-        margin: 0; /* 余白をなくす */
+        height: 100%;
+        margin: 0;
         padding: 0;
       }
+
       body {
-        display: flex;
-        justify-content: center; /* 中央寄せ */
-        align-items: flex-start; /* 上詰め（スクロール可能にするため） */
         background: #f4efe8;
         overflow-y: auto; /* 縦スクロール許可 */
       }
+
       .card-like {
-        width: 100%;
-        max-width: 560px;
-        min-height: 100vh; /* 画面高さを最低限確保 */
+        width: 100%; /* 横幅いっぱい */
+        min-height: 100vh; /* 画面高さ分を最低限確保 */
         margin: 0 auto; /* 中央寄せ */
         background: #f3e8d7;
         border: 2px solid #8f816e;
-        border-radius: 4px;
+        border-radius: 0; /* 四隅を角丸にしないなら 0、残したいならそのまま */
         padding: 16px 16px 24px;
-        box-sizing: border-box; /* padding込みで調整 */
+        box-sizing: border-box;
       }
+
       .brand {
         display: flex;
         align-items: center;
