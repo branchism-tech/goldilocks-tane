@@ -52,7 +52,7 @@ async function waiteCreateDom(ids, timeoutMs = 4000, intervalMs = 50) {
 }
 
 // プロフィール詳細をスクリーン2に描画
-function fillProfileDetail(profile) {
+function fillProfileDetail(kbn, profile) {
   // 画像
   const icon = document.getElementById("profile-owner-icon");
   if (icon)
@@ -73,14 +73,19 @@ function fillProfileDetail(profile) {
   renderTaneList("profile-tane-list", profile.taneList || []);
   renderTaneList("profile-tane-like-list", profile.taneLikeList || []);
 
-  if (!profile.likeUserFlg) {
-    const btn = document.getElementById("profile-like-btn");
-    btn.textContent = "いいね！";
-    btn.disabled = false;
-    btn.classList.remove("btn-secondary", "btn-liked");
-    btn.classList.add("btn-primary", "like-btn");
+  if (kbn === "tane") {
+    if (!profile.likeUserFlg) {
+      const btn = document.getElementById("profile-like-btn");
+      btn.textContent = "いいね！";
+      btn.disabled = false;
+      btn.classList.remove("btn-secondary", "btn-liked");
+      btn.classList.add("btn-primary", "like-btn");
+    } else {
+      setProfileLiked();
+    }
   } else {
-    setProfileLiked();
+    document.getElementById("profile-like-btn-row").style.display = "none";
+    document.getElementById("profile-rtn-btn-row").style.display = "none";
   }
 }
 
@@ -147,7 +152,7 @@ function addListenerProfileDetail(
     .on("click.likesNs", `img[id^="${idBase}_"]`, function (ev) {
       ev.preventDefault();
       const prof = likesProfileMap[this.id] || {};
-      fillProfileDetail(prof);
+      fillProfileDetail("tane", prof);
       if (likeBtnRowShowFlg) $("#profile-like-btn-row").show();
       else $("#profile-like-btn-row").hide();
       if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();
@@ -170,7 +175,7 @@ function addListenerProfileDetailSingle(
 
   $el.off("click.ownerNs").on("click.ownerNs", function (ev) {
     ev.preventDefault();
-    fillProfileDetail(profile);
+    fillProfileDetail("tane", profile);
     if (likeBtnRowShowFlg) $("#profile-like-btn-row").show();
     else $("#profile-like-btn-row").hide();
     if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();

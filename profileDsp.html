@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>プロフィールをみる</title>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+
+    <style>
+      body {
+        background: #f4efe8;
+      }
+      .card-like {
+        max-width: 560px;
+        margin: 0 auto 48px;
+        background: #f3e8d7;
+        border: 2px solid #8f816e;
+        border-radius: 4px;
+        padding: 16px 16px 24px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 4px 0 12px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #bcad97;
+      }
+      .brand .logo {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+      }
+      .section-title {
+        font-weight: 700;
+        font-size: 22px;
+        padding-bottom: 8px;
+        margin: 8px 0 16px;
+      }
+
+      .seed-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid #aaa;
+        object-fit: cover;
+      }
+
+      .field-label {
+        font-weight: 700;
+        margin-top: 12px;
+        margin-bottom: 6px;
+      }
+
+      .field-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .field-label-2 {
+        font-weight: 700;
+        min-width: 60px;
+        margin-top: 12px;
+        margin-bottom: 6px;
+      }
+
+      /* いいね！ */
+      .likes-header {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        margin: 10px 0 6px;
+      }
+      .likes-title {
+        font-weight: 700;
+      }
+      .likes-count {
+        color: #666;
+        font-size: 13px;
+      }
+
+      .likes-avatars {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      .likes-avatars img {
+        width: 36px;
+        height: 36px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+      }
+
+      .like-btn-row {
+        display: flex;
+        justify-content: flex-end;
+      }
+      .like-btn {
+        min-width: 120px;
+      }
+      .like-btn[disabled] {
+        background: #adb5bd;
+        border-color: #adb5bd;
+        cursor: default;
+      }
+      .btn-liked {
+        pointer-events: none;
+        opacity: 0.8;
+      }
+
+      .hint {
+        color: #666;
+        font-size: 12px;
+      }
+
+      #screen2 {
+        position: fixed;
+        inset: 0;
+        z-index: 1200;
+        background: #f4efe8;
+        display: none;
+        overflow: auto;
+        padding: 0;
+      }
+
+      #screen2 .card-like {
+        max-width: 560px;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        border: 0;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0;
+        background: #f4efe8;
+        padding: 16px 16px 24px;
+      }
+
+      #screen2 .brand {
+        position: sticky;
+        top: 0;
+        background: #f4efe8;
+        padding-top: 8px;
+        z-index: 1;
+      }
+
+      /* オーバーレイ／トースト */
+      #loadingOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.85);
+        z-index: 3001;
+        display: none;
+        justify-content: center;
+        align-items: center;
+      }
+      #loadingOverlay.show {
+        display: flex;
+      }
+
+      #errToast {
+        display: none;
+        position: fixed;
+        left: 50%;
+        bottom: 24px;
+        transform: translateX(-50%);
+        background: #222;
+        color: #fff;
+        padding: 10px 14px;
+        border-radius: 6px;
+        z-index: 4002;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="screen2" style="display: block">
+      <div id="profiledsp_common_section_placeholder"></div>
+    </div>
+
+    <!-- ローディングオーバーレイ -->
+    <div id="loadingOverlay">
+      <div
+        class="spinner-border text-primary"
+        role="status"
+        style="width: 3rem; height: 3rem"
+      >
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <div id="errToast"><span id="errText"></span></div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <script src="./utils.js?ver=1.00"></script>
+
+    <script>
+      // ===== 設定 =====
+      const LIFF_ID = "2008071727-prQWbK4R";
+      const GAS_ENDPOINT =
+        "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
+      const DUMMY_ICON_URL = "https://placehold.jp/40x40.png?text=DUMMY";
+
+      const userId = new URL(location.href).searchParams.get("userId");
+      var rtnData = {};
+
+      async function loadPage() {
+        userId = userId ?? "";
+        try {
+          const idToken = liff.getIDToken();
+          const r = await fetch(
+            `${GAS_ENDPOINT}?action=get_profile&userId=${encodeURIComponent(
+              userId
+            )}&id_token=${encodeURIComponent(idToken)}`
+          );
+          rtnData = r.ok ? await r.json() : { ok: false };
+          if (!rtnData.ok || !rtnData.profile) {
+            toast(rtnData.error || "プロフイールが見つかりません");
+            return;
+          }
+          // 本体表示
+          fillProfileDetail("profile", rtnData.profile);
+        } catch (e) {
+          console.error(e);
+          toast("読み込みエラーが発生しました");
+        }
+      }
+
+      $(async function () {
+        try {
+          loading.on();
+          // 共通部分（プロフィール表示）の読み込み
+          const response1 = await fetch("profileDspCommHtml.html");
+          const commonSection1 = await response1.text();
+          document.getElementById(
+            "profiledsp_common_section_placeholder"
+          ).innerHTML = commonSection1;
+          await waiteCreateDom(PROFILE_DSP_COMM_HTML_DSP_IDS);
+
+          await liff.init({ liffId: LIFF_ID });
+          const ready = await ensureLoginAndScopes();
+          if (!ready) return;
+
+          await loadPage();
+          // $("#likeBtn").on("click", likeAction);
+        } catch (e) {
+          console.error("LIFF init failed", e);
+          toast("LIFFの初期化に失敗しました");
+        } finally {
+          loading.off(); // 最後に閉じる
+        }
+      });
+    </script>
+  </body>
+</html>
