@@ -372,12 +372,13 @@
         rtnData.alreadyLiked = true;
         // ownerProfile.likeProfileに追加。二重追加防止（同じ taneId が既に並んでいれば追加しない）
         const existsOwnerProfileTaneId = (
-          rtnData.ownerProfile.likeProfile.taneLikeList || []
+          rtnData.ownerProfile.taneLikeList || []
         ).some((x) => x?.taneId === taneId);
+        alert(`existsOwnerProfileTaneId=${existsOwnerProfileTaneId}`);
         if (!existsOwnerProfileTaneId) {
-          rtnData.ownerProfile.likeProfile.taneLikeList =
-            rtnData.ownerProfile.likeProfile.taneLikeList || [];
-          rtnData.ownerProfile.likeProfile.taneLikeList.push(rtnData.record);
+          rtnData.ownerProfile.taneLikeList =
+            rtnData.ownerProfile.taneLikeList || [];
+          rtnData.ownerProfile.taneLikeList.push(rtnData.record);
         }
 
         alert("--2--");
