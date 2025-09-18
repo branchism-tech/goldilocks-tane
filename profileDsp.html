@@ -11,16 +11,29 @@
     />
 
     <style>
+      html,
       body {
+        height: 100%; /* 高さを画面全体に */
+        margin: 0; /* 余白をなくす */
+        padding: 0;
+      }
+      body {
+        display: flex;
+        justify-content: center; /* 中央寄せ */
+        align-items: flex-start; /* 上詰め（スクロール可能にするため） */
         background: #f4efe8;
+        overflow-y: auto; /* 縦スクロール許可 */
       }
       .card-like {
+        width: 100%;
         max-width: 560px;
-        margin: 0 auto 48px;
+        min-height: 100vh; /* 画面高さを最低限確保 */
+        margin: 0 auto; /* 中央寄せ */
         background: #f3e8d7;
         border: 2px solid #8f816e;
         border-radius: 4px;
         padding: 16px 16px 24px;
+        box-sizing: border-box; /* padding込みで調整 */
       }
       .brand {
         display: flex;
