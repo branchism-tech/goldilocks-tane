@@ -357,6 +357,8 @@
         const $btn = $("#likeBtn");
         if ($btn.hasClass("btn-liked") || $btn.prop("disabled")) return;
 
+        alert("--0--");
+        // ---- 楽観的にUI更新 ----
         // ---- 元の状態を保存（ロールバック用）----
         const prevAlreadyLiked = rtnData.alreadyLiked;
         const prevOwnerProfile = JSON.parse(
@@ -365,6 +367,7 @@
         const prevLikes = JSON.parse(JSON.stringify(rtnData.likes || []));
         const prevMyLike = JSON.parse(JSON.stringify(rtnData.myLike));
 
+        alert("--1--");
         // ---- 楽観的にUI更新 ----
         rtnData.alreadyLiked = true;
         // ownerProfile.likeProfileに追加。二重追加防止（同じ taneId が既に並んでいれば追加しない）
@@ -376,6 +379,8 @@
             rtnData.ownerProfile.likeProfile.taneLikeList || [];
           rtnData.ownerProfile.likeProfile.taneLikeList.push(rtnData.record);
         }
+
+        alert("--2--");
         // myLike.likeProfileに追加。二重追加防止（同じ taneId が既に並んでいれば追加しない）
         const existsMyLikeTaneId = (
           rtnData.myLike.likeProfile.taneLikeList || []
@@ -385,6 +390,8 @@
             rtnData.myLike.likeProfile.taneLikeList || [];
           rtnData.myLike.likeProfile.taneLikeList.push(rtnData.record);
         }
+
+        alert("--3-");
         // likes[].likeProfileに追加。二重追加防止（同じ userId が既に並んでいれば追加しない）
         const myUid = rtnData.myLike?.likeProfile?.userId;
         const exists = (rtnData.likes || []).some(
@@ -394,6 +401,7 @@
           ? [...prevLikes]
           : [...prevLikes, rtnData.myLike];
 
+        alert("--4--");
         setLiked(); // ボタンを“いいね済み”に
         renderLikes(rtnData.likes || []);
         const likeProfiles = (rtnData.likes || []).map(
