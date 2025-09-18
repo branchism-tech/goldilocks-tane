@@ -183,7 +183,7 @@
         color: #fff;
         padding: 10px 14px;
         border-radius: 6px;
-        z-index: 1100;
+        z-index: 4002;
       }
     </style>
   </head>
@@ -299,7 +299,6 @@
           toast("taneId がありません");
           return;
         }
-        loading.on();
         try {
           const idToken = liff.getIDToken();
           const r = await fetch(
@@ -348,8 +347,6 @@
         } catch (e) {
           console.error(e);
           toast("読み込みエラーが発生しました");
-        } finally {
-          loading.off();
         }
       }
 
@@ -367,21 +364,17 @@
         const prevLikes = JSON.parse(JSON.stringify(rtnData.likes || []));
         const prevMyLike = JSON.parse(JSON.stringify(rtnData.myLike));
 
-        alert("--1--");
         // ---- 楽観的にUI更新 ----
         rtnData.alreadyLiked = true;
         // ownerProfile.likeProfileに追加。二重追加防止（同じ taneId が既に並んでいれば追加しない）
         const existsOwnerProfileTaneId = (
           rtnData.ownerProfile.taneLikeList || []
         ).some((x) => x?.taneId === taneId);
-        alert(`existsOwnerProfileTaneId=${existsOwnerProfileTaneId}`);
         if (!existsOwnerProfileTaneId) {
           rtnData.ownerProfile.taneLikeList =
             rtnData.ownerProfile.taneLikeList || [];
           rtnData.ownerProfile.taneLikeList.push(rtnData.record);
         }
-
-        alert("--2--");
         // myLike.likeProfileに追加。二重追加防止（同じ taneId が既に並んでいれば追加しない）
         const existsMyLikeTaneId = (
           rtnData.myLike.likeProfile.taneLikeList || []
@@ -391,8 +384,6 @@
             rtnData.myLike.likeProfile.taneLikeList || [];
           rtnData.myLike.likeProfile.taneLikeList.push(rtnData.record);
         }
-
-        alert("--3-");
         // likes[].likeProfileに追加。二重追加防止（同じ userId が既に並んでいれば追加しない）
         const myUid = rtnData.myLike?.likeProfile?.userId;
         const exists = (rtnData.likes || []).some(
@@ -402,7 +393,6 @@
           ? [...prevLikes]
           : [...prevLikes, rtnData.myLike];
 
-        alert("--4--");
         setLiked(); // ボタンを“いいね済み”に
         renderLikes(rtnData.likes || []);
         const likeProfiles = (rtnData.likes || []).map(
@@ -458,6 +448,7 @@
 
       $(async function () {
         try {
+          loading.on();
           // 共通部分（プロフィール表示）の読み込み
           const response1 = await fetch("profileDspCommHtml.html");
           const commonSection1 = await response1.text();
@@ -475,6 +466,8 @@
         } catch (e) {
           console.error("LIFF init failed", e);
           toast("LIFFの初期化に失敗しました");
+        } finally {
+          loading.off(); // 最後に閉じる
         }
       });
     </script>
