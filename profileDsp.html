@@ -217,26 +217,23 @@
         "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
       const DUMMY_ICON_URL = "https://placehold.jp/40x40.png?text=DUMMY";
 
-      const userId = new URL(location.href).searchParams.get("userId");
-      var rtnData = {};
+      const userIdParam =
+        new URL(location.href).searchParams.get("userId") || "";
 
       async function loadPage() {
-        userId = userId ?? "";
         try {
           const idToken = liff.getIDToken();
           const r = await fetch(
             `${GAS_ENDPOINT}?action=get_profile&userId=${encodeURIComponent(
-              userId
+              userIdParam
             )}&id_token=${encodeURIComponent(idToken)}`
           );
-          rtnData = r.ok ? await r.json() : { ok: false };
-          if (!rtnData.ok || !rtnData.profile) {
-            toast(rtnData.error || "プロフイールが見つかりません");
+          const j = r.ok ? await r.json() : { ok: false };
+          if (!j.ok || !j.profile) {
+            toast(j.error || "プロフィールが見つかりません");
             return;
           }
-          // 本体表示
-          fillProfileDetail("profile", rtnData.profile);
-        } catch (e) {
+          fillProfileDetail("profile", j.profile);
           console.error(e);
           toast("読み込みエラーが発生しました");
         }
