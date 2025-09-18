@@ -372,14 +372,18 @@
           rtnData.ownerProfile.likeProfile.taneLikeList || []
         ).some((x) => x?.taneId === taneId);
         if (!existsOwnerProfileTaneId) {
-          rtnData.ownerProfile.likeProfile.taneLikeList.add(rtnData.record);
+          rtnData.ownerProfile.likeProfile.taneLikeList =
+            rtnData.ownerProfile.likeProfile.taneLikeList || [];
+          rtnData.ownerProfile.likeProfile.taneLikeList.push(rtnData.record);
         }
         // myLike.likeProfileに追加。二重追加防止（同じ taneId が既に並んでいれば追加しない）
         const existsMyLikeTaneId = (
           rtnData.myLike.likeProfile.taneLikeList || []
         ).some((x) => x?.taneId === taneId);
         if (!existsMyLikeTaneId) {
-          rtnData.myLike.likeProfile.taneLikeList.add(rtnData.record);
+          rtnData.myLike.likeProfile.taneLikeList =
+            rtnData.myLike.likeProfile.taneLikeList || [];
+          rtnData.myLike.likeProfile.taneLikeList.push(rtnData.record);
         }
         // likes[].likeProfileに追加。二重追加防止（同じ userId が既に並んでいれば追加しない）
         const myUid = rtnData.myLike?.likeProfile?.userId;
