@@ -94,7 +94,7 @@ function renderTaneList(containerId, list) {
     if (!!t.title) {
       const li = document.createElement("li");
       li.className = "list-group-item";
-      li.textContent = `${t.title || "（無題）"} / ${t.category || ""}`;
+      li.textContent = `${t.title} `;
 
       // 植木　ここはPG的に考える必要がある！ window.location.hrefは戻れない！　start
       // // 詳細ページへのリンクボタン
