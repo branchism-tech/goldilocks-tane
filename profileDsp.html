@@ -200,7 +200,7 @@
             toast(j.error || "プロフィールが見つかりません");
             return;
           }
-          fillProfileDetail(j.profile); // 第1引数は不要なら渡さない
+          fillProfileDetail("profile", j.profile);
         } catch (e) {
           console.error(e);
           toast("読み込みエラーが発生しました");
@@ -217,6 +217,9 @@
             "profiledsp_common_section_placeholder"
           ).innerHTML = commonSection1;
           await waiteCreateDom(PROFILE_DSP_COMM_HTML_DSP_IDS);
+          document.getElementById("profile-like-btn-row").style.display =
+            "none";
+          document.getElementById("profile-rtn-btn-row").style.display = "none";
 
           await liff.init({ liffId: LIFF_ID });
           const ready = await ensureLoginAndScopes();

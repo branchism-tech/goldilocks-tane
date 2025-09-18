@@ -83,9 +83,6 @@ function fillProfileDetail(kbn, profile) {
     } else {
       setProfileLiked();
     }
-  } else {
-    document.getElementById("profile-like-btn-row").style.display = "none";
-    document.getElementById("profile-rtn-btn-row").style.display = "none";
   }
 }
 
