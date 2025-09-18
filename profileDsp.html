@@ -200,7 +200,8 @@
             toast(j.error || "プロフィールが見つかりません");
             return;
           }
-          fillProfileDetail("profile", j.profile);
+          fillProfileDetail(j.profile); // 第1引数は不要なら渡さない
+        } catch (e) {
           console.error(e);
           toast("読み込みエラーが発生しました");
         }
