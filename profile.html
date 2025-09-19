@@ -462,12 +462,11 @@
 
           a.addEventListener("click", function (ev) {
             ev.preventDefault();
+            if (liff.closeWindow) liff.closeWindow();
             liff.openWindow({
               url: "https://liff.line.me/2008071727-LPVKe7GZ",
               external: false,
             });
-            // 先に開いてからLIFFを閉じる
-            if (liff.closeWindow) liff.closeWindow();
           });
 
           $("#alreadyModal")
