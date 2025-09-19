@@ -153,7 +153,7 @@ function addListenerProfileDetail(
       else $("#profile-like-btn-row").hide();
       if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();
       else $("#profile-rtn-btn-row").hide();
-      sendViewUserLog(prof.userId);
+      sendViewUserLog(prof.userId, "taneDsp");
       showProfileScreen();
     });
 }
@@ -177,7 +177,7 @@ function addListenerProfileDetailSingle(
     else $("#profile-like-btn-row").hide();
     if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();
     else $("#profile-rtn-btn-row").hide();
-    sendViewUserLog(profile.userId);
+    sendViewUserLog(profile.userId, "taneDsp");
     showProfileScreen();
   });
 }
@@ -271,12 +271,12 @@ function addListenerProfileDetailRtnBtn() {
   });
 }
 
-function sendViewUserLog(userId) {
+function sendViewUserLog(userId, kbn) {
   // ---- 非同期でサーバーへ投げっぱなし ----
   const idt = liff.getIDToken();
   const url = `${GAS_ENDPOINT}?action=view_user&userId=${encodeURIComponent(
     userId
-  )}&id_token=${encodeURIComponent(idt)}`;
+  )}&kbn=${encodeURIComponent(kbn)}&id_token=${encodeURIComponent(idt)}`;
 
   fetch(url)
     .then((r) =>
