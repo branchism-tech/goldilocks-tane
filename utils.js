@@ -177,7 +177,7 @@ function addListenerProfileDetailSingle(
     else $("#profile-like-btn-row").hide();
     if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();
     else $("#profile-rtn-btn-row").hide();
-    sendViewUserLog(prof.userId);
+    sendViewUserLog(profile.userId);
     showProfileScreen();
   });
 }
