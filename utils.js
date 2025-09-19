@@ -55,8 +55,7 @@ async function waiteCreateDom(ids, timeoutMs = 4000, intervalMs = 50) {
 function fillProfileDetail(kbn, profile) {
   // 画像
   const icon = document.getElementById("profile-owner-icon");
-  if (icon)
-    icon.src = profile.ownerIcon || "https://placehold.jp/40x40.png?text=DUMMY";
+  if (icon) icon.src = profile.ownerIcon || "logo.png";
 
   // テキスト
   const setText = (id, val) => {

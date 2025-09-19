@@ -197,7 +197,7 @@
             aria-describedby="jobHelp"
           />
           <small id="jobHelp" class="form-text text-muted">
-            例：会社員、学生、フリーランスなど
+            例：営業職／システムエンジニア
           </small>
           <div class="invalid-feedback"></div>
         </div>
@@ -466,6 +466,8 @@
               url: "https://liff.line.me/2008071727-LPVKe7GZ",
               external: false,
             });
+            // 先に開いてからLIFFを閉じる
+            if (liff.closeWindow) liff.closeWindow();
           });
 
           $("#alreadyModal")
