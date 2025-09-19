@@ -274,7 +274,7 @@ function addListenerProfileDetailRtnBtn() {
 function sendViewUserLog(userId) {
   // ---- 非同期でサーバーへ投げっぱなし ----
   const idt = liff.getIDToken();
-  const url = `${GAS_ENDPOINT}?action=viewe_user&userId=${encodeURIComponent(
+  const url = `${GAS_ENDPOINT}?action=view_user&userId=${encodeURIComponent(
     userId
   )}&id_token=${encodeURIComponent(idt)}`;
 
@@ -283,7 +283,7 @@ function sendViewUserLog(userId) {
       r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))
     )
     .then((j) => {
-      if (!j.ok) throw new Error(j.error || "like failed");
+      if (!j.ok) throw new Error(j.error || "view_user failed");
       // 成功なら何もしない
     })
     .catch((err) => {
