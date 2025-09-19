@@ -153,6 +153,7 @@ function addListenerProfileDetail(
       else $("#profile-like-btn-row").hide();
       if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();
       else $("#profile-rtn-btn-row").hide();
+      sendViewUserLog(prof.userId);
       showProfileScreen();
     });
 }
@@ -176,6 +177,7 @@ function addListenerProfileDetailSingle(
     else $("#profile-like-btn-row").hide();
     if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();
     else $("#profile-rtn-btn-row").hide();
+    sendViewUserLog(prof.userId);
     showProfileScreen();
   });
 }
@@ -267,6 +269,26 @@ function addListenerProfileDetailRtnBtn() {
     e.preventDefault();
     hideProfileScreen();
   });
+}
+
+function sendViewUserLog(userId) {
+  // ---- 非同期でサーバーへ投げっぱなし ----
+  const idt = liff.getIDToken();
+  const url = `${GAS_ENDPOINT}?action=viewe_user&userId=${encodeURIComponent(
+    userId
+  )}&id_token=${encodeURIComponent(idt)}`;
+
+  fetch(url)
+    .then((r) =>
+      r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))
+    )
+    .then((j) => {
+      if (!j.ok) throw new Error(j.error || "like failed");
+      // 成功なら何もしない
+    })
+    .catch((err) => {
+      // 失敗しても何もしな
+    });
 }
 
 // profileDspCommHtml.htmlの表示用エレメントID一覧
