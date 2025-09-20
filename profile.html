@@ -478,7 +478,9 @@
           bindFormSubmit();
         } catch (e) {
           console.error("LIFF init failed", e);
-          showErrorAndClose("LIFFの初期化に失敗しました　profile log=" + log);
+          showErrorAndClose(
+            "LIFFの初期化に失敗しました　profile log=" + log + e.message
+          );
         }
       });
 
