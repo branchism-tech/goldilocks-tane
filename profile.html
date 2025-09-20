@@ -397,6 +397,7 @@
     <script src="./"></script>
 
     <script>
+      let log = "";
       // URL パラメータが必要なら使う
       const params = new URL(document.location).searchParams;
       const key = params.get("key"); // 使わないなら削除OK
@@ -434,6 +435,7 @@
         );
         if (!res.ok) return false;
 
+        log = "--0---";
         const json = await res.json();
         if (json.registered) {
           // カードは見せない
@@ -441,12 +443,14 @@
           if (card) card.style.display = "none";
 
           try {
+            log = "--1---";
             liff.openWindow({ url: destLiffUrl, external: false });
             // // 少し待って現在ウィンドウを閉じる（LINEクライアント内）
             // setTimeout(() => {
             //   if (liff.closeWindow) liff.closeWindow();
             // }, 300);
           } catch (e) {
+            log = "--2---";
             location.href = destLiffUrl;
           }
           return true;
@@ -467,7 +471,7 @@
           bindFormSubmit();
         } catch (e) {
           console.error("LIFF init failed", e);
-          showErrorAndClose("LIFFの初期化に失敗しました");
+          showErrorAndClose("LIFFの初期化に失敗しました　profile log=" + log);
         }
       });
 
