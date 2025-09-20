@@ -464,12 +464,16 @@
       $(async function () {
         const LIFF_ID = "2008071727-vLPLr6Gx";
         try {
+          log = "--M0---";
           await liff.init({ liffId: LIFF_ID });
+          log = "--M1---";
           const ready = await ensureLoginAndScopes();
           if (!ready) return;
+          log = "--M2---";
 
           const redirected = await checkRegisteredAndMaybeRedirect();
           if (redirected) return;
+          log = "--M3---";
 
           bindFormSubmit();
         } catch (e) {
