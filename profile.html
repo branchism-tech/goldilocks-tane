@@ -442,10 +442,10 @@
 
           try {
             liff.openWindow({ url: destLiffUrl, external: false });
-            // 少し待って現在ウィンドウを閉じる（LINEクライアント内）
-            setTimeout(() => {
-              if (liff.closeWindow) liff.closeWindow();
-            }, 300);
+            // // 少し待って現在ウィンドウを閉じる（LINEクライアント内）
+            // setTimeout(() => {
+            //   if (liff.closeWindow) liff.closeWindow();
+            // }, 300);
           } catch (e) {
             location.href = destLiffUrl;
           }
