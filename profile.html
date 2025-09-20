@@ -397,7 +397,6 @@
     <script src="./utils.js?ver=1.01"></script>
 
     <script>
-      let log = "";
       // URL パラメータが必要なら使う
       const params = new URL(document.location).searchParams;
       const key = params.get("key"); // 使わないなら削除OK
@@ -422,23 +421,19 @@
           "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
         const destLiffUrl = "https://liff.line.me/2008071727-LPVKe7GZ";
 
-        // // 念のため：すでに目的のLIFFなら何もしない（循環防止）
-        // if (location.href.startsWith(destLiffUrl)) return false;
+        // 念のため：すでに目的のLIFFなら何もしない（循環防止）
+        if (location.href.startsWith(destLiffUrl)) return false;
 
-        log = "--0---";
         const idToken = liff.getIDToken();
         if (!idToken) return false;
 
-        log = "--1---";
         const res = await fetch(
           `${GAS_ENDPOINT}?action=profile_check&id_token=${encodeURIComponent(
             idToken
           )}`
         );
-        log = "--2---";
         if (!res.ok) return false;
 
-        log = "--3---";
         const json = await res.json();
         if (json.registered) {
           // カードは見せない
@@ -446,14 +441,12 @@
           if (card) card.style.display = "none";
 
           try {
-            log = "--4---";
             liff.openWindow({ url: destLiffUrl, external: false });
-            // // 少し待って現在ウィンドウを閉じる（LINEクライアント内）
-            // setTimeout(() => {
-            //   if (liff.closeWindow) liff.closeWindow();
-            // }, 300);
+            // 少し待って現在ウィンドウを閉じる（LINEクライアント内）
+            setTimeout(() => {
+              if (liff.closeWindow) liff.closeWindow();
+            }, 300);
           } catch (e) {
-            log = "--5---";
             location.href = destLiffUrl;
           }
           return true;
@@ -464,23 +457,16 @@
       $(async function () {
         const LIFF_ID = "2008071727-vLPLr6Gx";
         try {
-          log = "--M0---";
           await liff.init({ liffId: LIFF_ID });
-          log = "--M1---";
           const ready = await ensureLoginAndScopes();
           if (!ready) return;
-          log = "--M2---";
 
           const redirected = await checkRegisteredAndMaybeRedirect();
           if (redirected) return;
-          log = "--M3---";
-
           bindFormSubmit();
         } catch (e) {
           console.error("LIFF init failed", e);
-          showErrorAndClose(
-            "LIFFの初期化に失敗しました　profile log=" + log + e.message
-          );
+          showErrorAndClose("LIFFの初期化に失敗しました");
         }
       });
 
