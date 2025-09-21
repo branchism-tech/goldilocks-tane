@@ -97,19 +97,17 @@ function renderTaneList(containerId, list) {
       li.className = "list-group-item";
       li.textContent = `${t.title} `;
 
-      // 植木　ここはPG的に考える必要がある！ window.location.hrefは戻れない！　start
-      // // 詳細ページへのリンクボタン
-      // const btn = document.createElement("button");
-      // btn.className = "btn btn-sm btn-outline-primary float-right";
-      // btn.textContent = "詳細";
-      // btn.onclick = () => {
-      //   // taneDsp.html をオーバーレイで開くなどの処理
-      //   window.location.href = `taneDsp.html?taneId=${encodeURIComponent(
-      //     t.taneId
-      //   )}`;
-      // };
-      // li.appendChild(btn);
-      // 植木　ここはPG的に考える必要がある！ window.location.hrefは戻れない！ end
+      // 詳細ページへのリンクボタン
+      const btn = document.createElement("button");
+      btn.className = "btn btn-sm btn-outline-primary float-right";
+      btn.textContent = "詳細";
+      btn.onclick = () => {
+        // taneDsp.html をオーバーレイで開くなどの処理
+        window.location.href = `taneDsp.html?taneId=${encodeURIComponent(
+          t.taneId
+        )}`;
+      };
+      li.appendChild(btn);
       wrap.appendChild(li);
     }
   });
