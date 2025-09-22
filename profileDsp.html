@@ -187,10 +187,6 @@
     <script src="./utils.js?ver=1.01"></script>
 
     <script>
-      let log = "--start--\n";
-      // 共通部分（プロフィール表示）の読み込み
-      const response1 = fetch("profileDspCommHtml.html");
-
       // ===== 設定 =====
       const LIFF_ID = "2008071727-LPVKe7GZ";
       const GAS_ENDPOINT =
@@ -200,10 +196,8 @@
       const userIdParam =
         new URL(location.href).searchParams.get("userId") || "";
 
-      log += "--0--\n";
       async function loadPage() {
         try {
-          log += "--6--\n";
           const idToken = liff.getIDToken();
           sendViewUserLog(prof.userId, "profileDsp", idToken);
           const r = await fetch(
@@ -211,13 +205,11 @@
               userIdParam
             )}&id_token=${encodeURIComponent(idToken)}`
           );
-          log += "--7--\n";
           const j = r.ok ? await r.json() : { ok: false };
           if (!j.ok || !j.profile) {
             toast(j.error || "プロフィールが見つかりません");
             return;
           }
-          log += "--8--\n";
           fillProfileDetail("profile", j.profile);
         } catch (e) {
           console.error(e);
@@ -227,34 +219,28 @@
 
       $(async function () {
         try {
-          log += "--1-\n";
           loading.on();
-          // 共通部分（プロフィール表示）の読み込みチェック
-          waiteCreateProfileDspCommHtml(response1);
-          log += "--2--\n";
+          // 共通部分（プロフィール表示）の読み込み
+          const response1 = await fetch("profileDspCommHtml.html");
           const commonSection1 = await response1.text();
           document.getElementById(
             "profiledsp_common_section_placeholder"
           ).innerHTML = commonSection1;
-          log += "--3--\n";
           await waiteCreateDom(PROFILE_DSP_COMM_HTML_DSP_IDS);
           document.getElementById("profile-like-btn-row").style.display =
             "none";
           document.getElementById("profile-rtn-btn-row").style.display = "none";
 
-          log += "--4--\n";
           await liff.init({ liffId: LIFF_ID });
           const ready = await ensureLoginAndScopes();
           if (!ready) return;
 
-          log += "--5--\n";
           await loadPage();
         } catch (e) {
           console.error("LIFF init failed", e);
           toast("LIFFの初期化に失敗しました");
         } finally {
           loading.off(); // 最後に閉じる
-          alert(log);
         }
       });
     </script>
