@@ -199,7 +199,6 @@
       async function loadPage() {
         try {
           const idToken = liff.getIDToken();
-          sendViewUserLog(prof.userId, "profileDsp", idToken);
           const r = await fetch(
             `${GAS_ENDPOINT}?action=get_profile&userId=${encodeURIComponent(
               userIdParam

@@ -40,21 +40,6 @@ function formatNow() {
   return `${yyyy}/${MM}/${dd} ${HH}:${mm}:${ss}`;
 }
 
-// 共通部分（プロフィール表示）の読み込み待ち（存在チェックをポーリング）
-async function waiteCreateProfileDspCommHtml(
-  response1,
-  timeoutMs = 4000,
-  intervalMs = 50
-) {
-  const start = Date.now();
-  while (Date.now() - start < timeoutMs) {
-    const exist = !!response1;
-    if (exist) return true;
-    await new Promise((r) => setTimeout(r, intervalMs));
-  }
-  return false;
-}
-
 // DOM生成待ち（存在チェックをポーリング）
 async function waiteCreateDom(ids, timeoutMs = 4000, intervalMs = 50) {
   const start = Date.now();
@@ -284,15 +269,9 @@ function addListenerProfileDetailRtnBtn() {
   });
 }
 
-function sendViewUserLog(userId, kbn, idToken = null) {
+function sendViewUserLog(userId, kbn) {
   // ---- 非同期でサーバーへ投げっぱなし ----
-  let idt;
-  if (!!idToken) {
-    idt = idToken;
-  } else {
-    idt = liff.getIDToken();
-  }
-
+  const idt = liff.getIDToken();
   const url = `${GAS_ENDPOINT}?action=view_user&userId=${encodeURIComponent(
     userId
   )}&kbn=${encodeURIComponent(kbn)}&id_token=${encodeURIComponent(idt)}`;
