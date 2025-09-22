@@ -187,6 +187,9 @@
     <script src="./utils.js?ver=1.01"></script>
 
     <script>
+      // 共通部分（プロフィール表示）の読み込み
+      const response1 = await fetch("profileDspCommHtml.html");
+
       // ===== 設定 =====
       const LIFF_ID = "2008071727-LPVKe7GZ";
       const GAS_ENDPOINT =
@@ -199,6 +202,7 @@
       async function loadPage() {
         try {
           const idToken = liff.getIDToken();
+          sendViewUserLog(prof.userId, "profileDsp", idToken);
           const r = await fetch(
             `${GAS_ENDPOINT}?action=get_profile&userId=${encodeURIComponent(
               userIdParam
@@ -219,8 +223,8 @@
       $(async function () {
         try {
           loading.on();
-          // 共通部分（プロフィール表示）の読み込み
-          const response1 = await fetch("profileDspCommHtml.html");
+          // 共通部分（プロフィール表示）の読み込みチェック
+          waiteCreateProfileDspCommHtml(response1);
           const commonSection1 = await response1.text();
           document.getElementById(
             "profiledsp_common_section_placeholder"
