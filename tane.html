@@ -380,7 +380,7 @@
 
       .nav-item.active {
         color: var(--md-sys-color-primary);
-        background-color: var( --md-sys-color-hada);
+        background-color: var(--md-sys-color-hada);
       }
 
       .nav-item .material-icons-round {
@@ -803,12 +803,11 @@
           if (hasError) return;
 
           const msg =
-            (taneId != null ? `タネ編集ページ\n` : `タネ投稿ページ\n`) +
+            (taneId != null ? `こちらの情報でタネを編集しました。\n` : `こちらの情報でタネを投稿しました。\n`) +
             `カテゴリー：${category}\n` +
             `タイトル：${title}\n` +
             `コメント：${comment}\n` +
-            `こんな人にきて欲しい、集まれ！：${kind_person}\n` +
-            (taneId != null ? `ID：${taneId}\n` : ``);
+            `こんな人にきて欲しい、集まれ！：${kind_person}`;
 
           // 送信
           liff
