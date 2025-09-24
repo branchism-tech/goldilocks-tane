@@ -5,127 +5,376 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>プロフィール登録</title>
     <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      crossorigin="anonymous"
     />
     <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
 
     <style>
+      :root {
+        /* Material Design 3 color tokens */
+    --md-sys-color-primary: #2A51B3;
+    --md-sys-color-on-primary: #FFFFFF;
+    --md-sys-color-primary-container: #EADDFF;
+    --md-sys-color-on-primary-container: #21005D;
+    --md-sys-color-secondary: #757575;
+    --md-sys-color-on-secondary: #FFFFFF;
+    --md-sys-color-secondary-container: #E8DEF8;
+    --md-sys-color-on-secondary-container: #1D192B;
+    --md-sys-color-hada: #F3E9DF;
+    --md-sys-color-yellow: #EFC800;
+    --md-sys-color-red: #E60312;
+    --md-sys-color-surface: #fff;
+    --md-sys-color-on-surface: #1D1B20;
+    --md-sys-color-surface-variant: #ebebeb;
+    --md-sys-color-on-surface-variant: #525252;
+    --md-sys-color-outline: #79747E;
+    --md-sys-color-outline-variant: #CAC4D0;
+    --md-sys-color-error: #E60312;
+    --md-sys-color-on-error: #FFFFFF;
+    --md-sys-color-error-container: #FFDAD6;
+    --md-sys-color-on-error-container: #410002;
+
+        /* Elevation tokens */
+        --md-sys-elevation-level1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+        --md-sys-elevation-level2: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+        --md-sys-elevation-level3: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+
+        /* Shape tokens */
+        --md-sys-shape-corner-extra-small: 4px;
+        --md-sys-shape-corner-small: 8px;
+        --md-sys-shape-corner-medium: 12px;
+        --md-sys-shape-corner-large: 16px;
+        --md-sys-shape-corner-extra-large: 28px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
-        background: #f5f7f9;
+        font-family: 'Roboto', sans-serif;
+        background-color: var(--md-sys-color-hada);
+        color: var(--md-sys-color-on-surface);
+        line-height: 1.5;
+        margin: 0;
+        padding: 16px;
       }
+
       .card-like {
-        max-width: 560px;
-        margin: 0 auto 48px;
-        background: #d7e9ee;
-        border: 2px solid #7a8b94;
-        border-radius: 4px;
-        padding: 16px 16px 24px;
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: var(--md-sys-color-surface);
+        border-radius: var(--md-sys-shape-corner-large);
+        padding: 24px;
+        box-shadow: var(--md-sys-elevation-level1);
       }
+
       .brand {
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin: 4px 0 12px;
-        padding-bottom: 8px;
-        border-bottom: 2px solid #9db2bb;
+        gap: 12px;
+        margin: 0 0 32px 0;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--md-sys-color-outline-variant);
       }
+
       .brand .logo {
-        width: 30px;
-        height: 30px;
+        width: 40px;
+        height: 40px;
         display: inline-block;
       }
-      .section-title {
-        font-weight: 700;
-        font-size: 22px;
-        padding-bottom: 8px;
-        margin: 8px 0 16px;
-      }
-      .form-group label {
-        font-weight: 700;
-      }
-      .footer-button {
-        text-align: right;
-      }
-      .small-note {
-        color: #666;
-        font-size: 12px;
-      }
-      .modal-footer .btn {
-        min-width: 120px;
-      }
-      .form-group.is-invalid .invalid-feedback {
-        display: block;
-        color: #dc3545;
+
+      .brand strong {
+        font-weight: 500;
+        font-size: 20px;
+        color: var(--md-sys-color-on-surface);
       }
 
-      .field-row {
+      .section-title {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 32px;
+        color: var(--md-sys-color-on-surface);
+        margin: 0 0 24px 0;
+        letter-spacing: 0;
+      }
+
+      .form-group {
+        margin-bottom: 24px;
+      }
+
+      .form-group label {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0.1px;
+        color: var(--md-sys-color-on-surface-variant);
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 16px;
+        background-color: var(--md-sys-color-surface) !important;
+        border: 1px solid var(--md-sys-color-outline);
+        border-radius: var(--md-sys-shape-corner-extra-small);
+        font-size: 16px;
+        line-height: 24px;
+        color: var(--md-sys-color-on-surface);
+        transition: all 0.2s ease;
+        font-family: 'Roboto', sans-serif;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--md-sys-color-primary);
+        box-shadow: none;
+        background-color: var(--md-sys-color-surface) !important;
+      }
+
+      .form-control.is-invalid {
+        border-color: var(--md-sys-color-error);
+        background-color: var(--md-sys-color-surface) !important;
+      }
+
+      .form-control:-webkit-autofill,
+      .form-control:-webkit-autofill:hover,
+      .form-control:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0 1000px var(--md-sys-color-surface) inset !important;
+        box-shadow: 0 0 0 1000px var(--md-sys-color-surface) inset !important;
+        -webkit-text-fill-color: var(--md-sys-color-on-surface) !important;
+      }
+
+      .custom-control {
+        position: relative;
         display: flex;
         align-items: center;
-        gap: 8px;
+        min-height: 24px;
+        padding-left: 32px;
+        margin-bottom: 12px;
+      }
+
+      .custom-control-input {
+        width: 20px;
+        height: 20px;
+        margin-bottom: 8px;
+        margin-right: 8px;
+      }
+
+      .form-text {
+        font-size: 12px;
+        line-height: 16px;
+        color: var(--md-sys-color-on-surface-variant);
+        margin-top: 4px;
+      }
+
+      .invalid-feedback {
+        display: none;
+        font-size: 12px;
+        line-height: 16px;
+        color: var(--md-sys-color-error);
+        margin-top: 4px;
+      }
+
+      .form-group.is-invalid .invalid-feedback {
+        display: block;
+      }
+
+      .footer-button {
+        text-align: right;
         margin-top: 8px;
       }
-      .field-label-2 {
-        font-weight: 700;
-        min-width: 60px;
-        margin-top: 12px;
-        margin-bottom: 6px;
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 24px;
+        border: none;
+        border-radius: var(--md-sys-shape-corner-large);
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0.1px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: 'Roboto', sans-serif;
+        text-decoration: none;
+        box-shadow: var(--md-sys-elevation-level1);
       }
 
-      .like-btn-row {
-        display: flex;
-        justify-content: flex-end;
+      .btn-dark {
+        background-color: var(--md-sys-color-primary);
+        color: var(--md-sys-color-on-primary);
+        min-width: 140px;
+        height: 40px;
       }
-      .like-btn {
+
+      .btn-dark:hover {
+        box-shadow: var(--md-sys-elevation-level2);
+        transform: translateY(-1px);
+      }
+
+      .btn-dark:active {
+        transform: translateY(0);
+        box-shadow: var(--md-sys-elevation-level1);
+      }
+
+      .btn-outline-dark {
+        background-color: transparent;
+        color: var(--md-sys-color-primary);
+        border: 1px solid var(--md-sys-color-outline);
         min-width: 120px;
       }
-      .like-btn[disabled] {
-        background: #adb5bd;
-        border-color: #adb5bd;
-        cursor: default;
-      }
-      .btn-liked {
-        pointer-events: none;
-        opacity: 0.8;
+
+      .btn-outline-dark:hover {
+        background-color: var(--md-sys-color-primary-container);
+        border-color: var(--md-sys-color-primary);
       }
 
-      /* これ以降は、入力項目を白色に保つためもものなので、CSSの最後に置いて！ */
-      /* 常に白固定（テキスト/セレクト/テキストエリア） */
-      input.form-control,
-      select.form-control,
-      textarea.form-control {
-        background-color: #fff !important;
-        -webkit-appearance: none;
-        appearance: none;
+      /* Modal styling */
+      .modal-content {
+        border: none;
+        border-radius: var(--md-sys-shape-corner-extra-large);
+        box-shadow: var(--md-sys-elevation-level3);
+        background-color: var(--md-sys-color-surface);
       }
-      input.form-control:focus,
-      select.form-control:focus,
-      textarea.form-control:focus,
-      input.form-control.is-invalid,
-      select.form-control.is-invalid,
-      textarea.form-control.is-invalid,
-      input.form-control.is-valid,
-      select.form-control.is-valid,
-      textarea.form-control.is-valid {
-        background-color: #fff !important;
+
+      .modal-body {
+        padding: 24px;
+        font-size: 16px;
+        line-height: 24px;
+        color: var(--md-sys-color-on-surface);
       }
-      /* WebKit系（Chrome/Edge/Safari/Android）のオートフィルで黄/灰になるのを白で塗りつぶす */
-      input.form-control:-webkit-autofill,
-      input.form-control:-webkit-autofill:hover,
-      input.form-control:-webkit-autofill:focus {
-        -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
-        box-shadow: 0 0 0 1000px #fff inset !important;
-        -webkit-text-fill-color: #212529 !important;
+
+      .modal-footer {
+        padding: 16px 24px 24px;
+        border-top: none;
       }
-      /* iOS Safari の強めのフォーカス背景対策（保険） */
-      @supports (-webkit-touch-callout: none) {
-        input.form-control,
-        input.form-control:focus {
-          background-color: #fff !important;
+
+      /* Bottom Navigation Bar */
+      .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background-color: var(--md-sys-color-surface);
+        border-top: 1px solid var(--md-sys-color-outline-variant);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 1000;
+        box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: var(--md-sys-color-on-surface-variant);
+        padding: 8px;
+        border-radius: var(--md-sys-shape-corner-small);
+        transition: all 0.2s ease;
+        min-width: 64px;
+      }
+
+      .nav-item:hover {
+        color: var(--md-sys-color-primary);
+        background-color: var(--md-sys-color-primary-container);
+        text-decoration: none;
+      }
+
+      .nav-item.active {
+        color: var(--md-sys-color-primary);
+        background-color: var(--md-sys-color-hada);
+      }
+
+      .nav-item .material-icons-round {
+        font-size: 24px;
+        margin-bottom: 4px;
+      }
+
+      .nav-item span:last-child {
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 16px;
+        letter-spacing: 0.4px;
+      }
+
+      /* Add bottom padding to body to account for fixed nav */
+      body {
+        padding-bottom: 80px;
+      }
+
+      /* Mobile adjustments */
+      @media (max-width: 768px) {
+        body {
+          padding: 8px 8px 88px 8px;
+        }
+
+        .card-like {
+          padding: 16px;
+          border-radius: var(--md-sys-shape-corner-medium);
+        }
+
+        .brand {
+          gap: 8px;
+          margin-bottom: 24px;
+          padding-bottom: 12px;
+        }
+
+        .brand .logo {
+          width: 32px;
+          height: 32px;
+        }
+
+        .brand strong {
+          font-size: 18px;
+        }
+
+        .section-title {
+          font-size: 20px;
+          line-height: 28px;
+          margin-bottom: 20px;
+        }
+
+        .form-group {
+          margin-bottom: 20px;
+        }
+
+        .form-control {
+          padding: 12px;
+          font-size: 16px;
+        }
+
+        .custom-control {
+          padding-left: 16px;
+          margin-bottom: 10px;
+        }
+
+        .custom-control-label::before {
+          left: -28px;
+          width: 18px;
+          height: 18px;
+        }
+
+        .custom-control-label::after {
+          left: -25px;
+          width: 10px;
+          height: 10px;
+          top: 5px;
+        }
+
+        .footer-button {
+        margin-top: 4px;
         }
       }
     </style>
@@ -326,7 +575,10 @@
         </div>
 
         <div class="footer-button">
-          <button type="submit" class="btn btn-dark">登録する</button>
+          <button type="submit" class="btn btn-dark">
+            <span class="material-icons-round">person_add</span>
+            登録する
+          </button>
         </div>
       </form>
     </div>
@@ -349,6 +601,7 @@
               class="btn btn-outline-dark"
               id="closeLiffBtn"
             >
+              <span class="material-icons-round">close</span>
               とじる
             </button>
           </div>
@@ -373,6 +626,7 @@
               class="btn btn-outline-dark"
               id="errorCloseBtn"
             >
+              <span class="material-icons-round">close</span>
               とじる
             </button>
           </div>
@@ -380,14 +634,26 @@
       </div>
     </div>
 
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <a href="https://liff.line.me/2008071727-vLPLr6Gx" class="nav-item active">
+        <span class="material-icons-round">person</span>
+        <span>マイページ</span>
+      </a>
+      <a href="#" class="nav-item">
+        <span class="material-icons-round">view_list</span>
+        <span>タネ一覧</span>
+      </a>
+      <a href="https://liff.line.me/2008071727-ypMm7WGE" class="nav-item">
+        <span class="material-icons-round">add_circle</span>
+        <span>タネ投稿</span>
+      </a>
+    </nav>
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
       crossorigin="anonymous"
     ></script>
     <script
@@ -543,7 +809,7 @@
           if (hasError) return;
 
           const msg =
-            `プロフィール登録\n` +
+            `こちらの情報でプロフィール登録しました。\n` +
             `LINEアイコン表示：${lineicon}\n` +
             `名前：${name}\n` +
             `職業：${job}\n` +
