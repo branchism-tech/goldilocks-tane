@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>みんなのタネ</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background: #f4efe8;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 8px 0;
+      }
+      .brand .logo {
+        width: 30px;
+        height: 30px;
+      }
+      .sort-btn,
+      .cat-btn {
+        margin: 0 4px 8px 0;
+      }
+      .card-seed {
+        cursor: pointer;
+        margin-bottom: 12px;
+      }
+      .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid #aaa;
+        object-fit: cover;
+      }
+      .like-btn {
+        min-width: 72px;
+      }
+      .like-btn[disabled] {
+        background: #adb5bd;
+        border-color: #adb5bd;
+      }
+      .liked {
+        background: #000 !important;
+        border-color: #000 !important;
+        color: #fff !important;
+      }
+    </style>
+  </head>
+  <body class="p-2">
+    <div class="container">
+      <div class="brand">
+        <img class="logo" src="logo.png" alt="ロゴ" />
+        <strong>みんなのタネ</strong>
+      </div>
+      <p>やってみたいことを投稿して、一緒にチャレンジする仲間を見つけよう！</p>
+
+      <div class="mb-2">
+        <button class="btn btn-outline-dark cat-btn" data-cat="all">
+          全て
+        </button>
+        <button
+          class="btn btn-outline-dark cat-btn"
+          data-cat="テーマ①日本橋での表現活動（アート・音楽など自由に！）"
+        >
+          カテゴリー①
+        </button>
+        <button
+          class="btn btn-outline-dark cat-btn"
+          data-cat="テーマ②「あなたオリジナルの日本橋特集マップ」"
+        >
+          カテゴリー②
+        </button>
+      </div>
+
+      <div class="mb-2">
+        <select
+          id="sortSel"
+          class="form-control form-control-sm"
+          style="width: auto; display: inline-block"
+        >
+          <option value="likes">いいね数順</option>
+          <option value="new">新着順</option>
+        </select>
+      </div>
+
+      <div id="list" class="row"></div>
+    </div>
+
+    <div
+      id="errToast"
+      style="
+        display: none;
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #222;
+        color: #fff;
+        padding: 8px 12px;
+        border-radius: 6px;
+        z-index: 2000;
+      "
+    ></div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <script src="./utils.js"></script>
+    <script>
+      const LIFF_ID = "＜LIFF ID＞";
+      const GAS_ENDPOINT = "＜あなたのGASデプロイURL＞";
+      const DUMMY_ICON_URL = "logo.png";
+      let allSeeds = [];
+      let isLiff = false;
+
+      function toast(msg) {
+        $("#errToast").text(msg).fadeIn(200);
+        setTimeout(() => $("#errToast").fadeOut(300), 2000);
+      }
+
+      function renderList(cat = "all", sort = "likes") {
+        let data = [...allSeeds];
+        if (cat !== "all") {
+          data = data.filter((d) => d.category === cat);
+        }
+        if (sort === "likes") {
+          data.sort((a, b) => b.likeCount - a.likeCount);
+        } else {
+          data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        }
+
+        const wrap = $("#list");
+        wrap.empty();
+        data.forEach((d) => {
+          const card = $(`
+          <div class="col-md-4 col-12">
+            <div class="card card-seed" data-id="${d.taneId}">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                  <img class="avatar mr-2" src="${
+                    d.ownerIcon || DUMMY_ICON_URL
+                  }"/>
+                  <div>${d.name || "名無し"}</div>
+                </div>
+                <h6>${d.title || ""}</h6>
+                <p class="small text-muted">${d.comment || ""}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <button class="btn btn-sm like-btn ${
+                    d.alreadyLiked ? "liked" : ""
+                  }" data-id="${d.taneId}" ${
+            !isLiff || d.alreadyLiked ? "disabled" : ""
+          }>
+                    ♥ ${d.likeCount}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `);
+          // card click -> detail
+          card.find(".card-seed").on("click", (e) => {
+            if ($(e.target).hasClass("like-btn")) return;
+            window.location.href = `taneDsp.html?taneId=${encodeURIComponent(
+              d.taneId
+            )}`;
+          });
+          // like button
+          card.find(".like-btn").on("click", () => likeTane(d.taneId));
+          wrap.append(card);
+        });
+      }
+
+      async function fetchSeeds() {
+        const idt = isLiff ? liff.getIDToken() : "";
+        const url = `${GAS_ENDPOINT}?action=tane_list_all&id_token=${encodeURIComponent(
+          idt
+        )}`;
+        const r = await fetch(url);
+        const j = await r.json();
+        if (!j.ok) throw new Error(j.error || "fail");
+        allSeeds = j.list;
+      }
+
+      async function likeTane(taneId) {
+        const btn = $(`.like-btn[data-id="${taneId}"]`);
+        btn.prop("disabled", true);
+        let seed = allSeeds.find((s) => s.taneId === taneId);
+        seed.likeCount += 1;
+        seed.alreadyLiked = true;
+        btn.addClass("liked").text(`♥ ${seed.likeCount}`);
+        try {
+          const idt = liff.getIDToken();
+          const url = `${GAS_ENDPOINT}?action=like_tane&taneId=${encodeURIComponent(
+            taneId
+          )}&id_token=${encodeURIComponent(idt)}`;
+          const r = await fetch(url);
+          const j = await r.json();
+          if (!j.ok) throw new Error();
+        } catch (e) {
+          toast("いいね失敗");
+        }
+      }
+
+      $(async function () {
+        await liff.init({ liffId: LIFF_ID });
+        isLiff = liff.isInClient() || liff.isLoggedIn();
+        if (isLiff && !liff.isLoggedIn()) await liff.login();
+        try {
+          await fetchSeeds();
+          renderList();
+          $(".cat-btn").on("click", function () {
+            renderList($(this).data("cat"), $("#sortSel").val());
+          });
+          $("#sortSel").on("change", function () {
+            renderList("all", this.value);
+          });
+        } catch (e) {
+          toast("読み込み失敗");
+        }
+      });
+    </script>
+  </body>
+</html>
