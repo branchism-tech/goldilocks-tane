@@ -677,32 +677,18 @@
       const params = new URL(document.location).searchParams;
       const key = params.get("key"); // 使わないなら削除OK
 
-      const doneModalEl = document.getElementById("doneModal");
-      const errorModalEl = document.getElementById("errorModal");
-
-      const doneModal = new bootstrap.Modal(doneModalEl, {
-        backdrop: "static",
-        keyboard: false,
-      });
-      const errorModal = new bootstrap.Modal(errorModalEl, {
-        backdrop: "static",
-        keyboard: false,
-      });
-      document.getElementById("closeLiffBtn")?.addEventListener("click", () => {
-        if (liff.closeWindow) liff.closeWindow();
-        else doneModal.hide();
-      });
-      document
-        .getElementById("errorCloseBtn")
-        ?.addEventListener("click", () => {
-          if (liff.closeWindow) liff.closeWindow();
-          else errorModal.hide();
-        });
-
       function showErrorAndClose(message) {
-        const body = document.getElementById("errorModalBody");
-        if (body) body.textContent = message;
-        errorModal.show();
+        $("#errorModalBody").text(message);
+        $("#errorModal")
+          .modal({ backdrop: "static", keyboard: false })
+          .modal("show");
+
+        $("#errorCloseBtn")
+          .off("click")
+          .on("click", function () {
+            if (liff.closeWindow) liff.closeWindow();
+            else $("#errorModal").modal("hide");
+          });
       }
 
       // 置換：登録済みチェック → リダイレクト
@@ -846,12 +832,17 @@
           liff
             .sendMessages([{ type: "text", text: msg }])
             .then(() => {
-              doneModal.show(); // 成功したらモーダル
+              $("#doneModal").modal("show"); // 成功したらモーダル
             })
             .catch((err) => {
               console.error(err);
               showErrorAndClose("送信に失敗しました：" + err);
             });
+        });
+
+        $("#closeLiffBtn").on("click", function () {
+          if (liff.closeWindow) liff.closeWindow();
+          else $("#doneModal").modal("hide");
         });
       }
     </script>
