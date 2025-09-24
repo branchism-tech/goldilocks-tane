@@ -806,8 +806,9 @@
             (taneId != null ? `こちらの情報でタネを編集しました。\n` : `こちらの情報でタネを投稿しました。\n`) +
             `カテゴリー：${category}\n` +
             `タイトル：${title}\n` +
-            `コメント：${comment}\n` +
-            `こんな人にきて欲しい、集まれ！：${kind_person}`;
+            `コメント：${comment}\n` +  
+            `こんな人にきて欲しい、集まれ！：${kind_person}\n` +
+            (taneId != null ? `ID：${taneId}\n` : ``);
 
           // 送信
           liff
