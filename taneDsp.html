@@ -518,6 +518,68 @@
           min-height: calc(100vh - 16px);
         }
       }
+
+      /* Bottom Navigation Bar */
+      .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background-color: var(--md-sys-color-surface);
+        border-top: 1px solid var(--md-sys-color-outline-variant);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 1000;
+        box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: var(--md-sys-color-on-surface-variant);
+        padding: 8px;
+        border-radius: var(--md-sys-shape-corner-small);
+        transition: all 0.2s ease;
+        min-width: 64px;
+      }
+
+      .nav-item:hover {
+        color: var(--md-sys-color-primary);
+        background-color: var(--md-sys-color-primary-container);
+        text-decoration: none;
+      }
+
+      .nav-item.active {
+        color: var(--md-sys-color-primary);
+        background-color: var( --md-sys-color-hada);
+      }
+
+      .nav-item .material-icons-round {
+        font-size: 24px;
+        margin-bottom: 4px;
+      }
+
+      .nav-item span:last-child {
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 16px;
+        letter-spacing: 0.4px;
+      }
+
+      /* Add bottom padding to body to account for fixed nav */
+      body {
+        padding-bottom: 80px;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding-bottom: 88px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -575,6 +637,22 @@
 
     <div id="errToast"><span id="errText"></span></div>
 
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <a href="https://liff.line.me/2008071727-vLPLr6Gx" class="nav-item active">
+        <span class="material-icons-round">person</span>
+        <span>マイページ</span>
+      </a>
+      <a href="#" class="nav-item">
+        <span class="material-icons-round">view_list</span>
+        <span>タネ一覧</span>
+      </a>
+      <a href="https://liff.line.me/2008071727-ypMm7WGE" class="nav-item active">
+        <span class="material-icons-round">add_circle</span>
+        <span>タネ投稿</span>
+      </a>
+    </nav>
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
     <script src="./utils.js?ver=1.01"></script>
@@ -618,7 +696,7 @@
         const btn = document.getElementById("likeBtn");
         if (!btn) return;
         if (btn.classList.contains("btn-liked")) return; // すでに済なら何もしない
-        btn.textContent = "いいね済み";
+        btn.innerHTML = '<span class="material-icons-round">favorite</span>いいね済み';
         btn.disabled = true;
         btn.classList.remove("btn-primary");
         btn.classList.add("btn-secondary", "btn-liked");
@@ -767,10 +845,10 @@
             // ボタン表示も元へ
             const btn = document.getElementById("likeBtn");
             if (btn) {
-              btn.textContent = "いいね！";
+              btn.innerHTML = '<span class="material-icons-round">favorite_border</span>いいね！';
               btn.disabled = false;
               btn.classList.remove("btn-secondary", "btn-liked");
-              btn.classList.add("btn-primary", "like-btn");
+              btn.classList.add("like-btn");
             }
           });
       }
