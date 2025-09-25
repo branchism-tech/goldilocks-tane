@@ -637,6 +637,7 @@
 
       const userIdParam =
         new URL(location.href).searchParams.get("userId") || "";
+      const kbn = new URL(location.href).searchParams.get("kbn") || "";
 
       async function loadPage() {
         try {
@@ -670,8 +671,10 @@
           await waiteCreateDom(PROFILE_DSP_COMM_HTML_DSP_IDS);
           addEventListenerProfileDspTab();
 
-          document.getElementById("profile-like-btn-row").style.display =
-            "none";
+          if (!kbn) {
+            document.getElementById("profile-like-btn-row").style.display =
+              "none";
+          }
           document.getElementById("profile-rtn-btn-row").style.display = "none";
 
           await liff.init({ liffId: LIFF_ID });
