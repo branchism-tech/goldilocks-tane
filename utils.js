@@ -143,15 +143,16 @@ function addListenerProfileDetail(
       ev.preventDefault();
       const prof = likesProfileMap[this.id] || {};
       fillProfileDetail("tane", prof);
-      if (likeBtnRowShowFlg) $("#profile-like-btn-row").show();
-      else {
+      // if (likeBtnRowShowFlg) $("#profile-like-btn-row").show();
+      // else {
         // $("#profile-like-btn-row").hide();
-        document.getElementById("profile-like-btn-row").style.display = "none";
-      }
+        // いいねをなしに
+        // document.getElementById("profile-like-btn-row").style.display = "none";
+      // }
       if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();
       else {
         // $("#profile-rtn-btn-row").hide();
-        document.getElementById("profile-rtn-btn-row").style.display = "none";
+        // document.getElementById("profile-rtn-btn-row").style.display = "none";
       }
       sendViewUserLog(prof.userId, "taneDsp");
       showProfileScreen();
@@ -173,16 +174,16 @@ function addListenerProfileDetailSingle(
   $el.off("click.ownerNs").on("click.ownerNs", function (ev) {
     ev.preventDefault();
     fillProfileDetail("tane", profile);
-    if (likeBtnRowShowFlg) $("#profile-like-btn-row").show();
-    else {
+    // if (likeBtnRowShowFlg) $("#profile-like-btn-row").show();
+    // else {
       // $("#profile-like-btn-row").hide();
-      document.getElementById("profile-like-btn-row").style.display = "none";
-    }
-    if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();
-    else {
+      // document.getElementById("profile-like-btn-row").style.display = "none";
+    // }
+    // if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();
+    // else {
       // $("#profile-rtn-btn-row").hide();
-      document.getElementById("profile-rtn-btn-row").style.display = "none";
-    }
+      // document.getElementById("profile-rtn-btn-row").style.display = "none";
+    // }
 
     sendViewUserLog(profile.userId, "taneDsp");
     showProfileScreen();
