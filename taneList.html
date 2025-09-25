@@ -41,8 +41,7 @@
         object-fit: cover;
       }
       .like-btn {
-        margin-left: auto;
-        margin-right: 8px;
+        min-width: 72px;
       }
       .like-btn[disabled] {
         background: #adb5bd;
@@ -242,7 +241,7 @@
                 <p class="small text-muted">${d.comment || ""}</p>
               </div>
               <div class="d-flex justify-content-between align-items-center">
-                <button class="btn btn-sm like-btn ${
+                <button class="btn btn-sm like-btn ms-auto me-2 ${
                   d.alreadyLiked ? "liked" : ""
                 }" data-id="${d.taneId}" ${
             !isLiff || d.alreadyLiked ? "disabled" : ""
