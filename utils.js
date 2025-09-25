@@ -72,17 +72,18 @@ function fillProfileDetail(kbn, profile) {
   renderTaneList("profile-tane-list", profile.taneList || []);
   renderTaneList("profile-tane-like-list", profile.taneLikeList || []);
 
-  if (kbn === "tane") {
-    if (!profile.likeUserFlg) {
-      const btn = document.getElementById("profile-like-btn");
-      btn.textContent = "いいね！";
-      btn.disabled = false;
-      btn.classList.remove("btn-secondary", "btn-liked");
-      btn.classList.add("btn-primary", "like-btn");
-    } else {
-      setProfileLiked();
-    }
-  }
+  // いいねはなしに
+  // if (kbn === "tane") {
+  //   if (!profile.likeUserFlg) {
+  //     const btn = document.getElementById("profile-like-btn");
+  //     btn.textContent = "いいね！";
+  //     btn.disabled = false;
+  //     btn.classList.remove("btn-secondary", "btn-liked");
+  //     btn.classList.add("btn-primary", "like-btn");
+  //   } else {
+  //     setProfileLiked();
+  //   }
+  // }
 }
 
 // タネリスト描画用の共通関数
@@ -302,11 +303,12 @@ function profileLikeActionForProfileDsp() {
 }
 
 function setProfileLiked() {
-  const btn = document.getElementById("profile-like-btn");
-  btn.textContent = "いいね済み";
-  btn.disabled = true;
-  btn.classList.remove("btn-primary");
-  btn.classList.add("btn-secondary", "btn-liked");
+  // いいねをなしに
+  // const btn = document.getElementById("profile-like-btn");
+  // btn.textContent = "いいね済み";
+  // btn.disabled = true;
+  // btn.classList.remove("btn-primary");
+  // btn.classList.add("btn-secondary", "btn-liked");
 }
 
 function addListenerProfileDetailRtnBtn() {
