@@ -41,7 +41,8 @@
         object-fit: cover;
       }
       .like-btn {
-        min-width: 72px;
+        margin-left: auto;
+        margin-right: 8px;
       }
       .like-btn[disabled] {
         background: #adb5bd;
@@ -277,22 +278,36 @@
       }
 
       async function likeTane(taneId) {
-        const btn = $(`.like-btn[data-id="${taneId}"]`);
-        btn.prop("disabled", true);
-        let tane = allTanes.find((s) => s.taneId === taneId);
-        tane.likeCount += 1;
-        tane.alreadyLiked = true;
-        btn.addClass("liked").text(`♥ ${tane.likeCount}`);
         try {
           const idt = liff.getIDToken();
           const url = `${GAS_ENDPOINT}?action=like_tane&taneId=${encodeURIComponent(
             taneId
           )}&id_token=${encodeURIComponent(idt)}`;
-          const r = await fetch(url);
-          const j = await r.json();
-          if (!j.ok) throw new Error();
+          const btn = $(`.like-btn[data-id="${taneId}"]`);
+          btn.prop("disabled", true);
+          let tane = allTanes.find((s) => s.taneId === taneId);
+          tane.likeCount += 1;
+          tane.alreadyLiked = true;
+          btn.addClass("liked").text(`♥ ${tane.likeCount}`);
+
+          fetch(url)
+            .then((r) =>
+              r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))
+            )
+            .then((j) => {
+              if (!j.ok) throw new Error(j.error || "like failed");
+              // 成功なら何もしない（すでにUI更新済み）
+            })
+            .catch((err) => {
+              console.error(err);
+              toast("いいねに失敗しました");
+              // ---- ロールバック ----
+              tane.likeCount -= 1;
+              tane.alreadyLiked = false;
+              btn.addClass("liked").text(`♥ ${tane.likeCount}`);
+            });
         } catch (e) {
-          toast("いいね失敗");
+          toast("いいねに失敗しました");
         }
       }
 
