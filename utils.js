@@ -300,27 +300,24 @@ const PROFILE_DSP_COMM_HTML_DSP_IDS = [
   "profile-address",
   "profile-like-btn-row",
   "profile-rtn-btn-row",
+  "tab-posts",
+  "tab-likes",
 ];
 
 // profileDspCommHtml.htmlのscript
 function addEventListenerProfileDspTab() {
   // Tab functionality
-  document.addEventListener("DOMContentLoaded", function () {
-    const tabButtons = document.querySelectorAll(".tab-button");
-    const tabPanels = document.querySelectorAll(".tab-panel");
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".tab-button");
+    if (!btn) return; // タブ以外は無視
+    const container = btn.closest(".tab-container");
+    const buttons = container.querySelectorAll(".tab-button");
+    const panels = container.querySelectorAll(".tab-panel");
+    const target = container.querySelector(`#tab-${btn.dataset.tab}`);
 
-    tabButtons.forEach((button) => {
-      button.addEventListener("click", function () {
-        const targetTab = this.dataset.tab;
-
-        // Remove active class from all buttons and panels
-        tabButtons.forEach((btn) => btn.classList.remove("active"));
-        tabPanels.forEach((panel) => panel.classList.remove("active"));
-
-        // Add active class to clicked button and corresponding panel
-        this.classList.add("active");
-        document.getElementById(`tab-${targetTab}`).classList.add("active");
-      });
-    });
+    buttons.forEach((b) => b.classList.remove("active"));
+    panels.forEach((p) => p.classList.remove("active"));
+    btn.classList.add("active");
+    if (target) target.classList.add("active");
   });
 }
