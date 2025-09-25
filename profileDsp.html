@@ -685,12 +685,12 @@
           if (!ready) return;
 
           await loadPage();
-          alert(kbn);
         } catch (e) {
           console.error("LIFF init failed", e);
           toast("LIFFの初期化に失敗しました");
         } finally {
           loading.off(); // 最後に閉じる
+          alert(kbn);
         }
       });
     </script>
