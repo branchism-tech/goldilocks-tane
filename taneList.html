@@ -109,6 +109,9 @@
         max-width: 90%;
         word-wrap: break-word;
       }
+      .text-xsmall {
+        font-size: 0.75rem;
+      }
 
       /* Desktop adjustments */
       @media (min-width: 768px) {
@@ -231,6 +234,7 @@
           <div class="col-md-4 col-12">
             <div class="card card-tane" data-id="${d.taneId}">
               <div class="card-body">
+               <p class="text-xsmall text-muted">${d.category || ""}</p>
                 <h6>${d.title || ""}</h6>
                 <div class="d-flex align-items-center mb-2">
                    <img class="avatar mr-2" src="${
