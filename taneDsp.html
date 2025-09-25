@@ -677,6 +677,7 @@
       const GAS_ENDPOINT =
         "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
       const DUMMY_ICON_URL = "logo.png";
+      let isLiff = false;
 
       const taneId = new URL(location.href).searchParams.get("taneId");
       var rtnData = {};
@@ -723,7 +724,7 @@
           return;
         }
         try {
-          const idToken = liff.getIDToken();
+          const idToken = isLiff ? liff.getIDToken() : "";
           const r = await fetch(
             `${GAS_ENDPOINT}?action=tane_public_bundle&taneId=${encodeURIComponent(
               taneId
@@ -757,7 +758,7 @@
           addListenerProfileDetailSingle(
             "ownerIcon",
             rtnData.ownerProfile || {},
-            true,
+            isLiff ? true : false,
             true
           );
 
@@ -765,7 +766,12 @@
           const likeProfiles = (rtnData.likes || []).map(
             (x) => x.likeProfile || {}
           );
-          addListenerProfileDetail(likeProfiles, "likesAvatar", true, true);
+          addListenerProfileDetail(
+            likeProfiles,
+            "likesAvatar",
+            isLiff ? true : false,
+            true
+          );
 
           $("#profile-like-btn").on("click", profileLikeActionForTaneDsp);
           // 戻るボタン
@@ -885,8 +891,11 @@
           addEventListenerProfileDspTab();
 
           await liff.init({ liffId: LIFF_ID });
-          const ready = await ensureLoginAndScopes();
-          if (!ready) return;
+          isLiff = liff.isInClient() || liff.isLoggedIn();
+          if (isLiff && !liff.isLoggedIn()) {
+            const ready = await ensureLoginAndScopes();
+            if (!ready) return;
+          }
 
           await loadPage();
           $("#likeBtn").on("click", likeAction);
