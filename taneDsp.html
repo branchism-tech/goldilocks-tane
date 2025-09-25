@@ -17,32 +17,35 @@
     <style>
       :root {
         /* Material Design 3 color tokens */
-    --md-sys-color-primary: #2A51B3;
-    --md-sys-color-on-primary: #FFFFFF;
-    --md-sys-color-primary-container: #EADDFF;
-    --md-sys-color-on-primary-container: #21005D;
-    --md-sys-color-secondary: #757575;
-    --md-sys-color-on-secondary: #FFFFFF;
-    --md-sys-color-secondary-container: #E8DEF8;
-    --md-sys-color-on-secondary-container: #1D192B;
-    --md-sys-color-hada: #F3E9DF;
-    --md-sys-color-yellow: #EFC800;
-    --md-sys-color-red: #E60312;
-    --md-sys-color-surface: #fff;
-    --md-sys-color-on-surface: #1D1B20;
-    --md-sys-color-surface-variant: #ebebeb;
-    --md-sys-color-on-surface-variant: #525252;
-    --md-sys-color-outline: #79747E;
-    --md-sys-color-outline-variant: #CAC4D0;
-    --md-sys-color-error: #E60312;
-    --md-sys-color-on-error: #FFFFFF;
-    --md-sys-color-error-container: #FFDAD6;
-    --md-sys-color-on-error-container: #410002;
+        --md-sys-color-primary: #2a51b3;
+        --md-sys-color-on-primary: #ffffff;
+        --md-sys-color-primary-container: #eaddff;
+        --md-sys-color-on-primary-container: #21005d;
+        --md-sys-color-secondary: #757575;
+        --md-sys-color-on-secondary: #ffffff;
+        --md-sys-color-secondary-container: #e8def8;
+        --md-sys-color-on-secondary-container: #1d192b;
+        --md-sys-color-hada: #f3e9df;
+        --md-sys-color-yellow: #efc800;
+        --md-sys-color-red: #e60312;
+        --md-sys-color-surface: #fff;
+        --md-sys-color-on-surface: #1d1b20;
+        --md-sys-color-surface-variant: #ebebeb;
+        --md-sys-color-on-surface-variant: #525252;
+        --md-sys-color-outline: #79747e;
+        --md-sys-color-outline-variant: #cac4d0;
+        --md-sys-color-error: #e60312;
+        --md-sys-color-on-error: #ffffff;
+        --md-sys-color-error-container: #ffdad6;
+        --md-sys-color-on-error-container: #410002;
 
         /* Elevation tokens */
-        --md-sys-elevation-level1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-        --md-sys-elevation-level2: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 2px 6px 2px rgba(0, 0, 0, 0.15);
-        --md-sys-elevation-level3: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+        --md-sys-elevation-level1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
+          0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+        --md-sys-elevation-level2: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
+          0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+        --md-sys-elevation-level3: 0px 1px 3px 0px rgba(0, 0, 0, 0.3),
+          0px 4px 8px 3px rgba(0, 0, 0, 0.15);
 
         /* Shape tokens */
         --md-sys-shape-corner-extra-small: 4px;
@@ -61,7 +64,7 @@
         height: 100%;
         margin: 0;
         padding: 0;
-        font-family: 'Roboto', sans-serif;
+        font-family: "Roboto", sans-serif;
         background-color: var(--md-sys-color-yellow);
         color: var(--md-sys-color-on-surface);
       }
@@ -189,14 +192,14 @@
         color: var(--md-sys-color-on-surface);
       }
 
-      #commentText{
+      #commentText {
         padding: 16px 0;
         font-size: 16px;
         line-height: 24px;
         letter-spacing: 0.5px;
         margin-bottom: 16px;
       }
-      
+
       #kindText {
         padding: 16px;
         font-size: 16px;
@@ -276,7 +279,7 @@
         cursor: pointer;
         transition: all 0.2s ease;
         box-shadow: var(--md-sys-elevation-level1);
-        font-family: 'Roboto', sans-serif;
+        font-family: "Roboto", sans-serif;
       }
 
       .btn:hover {
@@ -387,8 +390,12 @@
       }
 
       @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
 
       #errToast {
@@ -439,7 +446,7 @@
         }
 
         .seed-title-wrap {
-          padding:0;
+          padding: 0;
           gap: 12px;
           margin: 8px 0;
         }
@@ -466,7 +473,7 @@
           line-height: 28px;
         }
 
-        #commentText{
+        #commentText {
           padding: 12px 0;
           font-size: 14px;
         }
@@ -639,7 +646,10 @@
 
     <!-- Bottom Navigation Bar -->
     <nav class="bottom-nav">
-      <a href="https://liff.line.me/2008071727-vLPLr6Gx" class="nav-item active">
+      <a
+        href="https://liff.line.me/2008071727-vLPLr6Gx"
+        class="nav-item active"
+      >
         <span class="material-icons-round">person</span>
         <span>マイページ</span>
       </a>
@@ -647,7 +657,10 @@
         <span class="material-icons-round">view_list</span>
         <span>タネ一覧</span>
       </a>
-      <a href="https://liff.line.me/2008071727-ypMm7WGE" class="nav-item active">
+      <a
+        href="https://liff.line.me/2008071727-ypMm7WGE"
+        class="nav-item active"
+      >
         <span class="material-icons-round">add_circle</span>
         <span>タネ投稿</span>
       </a>
@@ -655,7 +668,7 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
-    <script src="./utils.js?ver=1.01"></script>
+    <script src="./utils.js?ver=1.02"></script>
 
     <script>
       // ===== 設定 =====
@@ -696,7 +709,8 @@
         const btn = document.getElementById("likeBtn");
         if (!btn) return;
         if (btn.classList.contains("btn-liked")) return; // すでに済なら何もしない
-        btn.innerHTML = '<span class="material-icons-round">favorite</span>いいね済み';
+        btn.innerHTML =
+          '<span class="material-icons-round">favorite</span>いいね済み';
         btn.disabled = true;
         btn.classList.remove("btn-primary");
         btn.classList.add("btn-secondary", "btn-liked");
@@ -845,7 +859,8 @@
             // ボタン表示も元へ
             const btn = document.getElementById("likeBtn");
             if (btn) {
-              btn.innerHTML = '<span class="material-icons-round">favorite_border</span>いいね！';
+              btn.innerHTML =
+                '<span class="material-icons-round">favorite_border</span>いいね！';
               btn.disabled = false;
               btn.classList.remove("btn-secondary", "btn-liked");
               btn.classList.add("like-btn");
