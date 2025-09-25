@@ -240,6 +240,10 @@
   margin-right: 8px;
 }
 
+#profile-tane-like-list > div, #profile-tane-list > div {
+  padding-bottom: 8px;
+}
+
 /* Mobile */
 @media (max-width: 768px) {
   .card-like-sub {
