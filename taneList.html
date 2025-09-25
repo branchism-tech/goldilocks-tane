@@ -353,6 +353,10 @@
         padding: 4px;
       }
 
+      .bottom-nav.hidden {
+        display: none;
+      }
+
       .nav-item {
         display: flex;
         flex-direction: column;
@@ -603,6 +607,12 @@
           await liff.init({ liffId: LIFF_ID });
           isLiff = liff.isInClient() || liff.isLoggedIn();
           if (isLiff && !liff.isLoggedIn()) await liff.login();
+          
+          // LIFFではない場合はナビゲーションバーを非表示
+          if (!isLiff) {
+            $(".bottom-nav").addClass("hidden");
+          }
+          
           try {
             await fetchTanes();
             renderList();
