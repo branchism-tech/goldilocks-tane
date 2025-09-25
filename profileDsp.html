@@ -675,15 +675,16 @@
 
           if (kbn == "") {
             uekitest += " --1-- ";
-            document.getElementById("profile-like-btn-row").style.display =
+            document.getElementById("profile-rtn-btn-row").style.display =
               "none";
           } else {
             uekitest += " --2-- ";
-            // $("#profile-like-btn-row").show();
+            document.getElementById("rofile-rtn-btn").style.display = "none";
+            uekitest += " --3-- ";
+            $("#profile-like-btn-row").show();
             $("#profile-like-btn").on("click", profileLikeActionForProfileDsp);
           }
-          uekitest += " -3-- ";
-          document.getElementById("profile-rtn-btn-row").style.display = "none";
+          uekitest += " -4-- ";
 
           await liff.init({ liffId: LIFF_ID });
           const ready = await ensureLoginAndScopes();
