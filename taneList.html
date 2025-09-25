@@ -31,6 +31,7 @@
       }
       .card-body {
         cursor: pointer;
+        margin-bottom: 12px;
       }
       .avatar {
         width: 36px;
@@ -159,6 +160,7 @@
           class="form-control form-control-sm"
           style="width: auto; display: inline-block"
         >
+          <option value="reco">おすすめ数順</option>
           <option value="likes">いいね数順</option>
           <option value="new">新着順</option>
         </select>
@@ -201,8 +203,23 @@
         if (cat !== "all") {
           data = data.filter((d) => d.category === cat);
         }
-        if (sort === "likes") {
-          data.sort((a, b) => b.likeCount - a.likeCount);
+        if (sort === "reco") {
+          data.sort((a, b) => {
+            const recoDiff = (Number(b.reco) || 0) - (Number(a.reco) || 0);
+            if (recoDiff !== 0) {
+              return recoDiff;
+            }
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          });
+        } else if (sort === "likes") {
+          data.sort((a, b) => {
+            const likeDiff =
+              (Number(b.likeCount) || 0) - (Number(a.likeCount) || 0);
+            if (likeDiff !== 0) {
+              return likeDiff;
+            }
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          });
         } else {
           data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         }
@@ -215,14 +232,13 @@
             <div class="card card-tane" data-id="${d.taneId}">
               <div class="card-body">
                 <h6>${d.title || ""}</h6>
-                <p class="small text-muted">${d.comment || ""}</p>
                 <div class="d-flex align-items-center mb-2">
                    <img class="avatar mr-2" src="${
                      d.ownerIcon || DUMMY_ICON_URL
                    }"/>
                   <div>${d.name || "名無し"}</div>
                 </div>
-                <p class="small text-muted">${d.kind_person || ""}</p>
+                <p class="small text-muted">${d.comment || ""}</p>
               </div>
               <div class="d-flex justify-content-between align-items-center">
                 <button class="btn btn-sm like-btn ${
