@@ -170,6 +170,11 @@
   color: var(--md-sys-color-on-primary);
   box-shadow: var(--md-sys-elevation-level1);
 }
+.card-like-sub .tab-button.active[data-tab="likes"] {
+  background-color: var(--md-sys-color-red);
+  color: var(--md-sys-color-on-primary);
+}
+
 .card-like-sub .tab-button:hover:not(.active) {
   background-color: rgba(42, 81, 179, 0.08);
   color: var(--md-sys-color-primary);
