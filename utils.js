@@ -94,7 +94,7 @@ function renderTaneList(containerId, list) {
 
   list.forEach((d) => {
     const card = $(`
-    <div class="col-md-4 col-12">
+    <div class="col-md-6 col-12">
       <div class="card card-tane" data-id="${d.taneId}" style="cursor: pointer;" onclick="window.location.href='taneDsp.html?taneId=${encodeURIComponent(d.taneId)}'">
         <div class="card-body">
           <p class="text-xsmall">${d.category || ""}</p>
