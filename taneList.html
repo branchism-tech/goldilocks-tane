@@ -26,7 +26,7 @@
       .cat-btn {
         margin: 0 4px 8px 0;
       }
-      .card-seed {
+      .card-tane {
         cursor: pointer;
         margin-bottom: 12px;
       }
@@ -186,7 +186,7 @@
       const GAS_ENDPOINT =
         "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
       const DUMMY_ICON_URL = "logo.png";
-      let allSeeds = [];
+      let allTanes = [];
       let isLiff = false;
 
       function toast(msg) {
@@ -195,7 +195,7 @@
       }
 
       function renderList(cat = "all", sort = "likes") {
-        let data = [...allSeeds];
+        let data = [...allTanes];
         if (cat !== "all") {
           data = data.filter((d) => d.category === cat);
         }
@@ -210,31 +210,32 @@
         data.forEach((d) => {
           const card = $(`
           <div class="col-md-4 col-12">
-            <div class="card card-seed" data-id="${d.taneId}">
+            <div class="card card-tane" data-id="${d.taneId}">
               <div class="card-body">
-                <div class="d-flex align-items-center mb-2">
-                  <img class="avatar mr-2" src="${
-                    d.ownerIcon || DUMMY_ICON_URL
-                  }"/>
-                  <div>${d.name || "名無し"}</div>
-                </div>
                 <h6>${d.title || ""}</h6>
                 <p class="small text-muted">${d.comment || ""}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <button class="btn btn-sm like-btn ${
-                    d.alreadyLiked ? "liked" : ""
-                  }" data-id="${d.taneId}" ${
+                <div class="d-flex align-items-center mb-2">
+                   <img class="avatar mr-2" src="${
+                     d.ownerIcon || DUMMY_ICON_URL
+                   }"/>
+                  <div>${d.name || "名無し"}</div>
+                </div>
+                <p class="small text-muted">${d.kind_person || ""}</p>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <button class="btn btn-sm like-btn ${
+                  d.alreadyLiked ? "liked" : ""
+                }" data-id="${d.taneId}" ${
             !isLiff || d.alreadyLiked ? "disabled" : ""
           }>
-                    ♥ ${d.likeCount}
-                  </button>
-                </div>
+                  ♥ ${d.likeCount}
+                </button>
               </div>
             </div>
           </div>
         `);
           // card click -> detail
-          card.find(".card-seed").on("click", (e) => {
+          card.find(".card-tane").on("click", (e) => {
             if ($(e.target).hasClass("like-btn")) return;
             window.location.href = `https://liff.line.me/2008071727-prQWbK4R?taneId=${encodeURIComponent(
               d.taneId
@@ -246,7 +247,7 @@
         });
       }
 
-      async function fetchSeeds() {
+      async function fetchTanes() {
         const idt = isLiff ? liff.getIDToken() : "";
         const url = `${GAS_ENDPOINT}?action=tane_list_all&id_token=${encodeURIComponent(
           idt
@@ -254,16 +255,16 @@
         const r = await fetch(url);
         const j = await r.json();
         if (!j.ok) throw new Error(j.error || "fail");
-        allSeeds = j.list;
+        allTanes = j.list;
       }
 
       async function likeTane(taneId) {
         const btn = $(`.like-btn[data-id="${taneId}"]`);
         btn.prop("disabled", true);
-        let seed = allSeeds.find((s) => s.taneId === taneId);
-        seed.likeCount += 1;
-        seed.alreadyLiked = true;
-        btn.addClass("liked").text(`♥ ${seed.likeCount}`);
+        let tane = allTanes.find((s) => s.taneId === taneId);
+        tane.likeCount += 1;
+        tane.alreadyLiked = true;
+        btn.addClass("liked").text(`♥ ${tane.likeCount}`);
         try {
           const idt = liff.getIDToken();
           const url = `${GAS_ENDPOINT}?action=like_tane&taneId=${encodeURIComponent(
@@ -284,7 +285,7 @@
           isLiff = liff.isInClient() || liff.isLoggedIn();
           if (isLiff && !liff.isLoggedIn()) await liff.login();
           try {
-            await fetchSeeds();
+            await fetchTanes();
             renderList();
             $(".cat-btn").on("click", function () {
               renderList($(this).data("cat"), $("#sortSel").val());
