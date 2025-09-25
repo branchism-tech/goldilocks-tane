@@ -399,6 +399,20 @@
   src="https://js.sentry-cdn.com/fa3cc6e69226d871d4beefa6fc73865d.min.js"
   crossorigin="anonymous"
 ></script>
+<script>
+  Sentry.init({
+    dsn: "https://fa3cc6e69226d871d4beefa6fc73865d@o4510082026045440.ingest.us.sentry.io/4510082027683840goldirocks / javascript",
+    // Adds request headers and IP for users, for more info visit:
+    // https://docs.sentry.io/platforms/javascript/configuration/options/#sendDefaultPii
+    sendDefaultPii: true,
+    // Alternatively, use `process.env.npm_package_version` for a dynamic release version
+    // if your build tool supports it.
+    release: "my-project-name@2.3.12",
+    integrations: [
+    ],
+
+  });
+</script>
     <div class="card-like">
       <div class="brand">
         <img class="logo" src="logo.png" alt="ロゴ" />
