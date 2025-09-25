@@ -148,7 +148,10 @@ function addListenerProfileDetail(
       const prof = likesProfileMap[this.id] || {};
       fillProfileDetail("tane", prof);
       if (likeBtnRowShowFlg) $("#profile-like-btn-row").show();
-      else $("#profile-like-btn-row").hide();
+      else {
+        // $("#profile-like-btn-row").hide();
+        document.getElementById("profile-like-btn-row").style.display = "none";
+      }
       if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();
       else $("#profile-rtn-btn-row").hide();
       sendViewUserLog(prof.userId, "taneDsp");
@@ -172,7 +175,10 @@ function addListenerProfileDetailSingle(
     ev.preventDefault();
     fillProfileDetail("tane", profile);
     if (likeBtnRowShowFlg) $("#profile-like-btn-row").show();
-    else $("#profile-like-btn-row").hide();
+    else {
+      // $("#profile-like-btn-row").hide();
+      document.getElementById("profile-like-btn-row").style.display = "none";
+    }
     if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();
     else $("#profile-rtn-btn-row").hide();
     sendViewUserLog(profile.userId, "taneDsp");
