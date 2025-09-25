@@ -174,8 +174,8 @@
         justify-content: center;
         padding: 8px 16px;
         border-radius: var(--md-sys-shape-corner-extra-large);
-        background-color: transparent;
-        color: var(--md-sys-color-primary);
+        background-color: var(--md-sys-color-red);
+        color: var(--md-sys-color-surface);
         font-weight: 500;
         font-size: 14px;
         letter-spacing: 0.4px;
@@ -183,14 +183,14 @@
         transition: all 0.2s ease;
         font-family: "Roboto", sans-serif;
         margin: 4px 16px 16px auto;     
-        border: solid 1px var(--md-sys-color-primary);
+        border: none;
       }
       .like-btn:hover:not(:disabled) {
         background-color: var(--md-sys-color-primary-container);
       }
       .like-btn[disabled] {
-        background-color: var(--md-sys-color-surface-variant);
-        color: var(--md-sys-color-outline);
+        background-color: var(--md-sys-color-outline);
+        color: var(--md-sys-color-surface) !important;
         cursor: not-allowed;
         border: none;
       }
