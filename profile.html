@@ -108,7 +108,7 @@
       }
 
       .section-title {
-        font-weight: 500;
+        font-weight: 900;
         font-size: 24px;
         line-height: 32px;
         color: var(--md-sys-color-on-surface);
@@ -121,7 +121,7 @@
       }
 
       .form-group label {
-        font-weight: 500;
+        font-weight: 900;
         font-size: 14px;
         line-height: 20px;
         letter-spacing: 0.1px;
@@ -173,6 +173,7 @@
       }
 
       .custom-control-input {
+        accent-color: var(--md-sys-color-red);
         width: 20px;
         height: 20px;
         margin-bottom: 8px;
@@ -231,11 +232,9 @@
 
       .btn-dark:hover {
         box-shadow: var(--md-sys-elevation-level2);
-        transform: translateY(-1px);
       }
 
       .btn-dark:active {
-        transform: translateY(0);
         box-shadow: var(--md-sys-elevation-level1);
       }
 
@@ -372,19 +371,6 @@
         .custom-control {
           padding-left: 16px;
           margin-bottom: 10px;
-        }
-
-        .custom-control-label::before {
-          left: -28px;
-          width: 18px;
-          height: 18px;
-        }
-
-        .custom-control-label::after {
-          left: -25px;
-          width: 10px;
-          height: 10px;
-          top: 5px;
         }
 
         .footer-button {

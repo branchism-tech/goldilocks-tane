@@ -108,7 +108,7 @@
       }
 
       .section-title {
-        font-weight: 500;
+        font-weight: 900;
         font-size: 24px;
         line-height: 32px;
         color: var(--md-sys-color-on-surface);
@@ -121,7 +121,7 @@
       }
 
       .form-group label {
-        font-weight: 500;
+        font-weight: 900;
         font-size: 14px;
         line-height: 20px;
         letter-spacing: 0.1px;
@@ -177,20 +177,19 @@
         display: flex;
         align-items: flex-start;
         min-height: 24px;
-        padding-left: 32px;
         margin-bottom: 16px;
       }
-
+      
       .custom-control-input {
-        position: absolute;
-        left: 0;
-        z-index: -1;
+        accent-color: var(--md-sys-color-primary);
         width: 20px;
         height: 20px;
-        opacity: 0;
+        margin-bottom: 8px;
+        margin-right: 8px;
       }
 
       .custom-control-label {
+        font-weight: 500 !important;
         position: relative;
         margin-bottom: 0;
         font-size: 16px;
@@ -198,46 +197,6 @@
         cursor: pointer;
         padding-top: 2px;
       }
-
-      .custom-control-label::before {
-        position: absolute;
-        top: 2px;
-        left: -32px;
-        display: block;
-        width: 20px;
-        height: 20px;
-        content: "";
-        background-color: var(--md-sys-color-surface);
-        border: 2px solid var(--md-sys-color-outline);
-        border-radius: 50%;
-        transition: all 0.2s ease;
-      }
-
-      .custom-control-input:checked ~ .custom-control-label::before {
-        background-color: var(--md-sys-color-primary);
-        border-color: var(--md-sys-color-primary);
-      }
-
-      .custom-control-label::after {
-        position: absolute;
-        top: 6px;
-        left: -28px;
-        display: block;
-        width: 12px;
-        height: 12px;
-        content: "";
-        background-color: var(--md-sys-color-on-primary);
-        border-radius: 50%;
-        opacity: 0;
-        transform: scale(0);
-        transition: all 0.2s ease;
-      }
-
-      .custom-control-input:checked ~ .custom-control-label::after {
-        opacity: 1;
-        transform: scale(1);
-      }
-
       .invalid-feedback {
         display: none;
         font-size: 12px;
@@ -275,7 +234,7 @@
       }
 
       .btn-dark {
-        background-color: var(--md-sys-color-red);
+        background-color: var(--md-sys-color-orange);
         color: var(--md-sys-color-on-primary);
         min-width: 160px;
         height: 40px;
@@ -459,21 +418,7 @@
         }
 
         .custom-control {
-          padding-left: 28px;
           margin-bottom: 12px;
-        }
-
-        .custom-control-label::before {
-          left: -28px;
-          width: 18px;
-          height: 18px;
-        }
-
-        .custom-control-label::after {
-          left: -25px;
-          width: 10px;
-          height: 10px;
-          top: 5px;
         }
 
         .footer-button {
@@ -680,176 +625,176 @@
     <script src="./utils.js?ver=1.02"></script>
 
     <script>
-      // ====== 環境定数 ======
-      const LIFF_ID = "2008071727-ypMm7WGE";
-      const GAS_ENDPOINT =
-        "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
+      // // ====== 環境定数 ======
+      // const LIFF_ID = "2008071727-ypMm7WGE";
+      // const GAS_ENDPOINT =
+      //   "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
 
-      function showErrorAndClose(message) {
-        $("#errorModalBody").text(message);
-        $("#errorModal")
-          .modal({ backdrop: "static", keyboard: false })
-          .modal("show");
+      // function showErrorAndClose(message) {
+      //   $("#errorModalBody").text(message);
+      //   $("#errorModal")
+      //     .modal({ backdrop: "static", keyboard: false })
+      //     .modal("show");
 
-        $("#errorCloseBtn")
-          .off("click")
-          .on("click", function () {
-            if (liff.closeWindow) liff.closeWindow();
-            else $("#errorModal").modal("hide");
-          });
-      }
+      //   $("#errorCloseBtn")
+      //     .off("click")
+      //     .on("click", function () {
+      //       if (liff.closeWindow) liff.closeWindow();
+      //       else $("#errorModal").modal("hide");
+      //     });
+      // }
 
-      const params = new URL(location.href).searchParams;
-      const taneId = params.get("taneId"); // 有無でモード分岐
+      // const params = new URL(location.href).searchParams;
+      // const taneId = params.get("taneId"); // 有無でモード分岐
 
-      $(async function () {
-        try {
-          await liff.init({ liffId: LIFF_ID });
-          const ready = await ensureLoginAndScopes();
-          if (!ready) return;
+      // $(async function () {
+      //   try {
+      //     await liff.init({ liffId: LIFF_ID });
+      //     const ready = await ensureLoginAndScopes();
+      //     if (!ready) return;
 
-          loading.off();
-          if (taneId != null) {
-            $("#pageTitle").text("タネ編集ページ");
-            $("#submitBtn").html(
-              '<span class="material-icons-round">save</span>保存する'
-            );
-            $("#doneText").html(
-              "保存完了しました。<br />返信されたメッセージから編集できます。"
-            );
+      //     loading.off();
+      //     if (taneId != null) {
+      //       $("#pageTitle").text("タネ編集ページ");
+      //       $("#submitBtn").html(
+      //         '<span class="material-icons-round">save</span>保存する'
+      //       );
+      //       $("#doneText").html(
+      //         "保存完了しました。<br />返信されたメッセージから編集できます。"
+      //       );
 
-            // 既存データ取得
-            const idToken = liff.getIDToken();
-            const url = `${GAS_ENDPOINT}?action=tane_get&taneId=${encodeURIComponent(
-              taneId
-            )}&id_token=${encodeURIComponent(idToken)}`;
-            loading.on();
+      //       // 既存データ取得
+      //       const idToken = liff.getIDToken();
+      //       const url = `${GAS_ENDPOINT}?action=tane_get&taneId=${encodeURIComponent(
+      //         taneId
+      //       )}&id_token=${encodeURIComponent(idToken)}`;
+      //       loading.on();
 
-            try {
-              const res = await fetch(url);
-              if (res.ok) {
-                const json = await res.json();
-                if (json.ok && json.record) {
-                  const cat = (json.record.category || "").trim();
-                  const $cats = $('input[name="category"]');
-                  const $hit = $cats.filter(function () {
-                    return $(this).val() === cat;
-                  });
+      //       try {
+      //         const res = await fetch(url);
+      //         if (res.ok) {
+      //           const json = await res.json();
+      //           if (json.ok && json.record) {
+      //             const cat = (json.record.category || "").trim();
+      //             const $cats = $('input[name="category"]');
+      //             const $hit = $cats.filter(function () {
+      //               return $(this).val() === cat;
+      //             });
 
-                  if ($hit.length) {
-                    $hit.prop("checked", true).trigger("change");
-                  }
-                  $("#title").val(json.record.title || "");
-                  $("#comment").val(json.record.comment || "");
-                  $("#kind_person").val(json.record.kind_person || "");
-                } else {
-                  loading.off();
-                  showErrorAndClose("タネ情報は非表示になっています");
-                  return;
-                }
-              } else {
-                loading.off();
-                showErrorAndClose("タネ情報の取得に失敗しました");
-                return;
-              }
-            } catch (e) {
-              console.error(e);
-              loading.off();
-              showErrorAndClose("タネ情報の取得でエラーが発生しました");
-              return;
-            } finally {
-              loading.off();
-            }
-          }
-          bindFormSubmit();
-        } catch (e) {
-          console.error("LIFF init failed", e);
-          showErrorAndClose("LIFFの初期化に失敗しました");
-        }
-      });
+      //             if ($hit.length) {
+      //               $hit.prop("checked", true).trigger("change");
+      //             }
+      //             $("#title").val(json.record.title || "");
+      //             $("#comment").val(json.record.comment || "");
+      //             $("#kind_person").val(json.record.kind_person || "");
+      //           } else {
+      //             loading.off();
+      //             showErrorAndClose("タネ情報は非表示になっています");
+      //             return;
+      //           }
+      //         } else {
+      //           loading.off();
+      //           showErrorAndClose("タネ情報の取得に失敗しました");
+      //           return;
+      //         }
+      //       } catch (e) {
+      //         console.error(e);
+      //         loading.off();
+      //         showErrorAndClose("タネ情報の取得でエラーが発生しました");
+      //         return;
+      //       } finally {
+      //         loading.off();
+      //       }
+      //     }
+      //     bindFormSubmit();
+      //   } catch (e) {
+      //     console.error("LIFF init failed", e);
+      //     showErrorAndClose("LIFFの初期化に失敗しました");
+      //   }
+      // });
 
-      // 送信ハンドラ
-      function bindFormSubmit() {
-        $("#taneForm").on("submit", async function (e) {
-          e.preventDefault();
+      // // 送信ハンドラ
+      // function bindFormSubmit() {
+      //   $("#taneForm").on("submit", async function (e) {
+      //     e.preventDefault();
 
-          // 値取得
-          const category = $('input[name="category"]:checked').val();
-          const title = $("#title").val().trim();
-          const comment = $("#comment").val().trim();
-          const kind_person = $("#kind_person").val().trim();
+      //     // 値取得
+      //     const category = $('input[name="category"]:checked').val();
+      //     const title = $("#title").val().trim();
+      //     const comment = $("#comment").val().trim();
+      //     const kind_person = $("#kind_person").val().trim();
 
-          // バリデーション簡易
-          $(".invalid-feedback").text("");
-          $(".form-control").removeClass("is-invalid");
-          let hasError = false;
+      //     // バリデーション簡易
+      //     $(".invalid-feedback").text("");
+      //     $(".form-control").removeClass("is-invalid");
+      //     let hasError = false;
 
-          if (!category) {
-            const $group = $('input[name="category"]').closest(".form-group");
-            $group.addClass("is-invalid");
-            $group
-              .find(".invalid-feedback")
-              .text("カテゴリーを選択してください")
-              .show();
-            hasError = true;
-          }
-          if (!title) {
-            $("#title")
-              .addClass("is-invalid")
-              .siblings(".invalid-feedback")
-              .text("タイトルを入力してください");
-            hasError = true;
-          }
-          if (title.length > 24) {
-            $("#title")
-              .addClass("is-invalid")
-              .siblings(".invalid-feedback")
-              .text("タイトルは24文字以内です");
-            hasError = true;
-          }
-          if (!comment) {
-            $("#comment")
-              .addClass("is-invalid")
-              .siblings(".invalid-feedback")
-              .text("コメントを入力してください");
-            hasError = true;
-          }
-          if (!kind_person) {
-            $("#kind_person")
-              .addClass("is-invalid")
-              .siblings(".invalid-feedback")
-              .text("こんな人にきて欲しい、集まれ！を入力してください");
-            hasError = true;
-          }
-          if (hasError) return;
+      //     if (!category) {
+      //       const $group = $('input[name="category"]').closest(".form-group");
+      //       $group.addClass("is-invalid");
+      //       $group
+      //         .find(".invalid-feedback")
+      //         .text("カテゴリーを選択してください")
+      //         .show();
+      //       hasError = true;
+      //     }
+      //     if (!title) {
+      //       $("#title")
+      //         .addClass("is-invalid")
+      //         .siblings(".invalid-feedback")
+      //         .text("タイトルを入力してください");
+      //       hasError = true;
+      //     }
+      //     if (title.length > 24) {
+      //       $("#title")
+      //         .addClass("is-invalid")
+      //         .siblings(".invalid-feedback")
+      //         .text("タイトルは24文字以内です");
+      //       hasError = true;
+      //     }
+      //     if (!comment) {
+      //       $("#comment")
+      //         .addClass("is-invalid")
+      //         .siblings(".invalid-feedback")
+      //         .text("コメントを入力してください");
+      //       hasError = true;
+      //     }
+      //     if (!kind_person) {
+      //       $("#kind_person")
+      //         .addClass("is-invalid")
+      //         .siblings(".invalid-feedback")
+      //         .text("こんな人にきて欲しい、集まれ！を入力してください");
+      //       hasError = true;
+      //     }
+      //     if (hasError) return;
 
-          const msg =
-            (taneId != null
-              ? `こちらの情報でタネを編集しました。\n`
-              : `こちらの情報でタネを投稿しました。\n`) +
-            `カテゴリー：${category}\n` +
-            `タイトル：${title}\n` +
-            `コメント：${comment}\n` +
-            `こんな人にきて欲しい、集まれ！：${kind_person}\n` +
-            (taneId != null ? `ID：${taneId}\n` : ``);
+      //     const msg =
+      //       (taneId != null
+      //         ? `こちらの情報でタネを編集しました。\n`
+      //         : `こちらの情報でタネを投稿しました。\n`) +
+      //       `カテゴリー：${category}\n` +
+      //       `タイトル：${title}\n` +
+      //       `コメント：${comment}\n` +
+      //       `こんな人にきて欲しい、集まれ！：${kind_person}\n` +
+      //       (taneId != null ? `ID：${taneId}\n` : ``);
 
-          // 送信
-          liff
-            .sendMessages([{ type: "text", text: msg }])
-            .then(() => {
-              $("#doneModal").modal("show"); // 成功したらモーダル
-            })
-            .catch((err) => {
-              console.error(err);
-              showErrorAndClose("送信に失敗しました：" + err);
-            });
-        });
+      //     // 送信
+      //     liff
+      //       .sendMessages([{ type: "text", text: msg }])
+      //       .then(() => {
+      //         $("#doneModal").modal("show"); // 成功したらモーダル
+      //       })
+      //       .catch((err) => {
+      //         console.error(err);
+      //         showErrorAndClose("送信に失敗しました：" + err);
+      //       });
+      //   });
 
-        $("#closeLiffBtn").on("click", function () {
-          if (liff.closeWindow) liff.closeWindow();
-          else $("#doneModal").modal("hide");
-        });
-      }
+      //   $("#closeLiffBtn").on("click", function () {
+      //     if (liff.closeWindow) liff.closeWindow();
+      //     else $("#doneModal").modal("hide");
+      //   });
+      // }
     </script>
   </body>
 </html>
