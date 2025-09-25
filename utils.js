@@ -301,3 +301,26 @@ const PROFILE_DSP_COMM_HTML_DSP_IDS = [
   "profile-like-btn-row",
   "profile-rtn-btn-row",
 ];
+
+// profileDspCommHtml.htmlのscript
+function addEventListenerProfileDspTab() {
+  // Tab functionality
+  document.addEventListener("DOMContentLoaded", function () {
+    const tabButtons = document.querySelectorAll(".tab-button");
+    const tabPanels = document.querySelectorAll(".tab-panel");
+
+    tabButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        const targetTab = this.dataset.tab;
+
+        // Remove active class from all buttons and panels
+        tabButtons.forEach((btn) => btn.classList.remove("active"));
+        tabPanels.forEach((panel) => panel.classList.remove("active"));
+
+        // Add active class to clicked button and corresponding panel
+        this.classList.add("active");
+        document.getElementById(`tab-${targetTab}`).classList.add("active");
+      });
+    });
+  });
+}

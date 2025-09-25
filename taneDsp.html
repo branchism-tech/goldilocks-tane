@@ -881,6 +881,7 @@
             "profiledsp_common_section_placeholder"
           ).innerHTML = commonSection1;
           await waiteCreateDom(PROFILE_DSP_COMM_HTML_DSP_IDS);
+          addEventListenerProfileDspTab();
 
           await liff.init({ liffId: LIFF_ID });
           const ready = await ensureLoginAndScopes();

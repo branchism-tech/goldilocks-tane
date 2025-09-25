@@ -666,6 +666,8 @@
             "profiledsp_common_section_placeholder"
           ).innerHTML = commonSection1;
           await waiteCreateDom(PROFILE_DSP_COMM_HTML_DSP_IDS);
+          addEventListenerProfileDspTab();
+
           document.getElementById("profile-like-btn-row").style.display =
             "none";
           document.getElementById("profile-rtn-btn-row").style.display = "none";
