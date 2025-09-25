@@ -744,6 +744,9 @@
             (rtnData.ownerProfile && rtnData.ownerProfile.ownerIcon) ||
               DUMMY_ICON_URL
           );
+          $("ownerName").text(
+            (rtnData.ownerProfile && rtnData.ownerProfile.name) || ""
+          );
 
           // いいね一覧
           renderLikes(rtnData.likes || []);
