@@ -638,6 +638,7 @@
       const userIdParam =
         new URL(location.href).searchParams.get("userId") || "";
       const kbn = new URL(location.href).searchParams.get("kbn") || "";
+      alert(kbn);
       var rtnData = {};
 
       async function loadPage() {
