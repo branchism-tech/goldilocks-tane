@@ -27,8 +27,10 @@
         margin: 0 4px 8px 0;
       }
       .card-tane {
-        cursor: pointer;
         margin-bottom: 12px;
+      }
+      .card-body {
+        cursor: pointer;
       }
       .avatar {
         width: 36px;
@@ -235,7 +237,7 @@
           </div>
         `);
           // card click -> detail
-          card.find(".card-tane").on("click", (e) => {
+          card.find(".card-body").on("click", (e) => {
             if ($(e.target).hasClass("like-btn")) return;
             window.location.href = `https://liff.line.me/2008071727-prQWbK4R?taneId=${encodeURIComponent(
               d.taneId
