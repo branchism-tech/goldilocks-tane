@@ -639,7 +639,6 @@
         new URL(location.href).searchParams.get("userId") || "";
       const kbn = new URL(location.href).searchParams.get("kbn") || "";
       var rtnData = {};
-      var uekitest = kbn;
 
       async function loadPage() {
         try {
@@ -674,17 +673,12 @@
           addEventListenerProfileDspTab();
 
           if (kbn == "") {
-            uekitest += " --1-- ";
             document.getElementById("profile-rtn-btn-row").style.display =
               "none";
           } else {
-            uekitest += " --2-- ";
             document.getElementById("profile-rtn-btn").style.display = "none";
-            uekitest += " --3-- ";
-            // $("#profile-like-btn-row").show();
             $("#profile-like-btn").on("click", profileLikeActionForProfileDsp);
           }
-          uekitest += " -4-- ";
 
           await liff.init({ liffId: LIFF_ID });
           const ready = await ensureLoginAndScopes();
@@ -696,7 +690,6 @@
           toast("LIFFの初期化に失敗しました");
         } finally {
           loading.off(); // 最後に閉じる
-          alert(uekitest);
         }
       });
     </script>
