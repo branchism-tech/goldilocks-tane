@@ -269,7 +269,6 @@ function profileLikeActionForTaneDsp() {
 
 function profileLikeActionForProfileDsp() {
   const $btn = $("#profile-like-btn");
-  if ($btn.hasClass("btn-liked") || $btn.prop("disabled")) return;
   const userId = $("#profile-userId").val();
   // ---- 元の状態を保存（ロールバック用）----
   const prevProfile = { ...rtnData.profile };
