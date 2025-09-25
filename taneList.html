@@ -8,49 +8,194 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
+      rel="stylesheet"
+    />
     <style>
-      body {
-        background: #f4efe8;
+      :root {
+        /* Material Design 3 color tokens */
+        --md-sys-color-primary: #2a51b3;
+        --md-sys-color-on-primary: #ffffff;
+        --md-sys-color-primary-container:#f9f4ee;
+        --md-sys-color-on-primary-container: #21005d;
+        --md-sys-color-secondary: #757575;
+        --md-sys-color-on-secondary: #ffffff;
+        --md-sys-color-secondary-container: #e8def8;
+        --md-sys-color-on-secondary-container: #1d192b;
+        --md-sys-color-hada: #f3e9df;
+        --md-sys-color-yellow: #efc800;
+        --md-sys-color-red: #e60312;
+        --md-sys-color-orange: #ED0300;
+        --md-sys-color-green: #268454;
+        --md-sys-color-surface: #fff;
+        --md-sys-color-blue: #AFCCD1;
+        --md-sys-color-on-surface: #1d1b20;
+        --md-sys-color-surface-variant: #ebebeb;
+        --md-sys-color-on-surface-variant: #525252;
+        --md-sys-color-outline: #79747e;
+        --md-sys-color-outline-variant: #cac4d0;
+        --md-sys-color-error: #e60312;
+        --md-sys-color-on-error: #ffffff;
+        --md-sys-color-error-container: #ffdad6;
+        --md-sys-color-on-error-container: #410002;
+
+        /* Elevation tokens */
+        --md-sys-elevation-level0: 0px 1px 2px 0px rgba(0, 0, 0, 0.06),
+          0px 1px 3px 1px rgba(0, 0, 0, 0.03);
+        --md-sys-elevation-level1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
+          0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+        --md-sys-elevation-level2: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
+          0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+        --md-sys-elevation-level3: 0px 1px 3px 0px rgba(0, 0, 0, 0.3),
+          0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+
+        /* Shape tokens */
+        --md-sys-shape-corner-extra-small: 4px;
+        --md-sys-shape-corner-small: 8px;
+        --md-sys-shape-corner-medium: 12px;
+        --md-sys-shape-corner-large: 16px;
+        --md-sys-shape-corner-extra-large: 28px;
       }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: var(--md-sys-color-hada);
+        color: var(--md-sys-color-on-surface);
+        line-height: 1.5;
+        margin: 0;
+        padding: 16px;
+        padding-bottom: 96px;
+      }
+      .card-like {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: var(--md-sys-color-surface);
+        border-radius: var(--md-sys-shape-corner-large);
+        padding: 24px;
+        box-shadow: var(--md-sys-elevation-level1);
+        padding-bottom: 100px !important;
+      }
+
       .brand {
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin: 8px 0;
+        gap: 12px;
+        margin: 0 0 32px 0;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--md-sys-color-outline-variant);
       }
       .brand .logo {
-        width: 30px;
-        height: 30px;
+        width: 40px;
+        height: 40px;
+        display: inline-block;
       }
+      .brand strong {
+        font-weight: 500;
+        font-size: 20px;
+        color: var(--md-sys-color-on-surface);
+      }
+      #list > div{
+        padding-bottom: 8px;
+      }
+
       .sort-btn,
       .cat-btn {
-        margin: 0 4px 8px 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 8px;
+        border: none;
+        border-radius: var(--md-sys-shape-corner-extra-large);
+        background-color: var(--md-sys-color-primary);
+        color: var(--md-sys-color-surface);
+        font-weight: 900;
+        font-size: 12px;
+        letter-spacing: 0.1px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: "Roboto", sans-serif;
+        text-decoration: none;
+      }
+      .cat-btn:hover {
+        background-color: var(--md-sys-color-hada);
+        border-color: var(--md-sys-color-on-error-container);
+        color: var(--md-sys-color-on-error-container);
       }
       .card-tane {
-        margin-bottom: 12px;
+        margin-bottom: 16px;
+        border: 0.5px solid var(--md-sys-color-outline-variant);
+        border-radius: var(--md-sys-shape-corner-medium);
+        box-shadow: var(--md-sys-elevation-level0);
+        background-color: var(--md-sys-color-surface);
+        transition: all 0.2s ease;
+        cursor: pointer;
+        justify-content: space-between;
+        height: 100%;
+      }
+      .card-tane:hover {
+        box-shadow: var(--md-sys-elevation-level2);
       }
       .card-body {
         cursor: pointer;
-        margin-bottom: 12px;
+        padding: 16px;
+      }
+      .card-body h6 {
+        font-weight: 900;
+        font-size: 16px;
+        line-height: 24px;
+        color: var(--md-sys-color-on-surface);
+        margin: 12px 0 12px 0;
+      }
+      .card-body p.small {
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--md-sys-color-on-surface-variant);
+        margin: 0;
       }
       .avatar {
         width: 36px;
         height: 36px;
         border-radius: 50%;
-        border: 1px solid #aaa;
         object-fit: cover;
+        margin-right: 8px;
       }
       .like-btn {
-        min-width: 72px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 16px;
+        border:none;
+        border-radius: var(--md-sys-shape-corner-extra-large);
+        background-color: transparent;
+        color: var(--md-sys-color-primary);
+        font-weight: 500;
+        font-size: 14px;
+        letter-spacing: 0.4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: "Roboto", sans-serif;
+        margin: 4px 16px 16px auto;     
+      }
+      .like-btn:hover:not(:disabled) {
+        background-color: var(--md-sys-color-primary-container);
       }
       .like-btn[disabled] {
-        background: #adb5bd;
-        border-color: #adb5bd;
+        background-color: var(--md-sys-color-surface-variant);
+        color: var(--md-sys-color-on-surface-variant);
+        cursor: not-allowed;
       }
       .liked {
-        background: #000 !important;
-        border-color: #000 !important;
-        color: #fff !important;
+        background-color: var(--md-sys-color-primary) !important;
+        color: var(--md-sys-color-on-primary) !important;
       }
 
       /* オーバーレイ／トースト */
@@ -75,8 +220,8 @@
       .spinner-border {
         width: 48px;
         height: 48px;
-        border: 4px solid var(--md-sys-color-outline-variant);
-        border-top: 4px solid var(--md-sys-color-primary);
+        border: 4px solid var(--md-sys-color-yellow);
+        border-top: 4px solid var(--md-sys-color-orange);
         border-radius: 50%;
         animation: spin 1s linear infinite;
       }
@@ -109,18 +254,56 @@
         max-width: 90%;
         word-wrap: break-word;
       }
+
       .text-xsmall {
-        font-size: 0.75rem;
+        font-size: 12px;
+        line-height: 16px;
+        color:var(--md-sys-color-on-surface);
+        font-weight: 500;
+        letter-spacing: 0.4px;
+        margin-bottom: 4px;
+        padding: 8px 16px;
+        background-color:#efefef;
+        border-radius: var(--md-sys-shape-corner-extra-large);
+      }
+
+      /* Form control styling */
+      .form-control {
+        background-color: var(--md-sys-color-yellow) !important;
+        border: none;
+        border-radius: var(--md-sys-shape-corner-extra-large);
+        font-size: 12px;
+        color: var(--md-sys-color-surface);
+        transition: all 0.2s ease;
+        font-family: "Roboto", sans-serif;
+        padding: 4px 8px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      .form-control:focus,.form-control:hover {
+        background-color: var(--md-sys-color-blue) !important;
+        color: var(--md-sys-color-on-surface) !important;
+      }
+
+      /* Description text styling */
+      .card-like > p {
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--md-sys-color-on-surface-variant);
+        margin-bottom: 24px;
       }
 
       /* Desktop adjustments */
       @media (min-width: 768px) {
+        body {
+          padding: 16px;
+          padding-bottom: 96px;
+        }
         .card-like {
           padding: 24px;
-          max-width: 600px;
-          margin: 0 auto;
+          max-width: 800px;
           border-radius: var(--md-sys-shape-corner-large);
-          box-shadow: var(--md-sys-elevation-level1);
         }
         #errToast {
           bottom: 32px;
@@ -129,10 +312,85 @@
           max-width: 90%;
         }
       }
+
+      /* Mobile adjustments */
+      @media (max-width: 767px) {
+        body {
+          padding: 8px 8px 88px 8px;
+        }
+        .card-like {
+          padding: 16px;
+          border-radius: var(--md-sys-shape-corner-medium);
+        }
+        .brand {
+          gap: 8px;
+          margin-bottom: 24px;
+          padding-bottom: 12px;
+        }
+        .brand .logo {
+          width: 32px;
+          height: 32px;
+        }
+        .brand strong {
+          font-size: 18px;
+        }
+      }
+
+      /* Bottom Navigation Bar */
+      .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: var(--md-sys-color-surface);
+        border-top: 1px solid var(--md-sys-color-outline-variant);
+        display: flex;
+        justify-content: space-around;
+        align-items: stretch;
+        z-index: 1000;
+        box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.1);
+        padding: 4px;
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: var(--md-sys-color-on-surface-variant);
+        padding: 4px 8px;
+        border-radius: var(--md-sys-shape-corner-small);
+        transition: all 0.2s ease;
+        min-width: 25%;
+      }
+
+      .nav-item:hover {
+        color: var(--md-sys-color-on-primary-container);
+        background-color: var(--md-sys-color-yellow);
+        text-decoration: none;
+      }
+
+      .nav-item.active {
+        color: var(--md-sys-color-surface);
+        background-color: var(--md-sys-color-green);
+      }
+
+      .nav-item .material-icons-round {
+        font-size: 18px;
+        margin-bottom: 2px;
+      }
+
+      .nav-item span:last-child {
+        font-size: 8px;
+        font-weight: 500;
+        line-height: 10px;
+        letter-spacing: 0.4px;
+      }
     </style>
   </head>
-  <body class="p-2">
-    <div class="container">
+  <body>
+    <div class="card-like">
       <div class="brand">
         <img class="logo" src="logo.png" alt="ロゴ" />
         <strong>みんなのタネ</strong>
@@ -140,32 +398,38 @@
       <p>やってみたいことを投稿して、一緒にチャレンジする仲間を見つけよう！</p>
 
       <div class="mb-2">
-        <button class="btn btn-outline-dark cat-btn" data-cat="all">
+        <button class="cat-btn" data-cat="all">
           全て
         </button>
         <button
-          class="btn btn-outline-dark cat-btn"
+          class="cat-btn"
           data-cat="テーマ①日本橋での表現活動（アート・音楽など自由に！）"
         >
-          カテゴリー①
+          テーマ①
         </button>
         <button
-          class="btn btn-outline-dark cat-btn"
+          class="cat-btn"
           data-cat="テーマ②「あなたオリジナルの日本橋特集マップ」"
         >
-          カテゴリー②
+          テーマ②
+        </button>
+        <button
+          class="cat-btn"
+          data-cat="テーマ③その他"
+        >
+          テーマ③
         </button>
       </div>
 
       <div class="mb-2">
         <select
           id="sortSel"
-          class="form-control form-control-sm"
+          class="form-control"
           style="width: auto; display: inline-block"
         >
-          <option value="reco" selected>おすすめ数順</option>
-          <option value="likes">いいね数順</option>
-          <option value="new">新着順</option>
+          <option value="reco" selected>▼ おすすめ数順 💁</option>
+          <option value="likes">▼ いいね数順 ♡</option>
+          <option value="new">▼ 新着順 🆕</option>
         </select>
       </div>
 
@@ -179,9 +443,27 @@
         role="status"
         style="width: 3rem; height: 3rem"
       >
-        <span class="sr-only">Loading...</span>
       </div>
     </div>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <a
+        href="https://liff.line.me/2008071727-vLPLr6Gx"
+        class="nav-item"
+      >
+        <span class="material-icons-round">person</span>
+        <span>マイページ</span>
+      </a>
+      <a href="https://liff.line.me/2008071727-JWxnby8r" class="nav-item active">
+        <span class="material-icons-round">view_list</span>
+        <span>タネ一覧</span>
+      </a>
+      <a href="https://liff.line.me/2008071727-ypMm7WGE" class="nav-item">
+        <span class="material-icons-round">add_circle</span>
+        <span>タネ投稿</span>
+      </a>
+    </nav>
 
     <div id="errToast"><span id="errText"></span></div>
 
@@ -234,18 +516,18 @@
           <div class="col-md-4 col-12">
             <div class="card card-tane" data-id="${d.taneId}">
               <div class="card-body">
-                <p class="text-xsmall text-muted">${d.category || ""}</p>
+                <p class="text-xsmall">${d.category || ""}</p>
                 <h6>${d.title || ""}</h6>
-                <div class="d-flex align-items-center mb-2">
-                    <img class="avatar mr-2" src="${
-                      d.ownerIcon || DUMMY_ICON_URL
-                    }"/>
-                  <div>${d.name || "名無し"}</div>
+                <div class="d-flex align-items-center mb-3">
+                  <img class="avatar" src="${
+                    d.ownerIcon || DUMMY_ICON_URL
+                  }"/>
+                  <div style="font-size: 14px; color: var(--md-sys-color-on-surface);">${d.name || "名無し"}</div>
                 </div>
-                <p class="small text-muted">${d.comment || ""}</p>
+                <p class="small">${d.comment || ""}</p>
               </div>
               <div class="d-flex justify-content-between align-items-center">
-                <button class="btn btn-sm like-btn ms-auto me-2 ${
+                <button class="like-btn ${
                   d.alreadyLiked ? "liked" : ""
                 }" data-id="${d.taneId}" ${
             !isLiff || d.alreadyLiked ? "disabled" : ""

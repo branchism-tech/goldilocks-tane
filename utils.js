@@ -91,25 +91,20 @@ function renderTaneList(containerId, list) {
   if (!wrap) return;
   wrap.innerHTML = "";
 
-  (list || []).forEach((t) => {
-    if (!!t.title) {
-      const li = document.createElement("li");
-      li.className = "list-group-item";
-      li.textContent = `${t.title} `;
-
-      // 詳細ページへのリンクボタン
-      const btn = document.createElement("button");
-      btn.className = "btn btn-sm btn-outline-primary float-right";
-      btn.textContent = "詳細";
-      btn.onclick = () => {
-        // taneDsp.html をオーバーレイで開くなどの処理
-        window.location.href = `taneDsp.html?taneId=${encodeURIComponent(
-          t.taneId
-        )}`;
-      };
-      li.appendChild(btn);
-      wrap.appendChild(li);
-    }
+  list.forEach((d) => {
+    const card = $(`
+    <div class="col-md-4 col-12">
+      <div class="card card-tane" data-id="${d.taneId}" style="cursor: pointer;" onclick="window.location.href='taneDsp.html?taneId=${encodeURIComponent(d.taneId)}'">
+        <div class="card-body">
+          <p class="text-xsmall">${d.category || ""}</p>
+          <h6>${d.title || ""}</h6>
+          <p class="small">${d.comment || ""}</p>
+        </div>
+      </div>
+    </div>
+  `);
+    
+    $(wrap).append(card);
   });
 }
 
