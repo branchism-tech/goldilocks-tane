@@ -160,7 +160,7 @@
   border-radius: var(--md-sys-shape-corner-small);
   font-size: 14px;
   font-weight: 500;
-  color: var(--md-sys-color-on-surface-variant);
+  color: var(--md-sys-color-green);
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: "Roboto", sans-serif;
@@ -170,6 +170,10 @@
   color: var(--md-sys-color-on-primary);
   box-shadow: var(--md-sys-elevation-level1);
 }
+.card-like-sub .tab-button[data-tab="likes"] {
+  color: var(--md-sys-color-red);
+}
+
 .card-like-sub .tab-button.active[data-tab="likes"] {
   background-color: var(--md-sys-color-red);
   color: var(--md-sys-color-on-primary);
