@@ -638,7 +638,6 @@
       const userIdParam =
         new URL(location.href).searchParams.get("userId") || "";
       const kbn = new URL(location.href).searchParams.get("kbn") || "";
-      alert(kbn);
       var rtnData = {};
 
       async function loadPage() {
@@ -686,6 +685,7 @@
           if (!ready) return;
 
           await loadPage();
+          alert(kbn);
         } catch (e) {
           console.error("LIFF init failed", e);
           toast("LIFFの初期化に失敗しました");
