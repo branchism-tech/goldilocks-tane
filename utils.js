@@ -153,7 +153,10 @@ function addListenerProfileDetail(
         document.getElementById("profile-like-btn-row").style.display = "none";
       }
       if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();
-      else $("#profile-rtn-btn-row").hide();
+      else {
+        // $("#profile-rtn-btn-row").hide();
+        document.getElementById("profile-rtn-btn-row").style.display = "none";
+      }
       sendViewUserLog(prof.userId, "taneDsp");
       showProfileScreen();
     });
@@ -180,7 +183,11 @@ function addListenerProfileDetailSingle(
       document.getElementById("profile-like-btn-row").style.display = "none";
     }
     if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();
-    else $("#profile-rtn-btn-row").hide();
+    else {
+      // $("#profile-rtn-btn-row").hide();
+      document.getElementById("profile-rtn-btn-row").style.display = "none";
+    }
+
     sendViewUserLog(profile.userId, "taneDsp");
     showProfileScreen();
   });

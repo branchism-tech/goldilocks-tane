@@ -750,6 +750,9 @@
             (rtnData.ownerProfile && rtnData.ownerProfile.name) || ""
           );
 
+          if (!isLiff) {
+            document.getElementById("like-btn-row").style.display = "none";
+          }
           // いいね一覧
           renderLikes(rtnData.likes || []);
           if (rtnData.alreadyLiked) setLiked();
