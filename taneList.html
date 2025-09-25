@@ -160,7 +160,7 @@
           class="form-control form-control-sm"
           style="width: auto; display: inline-block"
         >
-          <option value="reco">おすすめ数順</option>
+          <option value="reco" selected>おすすめ数順</option>
           <option value="likes">いいね数順</option>
           <option value="new">新着順</option>
         </select>
@@ -198,7 +198,7 @@
         setTimeout(() => $("#errToast").fadeOut(300), 2000);
       }
 
-      function renderList(cat = "all", sort = "likes") {
+      function renderList(cat = "all", sort = "reco") {
         let data = [...allTanes];
         if (cat !== "all") {
           data = data.filter((d) => d.category === cat);
@@ -309,7 +309,7 @@
               renderList($(this).data("cat"), $("#sortSel").val());
             });
             $("#sortSel").on("change", function () {
-              renderList("all", this.value);
+              renderList($("sortSel").data("cat"), this.value);
             });
           } catch (e) {
             toast("読み込み失敗");
