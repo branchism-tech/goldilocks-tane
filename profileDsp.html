@@ -638,6 +638,7 @@
       const userIdParam =
         new URL(location.href).searchParams.get("userId") || "";
       const kbn = new URL(location.href).searchParams.get("kbn") || "";
+      var rtnData = {};
 
       async function loadPage() {
         try {
@@ -647,12 +648,12 @@
               userIdParam
             )}&id_token=${encodeURIComponent(idToken)}`
           );
-          const j = r.ok ? await r.json() : { ok: false };
-          if (!j.ok || !j.profile) {
-            toast(j.error || "プロフィールが見つかりません");
+          rtnData = r.ok ? await r.json() : { ok: false };
+          if (!rtnData.ok || !rtnData.profile) {
+            toast(rtnData.error || "プロフィールが見つかりません");
             return;
           }
-          fillProfileDetail("profile", j.profile);
+          fillProfileDetail(!kbn ? "profile" : "tane", rtnData.profile);
         } catch (e) {
           console.error(e);
           toast("読み込みエラーが発生しました");
@@ -674,6 +675,8 @@
           if (!kbn) {
             document.getElementById("profile-like-btn-row").style.display =
               "none";
+          } else {
+            $("#profile-like-btn").on("click", profileLikeActionForProfileDsp);
           }
           document.getElementById("profile-rtn-btn-row").style.display = "none";
 

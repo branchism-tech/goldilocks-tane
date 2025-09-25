@@ -267,6 +267,46 @@ function profileLikeActionForTaneDsp() {
     });
 }
 
+function profileLikeActionForProfileDsp() {
+  const $btn = $("#profile-like-btn");
+  if ($btn.hasClass("btn-liked") || $btn.prop("disabled")) return;
+  const userId = $("#profile-userId").val();
+  // ---- 元の状態を保存（ロールバック用）----
+  const prevProfile = { ...rtnData.profile };
+
+  // ---- 楽観的にUI更新 ----
+  rtnData.profile.likeUserFlg = true;
+  setProfileLiked();
+
+  // ---- 非同期でサーバーへ投げっぱなし ----
+  const idt = liff.getIDToken();
+  const url = `${GAS_ENDPOINT}?action=like_user&userId=${encodeURIComponent(
+    userId
+  )}&id_token=${encodeURIComponent(idt)}`;
+
+  fetch(url)
+    .then((r) =>
+      r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))
+    )
+    .then((j) => {
+      if (!j.ok) throw new Error(j.error || "like failed");
+      // 成功なら何もしない（すでにUI更新済み）
+    })
+    .catch((err) => {
+      console.error(err);
+      toast("いいねに失敗しました");
+
+      // ---- ロールバック ----
+      rtnData.profile = prevProfile;
+      // ボタン表示も元へ
+      const btn = document.getElementById("profile-like-btn");
+      btn.textContent = "いいね！";
+      btn.disabled = false;
+      btn.classList.remove("btn-secondary", "btn-liked");
+      btn.classList.add("btn-primary", "like-btn");
+    });
+}
+
 function setProfileLiked() {
   const btn = document.getElementById("profile-like-btn");
   btn.textContent = "いいね済み";
