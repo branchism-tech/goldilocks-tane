@@ -53,7 +53,8 @@
 .card-like-sub .profile-info-compact {
   display: flex;
   flex-wrap: wrap;
-  padding: 4px 20px;
+  padding: 0px 20px;
+  gap: 0px 8px;
   font-family: "Roboto", sans-serif;
 }
 .card-like-sub .info-item {
@@ -63,14 +64,14 @@
   font-size: 16px;
   line-height: 24px;
   color: var(--md-sys-color-on-surface);
-  gap: 8px;
+  gap: 2px;
 }
 .card-like-sub .info-item:last-child {
   margin-bottom: 0;
 }
 .card-like-sub .info-item::before {
   content: "#";
-  color: var(--md-sys-color-red);
+  color: var(--md-sys-color-yellow);
   font-weight: 500;
   flex-shrink: 0;
 }
@@ -119,18 +120,17 @@
   margin-top: 16px;
 }
 .card-like-sub .back-btn {
-  height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 16px;
+  padding: 4px 8px;
   background-color: var(--md-sys-color-secondary);
   color: var(--md-sys-color-on-secondary);
   border: none;
   border-radius: var(--md-sys-shape-corner-large);
   font-weight: 500;
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: var(--md-sys-elevation-level1);
@@ -147,7 +147,7 @@
 
 /* Tabs */
 .card-like-sub .tab-container {
-  margin-top: 32px;
+  margin-top: 8px;
 }
 .card-like-sub .tab-header {
   display: flex;
@@ -175,7 +175,7 @@
   font-family: "Roboto", sans-serif;
 }
 .card-like-sub .tab-button.active {
-  background-color: var(--md-sys-color-primary);
+  background-color: var(--md-sys-color-green);
   color: var(--md-sys-color-on-primary);
   box-shadow: var(--md-sys-elevation-level1);
 }
@@ -228,7 +228,7 @@
     font-size: 16px;
   }
   .card-like-sub .profile-info-compact {
-    padding: 4px 20px;
+    padding: 0px 20px;
   }
   .card-like-sub .info-item {
     font-size: 14px;
@@ -239,8 +239,8 @@
     font-size: 12px;
     gap: 6px;
   }
-  .card-like-sub .tab-button .material-icons-round {
-    font-size: 16px;
+  .card-like-sub .material-icons-round {
+    font-size: 12px;
   }
   .card-like-sub .like-btn {
     min-width: 120px;
@@ -278,7 +278,7 @@
 /* Desktop (explicit tweaks) */
 @media (min-width: 768px) {
   .card-like-sub .profile-info-compact {
-    padding: 4px 20px;
+    padding: 0px 8px
   }
   .card-like-sub .info-item {
     font-size: 16px;

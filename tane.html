@@ -22,7 +22,7 @@
         /* Material Design 3 color tokens */
         --md-sys-color-primary: #2a51b3;
         --md-sys-color-on-primary: #ffffff;
-        --md-sys-color-primary-container: #eaddff;
+        --md-sys-color-primary-container:#f9f4ee;
         --md-sys-color-on-primary-container: #21005d;
         --md-sys-color-secondary: #757575;
         --md-sys-color-on-secondary: #ffffff;
@@ -31,7 +31,10 @@
         --md-sys-color-hada: #f3e9df;
         --md-sys-color-yellow: #efc800;
         --md-sys-color-red: #e60312;
+        --md-sys-color-orange: #ED0300;
+        --md-sys-color-green: #268454;
         --md-sys-color-surface: #fff;
+        --md-sys-color-blue: #AFCCD1;
         --md-sys-color-on-surface: #1d1b20;
         --md-sys-color-surface-variant: #ebebeb;
         --md-sys-color-on-surface-variant: #525252;
@@ -43,6 +46,8 @@
         --md-sys-color-on-error-container: #410002;
 
         /* Elevation tokens */
+        --md-sys-elevation-level0: 0px 1px 2px 0px rgba(0, 0, 0, 0.06),
+          0px 1px 3px 1px rgba(0, 0, 0, 0.03);
         --md-sys-elevation-level1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
           0px 1px 3px 1px rgba(0, 0, 0, 0.15);
         --md-sys-elevation-level2: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
@@ -78,6 +83,7 @@
         border-radius: var(--md-sys-shape-corner-large);
         padding: 24px;
         box-shadow: var(--md-sys-elevation-level1);
+        padding-bottom: 100px !important;
       }
 
       .brand {
@@ -317,7 +323,7 @@
         border-top: none;
       }
 
-      /* Loading overlay */
+      /* オーバーレイ／トースト */
       #loadingOverlay {
         position: fixed;
         top: 0;
@@ -339,8 +345,8 @@
       .spinner-border {
         width: 48px;
         height: 48px;
-        border: 4px solid var(--md-sys-color-outline-variant);
-        border-top: 4px solid var(--md-sys-color-primary);
+        border: 4px solid var(--md-sys-color-yellow);
+        border-top: 4px solid var(--md-sys-color-orange);
         border-radius: 50%;
         animation: spin 1s linear infinite;
       }
@@ -360,48 +366,49 @@
         bottom: 0;
         left: 0;
         right: 0;
-        height: 80px;
         background-color: var(--md-sys-color-surface);
         border-top: 1px solid var(--md-sys-color-outline-variant);
         display: flex;
         justify-content: space-around;
-        align-items: center;
+        align-items: stretch;
         z-index: 1000;
         box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.1);
+        padding: 4px;
       }
 
       .nav-item {
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
         text-decoration: none;
         color: var(--md-sys-color-on-surface-variant);
-        padding: 8px;
+        padding: 4px 8px;
         border-radius: var(--md-sys-shape-corner-small);
         transition: all 0.2s ease;
-        min-width: 64px;
+        min-width: 25%;
       }
 
       .nav-item:hover {
-        color: var(--md-sys-color-primary);
-        background-color: var(--md-sys-color-primary-container);
+        color: var(--md-sys-color-on-primary-container);
+        background-color: var(--md-sys-color-yellow);
         text-decoration: none;
       }
 
       .nav-item.active {
-        color: var(--md-sys-color-primary);
-        background-color: var(--md-sys-color-hada);
+        color: var(--md-sys-color-surface);
+        background-color: var(--md-sys-color-green);
       }
 
       .nav-item .material-icons-round {
-        font-size: 24px;
-        margin-bottom: 4px;
+        font-size: 18px;
+        margin-bottom: 2px;
       }
 
       .nav-item span:last-child {
-        font-size: 12px;
+        font-size: 8px;
         font-weight: 500;
-        line-height: 16px;
+        line-height: 10px;
         letter-spacing: 0.4px;
       }
 
@@ -638,7 +645,6 @@
         role="status"
         style="width: 3rem; height: 3rem"
       >
-        <span class="sr-only">Loading...</span>
       </div>
     </div>
 
