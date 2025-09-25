@@ -15,583 +15,584 @@
     />
 
     <style>
-      :root {
-        /* Material Design 3 color tokens */
-        --md-sys-color-primary: #2a51b3;
-        --md-sys-color-on-primary: #ffffff;
-        --md-sys-color-primary-container: #eaddff;
-        --md-sys-color-on-primary-container: #21005d;
-        --md-sys-color-secondary: #757575;
-        --md-sys-color-on-secondary: #ffffff;
-        --md-sys-color-secondary-container: #e8def8;
-        --md-sys-color-on-secondary-container: #1d192b;
-        --md-sys-color-hada: #f3e9df;
-        --md-sys-color-yellow: #efc800;
-        --md-sys-color-red: #e60312;
-        --md-sys-color-surface: #fff;
-        --md-sys-color-on-surface: #1d1b20;
-        --md-sys-color-surface-variant: #ebebeb;
-        --md-sys-color-on-surface-variant: #525252;
-        --md-sys-color-outline: #79747e;
-        --md-sys-color-outline-variant: #cac4d0;
-        --md-sys-color-error: #e60312;
-        --md-sys-color-on-error: #ffffff;
-        --md-sys-color-error-container: #ffdad6;
-        --md-sys-color-on-error-container: #410002;
+        :root {
+          /* Material Design 3 color tokens */
+          --md-sys-color-primary: #2a51b3;
+          --md-sys-color-on-primary: #ffffff;
+          --md-sys-color-primary-container: #eaddff;
+          --md-sys-color-on-primary-container: #21005d;
+          --md-sys-color-secondary: #757575;
+          --md-sys-color-on-secondary: #ffffff;
+          --md-sys-color-secondary-container: #e8def8;
+          --md-sys-color-on-secondary-container: #1d192b;
+          --md-sys-color-hada: #f3e9df;
+          --md-sys-color-yellow: #efc800;
+          --md-sys-color-red: #e60312;
+          --md-sys-color-surface: #fff;
+          --md-sys-color-on-surface: #1d1b20;
+          --md-sys-color-surface-variant: #ebebeb;
+          --md-sys-color-on-surface-variant: #525252;
+          --md-sys-color-outline: #79747e;
+          --md-sys-color-outline-variant: #cac4d0;
+          --md-sys-color-error: #e60312;
+          --md-sys-color-on-error: #ffffff;
+          --md-sys-color-error-container: #ffdad6;
+          --md-sys-color-on-error-container: #410002;
 
-        /* Elevation tokens */
-        --md-sys-elevation-level1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
-          0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-        --md-sys-elevation-level2: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
-          0px 2px 6px 2px rgba(0, 0, 0, 0.15);
-        --md-sys-elevation-level3: 0px 1px 3px 0px rgba(0, 0, 0, 0.3),
-          0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+          /* Elevation tokens */
+          --md-sys-elevation-level1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
+            0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+          --md-sys-elevation-level2: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
+            0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+          --md-sys-elevation-level3: 0px 1px 3px 0px rgba(0, 0, 0, 0.3),
+            0px 4px 8px 3px rgba(0, 0, 0, 0.15);
 
-        /* Shape tokens */
-        --md-sys-shape-corner-extra-small: 4px;
-        --md-sys-shape-corner-small: 8px;
-        --md-sys-shape-corner-medium: 12px;
-        --md-sys-shape-corner-large: 16px;
-        --md-sys-shape-corner-extra-large: 28px;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        font-family: "Roboto", sans-serif;
-        background-color: var(--md-sys-color-primary);
-        color: var(--md-sys-color-on-surface);
-      }
-
-      body {
-        overflow-y: auto;
-        line-height: 1.5;
-      }
-
-      .card-like {
-        width: 100%;
-        min-height: 100vh;
-        margin: 0;
-        background-color: var(--md-sys-color-surface);
-        padding: 24px;
-        box-sizing: border-box;
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin: 0 0 32px 0;
-        padding-bottom: 16px;
-        border-bottom: 1px solid var(--md-sys-color-outline-variant);
-      }
-
-      .brand .logo {
-        width: 40px;
-        height: 40px;
-        display: inline-block;
-      }
-
-      .section-title {
-        font-weight: 500;
-        font-size: 22px;
-        line-height: 28px;
-        color: var(--md-sys-color-on-surface);
-        margin: 24px 0 16px 0;
-        letter-spacing: 0;
-      }
-
-      .seed-title-wrap {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 16px;
-        background-color: var(--md-sys-color-surface-variant);
-        border-radius: var(--md-sys-shape-corner-medium);
-        margin-bottom: 24px;
-      }
-
-      .avatar {
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-        object-fit: cover;
-        box-shadow: var(--md-sys-elevation-level1);
-      }
-
-      .field-label {
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 20px;
-        letter-spacing: 0.1px;
-        color: var(--md-sys-color-on-surface-variant);
-        margin-top: 24px;
-        margin-bottom: 8px;
-        text-transform: uppercase;
-      }
-
-      .field-row {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-top: 8px;
-        padding: 12px 16px;
-        background-color: var(--md-sys-color-surface-variant);
-        border-radius: var(--md-sys-shape-corner-small);
-        font-size: 16px;
-        line-height: 24px;
-        letter-spacing: 0.5px;
-      }
-
-      .field-label-2 {
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 20px;
-        letter-spacing: 0.1px;
-        color: var(--md-sys-color-on-surface-variant);
-        min-width: 80px;
-        margin-top: 16px;
-        margin-bottom: 8px;
-        text-transform: uppercase;
-      }
-
-      /* いいね！ */
-      .likes-header {
-        display: flex;
-        align-items: baseline;
-        gap: 12px;
-        margin: 24px 0 16px 0;
-        padding: 0 16px;
-      }
-
-      .likes-title {
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 24px;
-        letter-spacing: 0.5px;
-        color: var(--md-sys-color-on-surface);
-      }
-
-      .likes-count {
-        color: var(--md-sys-color-on-surface-variant);
-        font-size: 14px;
-        line-height: 20px;
-        letter-spacing: 0.25px;
-      }
-
-      .likes-avatars {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-bottom: 24px;
-        padding: 16px;
-        background-color: var(--md-sys-color-surface-variant);
-        border-radius: var(--md-sys-shape-corner-medium);
-      }
-
-      .likes-avatars img {
-        width: 48px;
-        height: 48px;
-        object-fit: cover;
-        border-radius: 50%;
-        box-shadow: var(--md-sys-elevation-level1);
-        transition: transform 0.2s ease;
-      }
-
-      .likes-avatars img:hover {
-        transform: scale(1.05);
-      }
-
-      .like-btn-row {
-        display: flex;
-        justify-content: flex-end;
-        padding: 16px;
-      }
-
-      .like-btn {
-        min-width: 140px;
-        height: 40px;
-        background-color: var(--md-sys-color-primary);
-        color: var(--md-sys-color-on-primary);
-        border: none;
-        border-radius: var(--md-sys-shape-corner-large);
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 20px;
-        letter-spacing: 0.1px;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        box-shadow: var(--md-sys-elevation-level1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
-
-      .like-btn:hover {
-        box-shadow: var(--md-sys-elevation-level2);
-        transform: translateY(-1px);
-      }
-
-      .like-btn:active {
-        transform: translateY(0);
-        box-shadow: var(--md-sys-elevation-level1);
-      }
-
-      .like-btn[disabled] {
-        background-color: var(--md-sys-color-outline-variant);
-        color: var(--md-sys-color-on-surface-variant);
-        cursor: not-allowed;
-        box-shadow: none;
-        transform: none;
-      }
-
-      .like-btn[disabled]:hover {
-        box-shadow: none;
-        transform: none;
-      }
-
-      .btn-liked {
-        background-color: var(--md-sys-color-secondary-container);
-        color: var(--md-sys-color-on-secondary-container);
-        pointer-events: none;
-        opacity: 0.9;
-      }
-
-      .hint {
-        color: var(--md-sys-color-on-surface-variant);
-        font-size: 12px;
-        line-height: 16px;
-        letter-spacing: 0.4px;
-        font-style: italic;
-      }
-
-      /* オーバーレイ／トースト */
-      #loadingOverlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(4px);
-        z-index: 3001;
-        display: none;
-        justify-content: center;
-        align-items: center;
-      }
-
-      #loadingOverlay.show {
-        display: flex;
-      }
-
-      .spinner-border {
-        width: 48px;
-        height: 48px;
-        border: 4px solid var(--md-sys-color-outline-variant);
-        border-top: 4px solid var(--md-sys-color-primary);
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
+          /* Shape tokens */
+          --md-sys-shape-corner-extra-small: 4px;
+          --md-sys-shape-corner-small: 8px;
+          --md-sys-shape-corner-medium: 12px;
+          --md-sys-shape-corner-large: 16px;
+          --md-sys-shape-corner-extra-large: 28px;
         }
-        100% {
-          transform: rotate(360deg);
+
+        * {
+          box-sizing: border-box;
         }
-      }
 
-      #errToast {
-        display: none;
-        position: fixed;
-        left: 50%;
-        bottom: 32px;
-        transform: translateX(-50%);
-        background-color: var(--md-sys-color-error-container);
-        color: var(--md-sys-color-on-error-container);
-        padding: 16px 24px;
-        border-radius: var(--md-sys-shape-corner-small);
-        z-index: 4002;
-        box-shadow: var(--md-sys-elevation-level3);
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 20px;
-        letter-spacing: 0.25px;
-        max-width: 90%;
-        word-wrap: break-word;
-      }
+        html,
+        body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          font-family: "Roboto", sans-serif;
+          background-color: var(--md-sys-color-primary);
+          color: var(--md-sys-color-on-surface);
+        }
 
-      /* Material Design 3 mobile-first responsive design */
-      .card-like {
-        padding: 16px;
-        max-width: 100%;
-      }
+        body {
+          overflow-y: auto;
+          line-height: 1.5;
+        }
 
-      .brand {
-        gap: 8px;
-        margin-bottom: 24px;
-        padding-bottom: 12px;
-      }
-
-      .brand .logo {
-        width: 32px;
-        height: 32px;
-      }
-
-      .section-title {
-        font-size: 20px;
-        line-height: 24px;
-        margin: 20px 0 12px 0;
-      }
-
-      .seed-title-wrap {
-        padding: 12px;
-        gap: 12px;
-        margin-bottom: 20px;
-      }
-
-      .avatar {
-        width: 48px;
-        height: 48px;
-      }
-
-      .field-label {
-        font-size: 12px;
-        margin-top: 20px;
-        margin-bottom: 6px;
-      }
-
-      .field-row {
-        padding: 12px;
-        font-size: 14px;
-        gap: 8px;
-      }
-
-      .field-label-2 {
-        font-size: 12px;
-        margin-top: 12px;
-        margin-bottom: 6px;
-        min-width: 60px;
-      }
-
-      .likes-header {
-        margin: 20px 0 12px 0;
-        padding: 0 12px;
-        gap: 8px;
-      }
-
-      .likes-title {
-        font-size: 14px;
-      }
-
-      .likes-count {
-        font-size: 12px;
-      }
-
-      .likes-avatars {
-        padding: 12px;
-        gap: 8px;
-        margin-bottom: 20px;
-      }
-
-      .likes-avatars img {
-        width: 40px;
-        height: 40px;
-      }
-
-      .like-btn-row {
-        padding: 12px;
-      }
-
-      .like-btn {
-        min-width: 120px;
-        height: 36px;
-        font-size: 12px;
-        border-radius: var(--md-sys-shape-corner-medium);
-      }
-
-      #errToast {
-        bottom: 20px;
-        padding: 12px 20px;
-        font-size: 12px;
-        max-width: calc(100% - 32px);
-      }
-
-      /* Desktop adjustments */
-      @media (min-width: 768px) {
         .card-like {
+          width: 100%;
+          min-height: 100vh;
+          margin: 0;
+          background-color: var(--md-sys-color-surface);
           padding: 24px;
-          max-width: 600px;
-          margin: 0 auto;
-          border-radius: var(--md-sys-shape-corner-large);
-          box-shadow: var(--md-sys-elevation-level1);
+          box-sizing: border-box;
         }
 
         .brand {
+          display: flex;
+          align-items: center;
           gap: 12px;
-          margin-bottom: 32px;
+          margin: 0 0 32px 0;
           padding-bottom: 16px;
+          border-bottom: 1px solid var(--md-sys-color-outline-variant);
         }
 
         .brand .logo {
           width: 40px;
           height: 40px;
+          display: inline-block;
         }
 
         .section-title {
+          font-weight: 500;
           font-size: 22px;
           line-height: 28px;
+          color: var(--md-sys-color-on-surface);
           margin: 24px 0 16px 0;
+          letter-spacing: 0;
         }
 
         .seed-title-wrap {
-          padding: 16px;
+          display: flex;
+          align-items: center;
           gap: 16px;
+          padding: 16px;
+          background-color: var(--md-sys-color-surface-variant);
+          border-radius: var(--md-sys-shape-corner-medium);
           margin-bottom: 24px;
         }
 
         .avatar {
           width: 56px;
           height: 56px;
+          border-radius: 50%;
+          object-fit: cover;
+          box-shadow: var(--md-sys-elevation-level1);
         }
 
         .field-label {
+          font-weight: 500;
           font-size: 14px;
+          line-height: 20px;
+          letter-spacing: 0.1px;
+          color: var(--md-sys-color-on-surface-variant);
           margin-top: 24px;
           margin-bottom: 8px;
+          text-transform: uppercase;
         }
 
         .field-row {
-          padding: 12px 16px;
-          font-size: 16px;
+          display: flex;
+          align-items: center;
           gap: 12px;
+          margin-top: 8px;
+          padding: 12px 16px;
+          background-color: var(--md-sys-color-surface-variant);
+          border-radius: var(--md-sys-shape-corner-small);
+          font-size: 16px;
+          line-height: 24px;
+          letter-spacing: 0.5px;
         }
 
         .field-label-2 {
+          font-weight: 500;
           font-size: 14px;
+          line-height: 20px;
+          letter-spacing: 0.1px;
+          color: var(--md-sys-color-on-surface-variant);
+          min-width: 80px;
           margin-top: 16px;
           margin-bottom: 8px;
-          min-width: 80px;
+          text-transform: uppercase;
         }
 
+        /* いいね！ */
         .likes-header {
+          display: flex;
+          align-items: baseline;
+          gap: 12px;
           margin: 24px 0 16px 0;
           padding: 0 16px;
-          gap: 12px;
         }
 
         .likes-title {
+          font-weight: 500;
           font-size: 16px;
+          line-height: 24px;
+          letter-spacing: 0.5px;
+          color: var(--md-sys-color-on-surface);
         }
 
         .likes-count {
+          color: var(--md-sys-color-on-surface-variant);
           font-size: 14px;
+          line-height: 20px;
+          letter-spacing: 0.25px;
         }
 
         .likes-avatars {
-          padding: 16px;
+          display: flex;
+          flex-wrap: wrap;
           gap: 12px;
           margin-bottom: 24px;
+          padding: 16px;
+          background-color: var(--md-sys-color-surface-variant);
+          border-radius: var(--md-sys-shape-corner-medium);
         }
 
         .likes-avatars img {
           width: 48px;
           height: 48px;
+          object-fit: cover;
+          border-radius: 50%;
+          box-shadow: var(--md-sys-elevation-level1);
+          transition: transform 0.2s ease;
+        }
+
+        .likes-avatars img:hover {
+          transform: scale(1.05);
         }
 
         .like-btn-row {
+          display: flex;
+          justify-content: flex-end;
           padding: 16px;
         }
 
         .like-btn {
           min-width: 140px;
           height: 40px;
-          font-size: 14px;
+          background-color: var(--md-sys-color-primary);
+          color: var(--md-sys-color-on-primary);
+          border: none;
           border-radius: var(--md-sys-shape-corner-large);
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 20px;
+          letter-spacing: 0.1px;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          box-shadow: var(--md-sys-elevation-level1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+        }
+
+        .like-btn:hover {
+          box-shadow: var(--md-sys-elevation-level2);
+          transform: translateY(-1px);
+        }
+
+        .like-btn:active {
+          transform: translateY(0);
+          box-shadow: var(--md-sys-elevation-level1);
+        }
+
+        .like-btn[disabled] {
+          background-color: var(--md-sys-color-outline-variant);
+          color: var(--md-sys-color-on-surface-variant);
+          cursor: not-allowed;
+          box-shadow: none;
+          transform: none;
+        }
+
+        .like-btn[disabled]:hover {
+          box-shadow: none;
+          transform: none;
+        }
+
+        .btn-liked {
+          background-color: var(--md-sys-color-secondary-container);
+          color: var(--md-sys-color-on-secondary-container);
+          pointer-events: none;
+          opacity: 0.9;
+        }
+
+        .hint {
+          color: var(--md-sys-color-on-surface-variant);
+          font-size: 12px;
+          line-height: 16px;
+          letter-spacing: 0.4px;
+          font-style: italic;
+        }
+
+        /* オーバーレイ／トースト */
+        #loadingOverlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(255, 255, 255, 0.9);
+          backdrop-filter: blur(4px);
+          z-index: 3001;
+          display: none;
+          justify-content: center;
+          align-items: center;
+        }
+
+        #loadingOverlay.show {
+          display: flex;
+        }
+
+        .spinner-border {
+          width: 48px;
+          height: 48px;
+          border: 4px solid var(--md-sys-color-outline-variant);
+          border-top: 4px solid var(--md-sys-color-primary);
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
         }
 
         #errToast {
+          display: none;
+          position: fixed;
+          left: 50%;
           bottom: 32px;
+          transform: translateX(-50%);
+          background-color: var(--md-sys-color-error-container);
+          color: var(--md-sys-color-on-error-container);
           padding: 16px 24px;
+          border-radius: var(--md-sys-shape-corner-small);
+          z-index: 4002;
+          box-shadow: var(--md-sys-elevation-level3);
+          font-weight: 500;
           font-size: 14px;
+          line-height: 20px;
+          letter-spacing: 0.25px;
           max-width: 90%;
+          word-wrap: break-word;
         }
-      }
 
-      /* Bottom Navigation Bar */
-      .bottom-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 80px;
-        background-color: var(--md-sys-color-surface);
-        border-top: 1px solid var(--md-sys-color-outline-variant);
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        z-index: 1000;
-        box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.1);
-      }
+        /* Material Design 3 mobile-first responsive design */
+        .card-like {
+          padding: 16px;
+          max-width: 100%;
+        }
 
-      .nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-decoration: none;
-        color: var(--md-sys-color-on-surface-variant);
-        padding: 8px;
-        border-radius: var(--md-sys-shape-corner-small);
-        transition: all 0.2s ease;
-        min-width: 64px;
-      }
+        .brand {
+          gap: 8px;
+          margin-bottom: 24px;
+          padding-bottom: 12px;
+        }
 
-      .nav-item:hover {
-        color: var(--md-sys-color-primary);
-        background-color: var(--md-sys-color-primary-container);
-        text-decoration: none;
-      }
+        .brand .logo {
+          width: 32px;
+          height: 32px;
+        }
 
-      .nav-item.active {
-        color: var(--md-sys-color-primary);
-        background-color: var(--md-sys-color-hada);
-      }
+        .section-title {
+          font-size: 20px;
+          line-height: 24px;
+          margin: 20px 0 12px 0;
+        }
 
-      .nav-item .material-icons-round {
-        font-size: 24px;
-        margin-bottom: 4px;
-      }
+        .seed-title-wrap {
+          padding: 12px;
+          gap: 12px;
+          margin-bottom: 20px;
+        }
 
-      .nav-item span:last-child {
-        font-size: 12px;
-        font-weight: 500;
-        line-height: 16px;
-        letter-spacing: 0.4px;
-      }
+        .avatar {
+          width: 48px;
+          height: 48px;
+        }
 
-      /* Add bottom padding to body to account for fixed nav */
-      body {
-        padding-bottom: 80px;
-      }
+        .field-label {
+          font-size: 12px;
+          margin-top: 20px;
+          margin-bottom: 6px;
+        }
 
-      @media (max-width: 768px) {
+        .field-row {
+          padding: 12px;
+          font-size: 14px;
+          gap: 8px;
+        }
+
+        .field-label-2 {
+          font-size: 12px;
+          margin-top: 12px;
+          margin-bottom: 6px;
+          min-width: 60px;
+        }
+
+        .likes-header {
+          margin: 20px 0 12px 0;
+          padding: 0 12px;
+          gap: 8px;
+        }
+
+        .likes-title {
+          font-size: 14px;
+        }
+
+        .likes-count {
+          font-size: 12px;
+        }
+
+        .likes-avatars {
+          padding: 12px;
+          gap: 8px;
+          margin-bottom: 20px;
+        }
+
+        .likes-avatars img {
+          width: 40px;
+          height: 40px;
+        }
+
+        .like-btn-row {
+          padding: 12px;
+        }
+
+        .like-btn {
+          min-width: 120px;
+          height: 36px;
+          font-size: 12px;
+          border-radius: var(--md-sys-shape-corner-medium);
+        }
+
+        #errToast {
+          bottom: 20px;
+          padding: 12px 20px;
+          font-size: 12px;
+          max-width: calc(100% - 32px);
+        }
+
+        /* Desktop adjustments */
+        @media (min-width: 768px) {
+          .card-like {
+            padding: 24px;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: var(--md-sys-shape-corner-large);
+            box-shadow: var(--md-sys-elevation-level1);
+          }
+
+          .brand {
+            gap: 12px;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+          }
+
+          .brand .logo {
+            width: 40px;
+            height: 40px;
+          }
+
+          .section-title {
+            font-size: 22px;
+            line-height: 28px;
+            margin: 24px 0 16px 0;
+          }
+
+          .seed-title-wrap {
+            padding: 16px;
+            gap: 16px;
+            margin-bottom: 24px;
+          }
+
+          .avatar {
+            width: 56px;
+            height: 56px;
+          }
+
+          .field-label {
+            font-size: 14px;
+            margin-top: 24px;
+            margin-bottom: 8px;
+          }
+
+          .field-row {
+            padding: 12px 16px;
+            font-size: 16px;
+            gap: 12px;
+          }
+
+          .field-label-2 {
+            font-size: 14px;
+            margin-top: 16px;
+            margin-bottom: 8px;
+            min-width: 80px;
+          }
+
+          .likes-header {
+            margin: 24px 0 16px 0;
+            padding: 0 16px;
+            gap: 12px;
+          }
+
+          .likes-title {
+            font-size: 16px;
+          }
+
+          .likes-count {
+            font-size: 14px;
+          }
+
+          .likes-avatars {
+            padding: 16px;
+            gap: 12px;
+            margin-bottom: 24px;
+          }
+
+          .likes-avatars img {
+            width: 48px;
+            height: 48px;
+          }
+
+          .like-btn-row {
+            padding: 16px;
+          }
+
+          .like-btn {
+            min-width: 140px;
+            height: 40px;
+            font-size: 14px;
+            border-radius: var(--md-sys-shape-corner-large);
+          }
+
+          #errToast {
+            bottom: 32px;
+            padding: 16px 24px;
+            font-size: 14px;
+            max-width: 90%;
+          }
+        }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 80px;
+          background-color: var(--md-sys-color-surface);
+          border-top: 1px solid var(--md-sys-color-outline-variant);
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          z-index: 1000;
+          box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-decoration: none;
+          color: var(--md-sys-color-on-surface-variant);
+          padding: 8px;
+          border-radius: var(--md-sys-shape-corner-small);
+          transition: all 0.2s ease;
+          min-width: 64px;
+        }
+
+        .nav-item:hover {
+          color: var(--md-sys-color-primary);
+          background-color: var(--md-sys-color-primary-container);
+          text-decoration: none;
+        }
+
+        .nav-item.active {
+          color: var(--md-sys-color-primary);
+          background-color: var(--md-sys-color-hada);
+        }
+
+        .nav-item .material-icons-round {
+          font-size: 24px;
+          margin-bottom: 4px;
+        }
+
+        .nav-item span:last-child {
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 16px;
+          letter-spacing: 0.4px;
+        }
+
+        /* Add bottom padding to body to account for fixed nav */
         body {
-          padding-bottom: 88px;
+          padding-bottom: 80px;
         }
-      }
+
+        @media (max-width: 768px) {
+          body {
+            padding-bottom: 88px;
+          }
+        }
+      /*
     </style>
 
     <style>
-      :root {
+      */ :root {
         /* Material Design 3 color tokens */
         --md-sys-color-primary: #2a51b3;
         --md-sys-color-on-primary: #ffffff;
