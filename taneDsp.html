@@ -685,243 +685,243 @@
     <script src="./utils.js?ver=1.02"></script>
 
     <script>
-      // // ===== 設定 =====
-      // const LIFF_ID = "2008071727-prQWbK4R";
-      // const GAS_ENDPOINT =
-      //   "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
-      // const DUMMY_ICON_URL = "logo.png";
-      // let isLiff = false;
+      // ===== 設定 =====
+      const LIFF_ID = "2008071727-prQWbK4R";
+      const GAS_ENDPOINT =
+        "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
+      const DUMMY_ICON_URL = "logo.png";
+      let isLiff = false;
 
-      // const taneId = new URL(location.href).searchParams.get("taneId");
-      // var rtnData = {};
+      const taneId = new URL(location.href).searchParams.get("taneId");
+      var rtnData = {};
 
-      // let likesProfileMap = {};
+      let likesProfileMap = {};
 
-      // function renderLikes(list) {
-      //   const wrap = document.getElementById("likesAvatars");
-      //   if (!wrap) return;
+      function renderLikes(list) {
+        const wrap = document.getElementById("likesAvatars");
+        if (!wrap) return;
 
-      //   wrap.innerHTML = "";
-      //   likesProfileMap = {}; // 毎回作り直し
+        wrap.innerHTML = "";
+        likesProfileMap = {}; // 毎回作り直し
 
-      //   (list || []).forEach((x, i) => {
-      //     const img = document.createElement("img");
-      //     const idNum = String(i + 1).padStart(3, "0");
-      //     const domId = `likesAvatar_${idNum}`;
+        (list || []).forEach((x, i) => {
+          const img = document.createElement("img");
+          const idNum = String(i + 1).padStart(3, "0");
+          const domId = `likesAvatar_${idNum}`;
 
-      //     img.id = domId;
-      //     img.src =
-      //       (x.likeProfile && x.likeProfile.ownerIcon) || DUMMY_ICON_URL;
-      //     img.alt = "like-user";
-      //     wrap.appendChild(img);
+          img.id = domId;
+          img.src =
+            (x.likeProfile && x.likeProfile.ownerIcon) || DUMMY_ICON_URL;
+          img.alt = "like-user";
+          wrap.appendChild(img);
 
-      //     // クリック時に引くためのプロフィールを記録
-      //     likesProfileMap[domId] = x.likeProfile || {};
-      //   });
-      // }
+          // クリック時に引くためのプロフィールを記録
+          likesProfileMap[domId] = x.likeProfile || {};
+        });
+      }
 
-      // function setLiked() {
-      //   const btn = document.getElementById("likeBtn");
-      //   if (!btn) return;
-      //   if (btn.classList.contains("btn-liked")) return; // すでに済なら何もしない
-      //   btn.innerHTML =
-      //     '<span class="material-icons-round">favorite</span>いいね済み';
-      //   btn.disabled = true;
-      //   btn.classList.remove("btn-primary");
-      //   btn.classList.add("btn-secondary", "btn-liked");
-      // }
+      function setLiked() {
+        const btn = document.getElementById("likeBtn");
+        if (!btn) return;
+        if (btn.classList.contains("btn-liked")) return; // すでに済なら何もしない
+        btn.innerHTML =
+          '<span class="material-icons-round">favorite</span>いいね済み';
+        btn.disabled = true;
+        btn.classList.remove("btn-primary");
+        btn.classList.add("btn-secondary", "btn-liked");
+      }
 
-      // async function loadPage() {
-      //   if (!taneId) {
-      //     toast("taneId がありません");
-      //     return;
-      //   }
-      //   try {
-      //     const idToken = isLiff ? liff.getIDToken() : "";
-      //     const r = await fetch(
-      //       `${GAS_ENDPOINT}?action=tane_public_bundle&taneId=${encodeURIComponent(
-      //         taneId
-      //       )}&id_token=${encodeURIComponent(idToken)}`
-      //     );
-      //     rtnData = r.ok ? await r.json() : { ok: false };
-      //     if (!rtnData.ok || !rtnData.record) {
-      //       toast(rtnData.error || "タネが見つかりません");
-      //       return;
-      //     }
+      async function loadPage() {
+        if (!taneId) {
+          toast("taneId がありません");
+          return;
+        }
+        try {
+          const idToken = isLiff ? liff.getIDToken() : "";
+          const r = await fetch(
+            `${GAS_ENDPOINT}?action=tane_public_bundle&taneId=${encodeURIComponent(
+              taneId
+            )}&id_token=${encodeURIComponent(idToken)}`
+          );
+          rtnData = r.ok ? await r.json() : { ok: false };
+          if (!rtnData.ok || !rtnData.record) {
+            toast(rtnData.error || "タネが見つかりません");
+            return;
+          }
 
-      //     // 本体表示
-      //     $("#categoryText").text(`カテゴリ：${rtnData.record.category || ""}`);
-      //     $("#titleText").text(rtnData.record.title || "");
-      //     $("#commentText").text(rtnData.record.comment || "");
-      //     $("#kindText").text(rtnData.record.kind_person || "");
-      //     $("#ownerIcon").attr(
-      //       "src",
-      //       (rtnData.ownerProfile && rtnData.ownerProfile.ownerIcon) ||
-      //         DUMMY_ICON_URL
-      //     );
-      //     $("#ownerName").text(
-      //       (rtnData.ownerProfile && rtnData.ownerProfile.name) || ""
-      //     );
+          // 本体表示
+          $("#categoryText").text(`カテゴリ：${rtnData.record.category || ""}`);
+          $("#titleText").text(rtnData.record.title || "");
+          $("#commentText").text(rtnData.record.comment || "");
+          $("#kindText").text(rtnData.record.kind_person || "");
+          $("#ownerIcon").attr(
+            "src",
+            (rtnData.ownerProfile && rtnData.ownerProfile.ownerIcon) ||
+              DUMMY_ICON_URL
+          );
+          $("#ownerName").text(
+            (rtnData.ownerProfile && rtnData.ownerProfile.name) || ""
+          );
 
-      //     // いいね一覧
-      //     renderLikes(rtnData.likes || []);
-      //     if (rtnData.alreadyLiked) setLiked();
-      //     if (!isLiff) {
-      //       document.getElementById("likeBtn").style.display = "none";
-      //     }
+          // いいね一覧
+          renderLikes(rtnData.likes || []);
+          if (rtnData.alreadyLiked) setLiked();
+          if (!isLiff) {
+            document.getElementById("likeBtn").style.display = "none";
+          }
 
-      //     // クリックでプロフィール詳細（owner単体）
-      //     addListenerProfileDetailSingle(
-      //       "ownerIcon",
-      //       rtnData.ownerProfile || {},
-      //       isLiff ? true : false,
-      //       true
-      //     );
+          // クリックでプロフィール詳細（owner単体）
+          addListenerProfileDetailSingle(
+            "ownerIcon",
+            rtnData.ownerProfile || {},
+            isLiff ? true : false,
+            true
+          );
 
-      //     // クリックでプロフィール詳細（likes 複数）
-      //     const likeProfiles = (rtnData.likes || []).map(
-      //       (x) => x.likeProfile || {}
-      //     );
-      //     addListenerProfileDetail(
-      //       likeProfiles,
-      //       "likesAvatar",
-      //       isLiff ? true : false,
-      //       true
-      //     );
+          // クリックでプロフィール詳細（likes 複数）
+          const likeProfiles = (rtnData.likes || []).map(
+            (x) => x.likeProfile || {}
+          );
+          addListenerProfileDetail(
+            likeProfiles,
+            "likesAvatar",
+            isLiff ? true : false,
+            true
+          );
 
-      //     $("#profile-like-btn").on("click", profileLikeActionForTaneDsp);
-      //     // 戻るボタン
-      //     addListenerProfileDetailRtnBtn();
-      //   } catch (e) {
-      //     console.error(e);
-      //     toast("読み込みエラーが発生しました");
-      //   }
-      // }
+          $("#profile-like-btn").on("click", profileLikeActionForTaneDsp);
+          // 戻るボタン
+          addListenerProfileDetailRtnBtn();
+        } catch (e) {
+          console.error(e);
+          toast("読み込みエラーが発生しました");
+        }
+      }
 
-      // function likeAction() {
-      //   const $btn = $("#likeBtn");
-      //   if ($btn.hasClass("btn-liked") || $btn.prop("disabled")) return;
+      function likeAction() {
+        const $btn = $("#likeBtn");
+        if ($btn.hasClass("btn-liked") || $btn.prop("disabled")) return;
 
-      //   // ---- 楽観的にUI更新 ----
-      //   // ---- 元の状態を保存（ロールバック用）----
-      //   const prevAlreadyLiked = rtnData.alreadyLiked;
-      //   const prevOwnerProfile = JSON.parse(
-      //     JSON.stringify(rtnData.ownerProfile)
-      //   );
-      //   const prevLikes = JSON.parse(JSON.stringify(rtnData.likes || []));
-      //   const prevMyLike = JSON.parse(JSON.stringify(rtnData.myLike));
+        // ---- 楽観的にUI更新 ----
+        // ---- 元の状態を保存（ロールバック用）----
+        const prevAlreadyLiked = rtnData.alreadyLiked;
+        const prevOwnerProfile = JSON.parse(
+          JSON.stringify(rtnData.ownerProfile)
+        );
+        const prevLikes = JSON.parse(JSON.stringify(rtnData.likes || []));
+        const prevMyLike = JSON.parse(JSON.stringify(rtnData.myLike));
 
-      //   // ---- 楽観的にUI更新 ----
-      //   rtnData.alreadyLiked = true;
-      //   // ownerProfile.likeProfileに追加。二重追加防止（同じ taneId が既に並んでいれば追加しない）
-      //   const existsOwnerProfileTaneId = (
-      //     rtnData.ownerProfile.taneLikeList || []
-      //   ).some((x) => x?.taneId === taneId);
-      //   if (!existsOwnerProfileTaneId) {
-      //     rtnData.ownerProfile.taneLikeList =
-      //       rtnData.ownerProfile.taneLikeList || [];
-      //     rtnData.ownerProfile.taneLikeList.push(rtnData.record);
-      //   }
-      //   // myLike.likeProfileに追加。二重追加防止（同じ taneId が既に並んでいれば追加しない）
-      //   const existsMyLikeTaneId = (
-      //     rtnData.myLike.likeProfile.taneLikeList || []
-      //   ).some((x) => x?.taneId === taneId);
-      //   if (!existsMyLikeTaneId) {
-      //     rtnData.myLike.likeProfile.taneLikeList =
-      //       rtnData.myLike.likeProfile.taneLikeList || [];
-      //     rtnData.myLike.likeProfile.taneLikeList.push(rtnData.record);
-      //   }
-      //   // likes[].likeProfileに追加。二重追加防止（同じ userId が既に並んでいれば追加しない）
-      //   const myUid = rtnData.myLike?.likeProfile?.userId;
-      //   const exists = (rtnData.likes || []).some(
-      //     (x) => x?.likeProfile?.userId === myUid
-      //   );
-      //   rtnData.likes = exists
-      //     ? [...prevLikes]
-      //     : [...prevLikes, rtnData.myLike];
+        // ---- 楽観的にUI更新 ----
+        rtnData.alreadyLiked = true;
+        // ownerProfile.likeProfileに追加。二重追加防止（同じ taneId が既に並んでいれば追加しない）
+        const existsOwnerProfileTaneId = (
+          rtnData.ownerProfile.taneLikeList || []
+        ).some((x) => x?.taneId === taneId);
+        if (!existsOwnerProfileTaneId) {
+          rtnData.ownerProfile.taneLikeList =
+            rtnData.ownerProfile.taneLikeList || [];
+          rtnData.ownerProfile.taneLikeList.push(rtnData.record);
+        }
+        // myLike.likeProfileに追加。二重追加防止（同じ taneId が既に並んでいれば追加しない）
+        const existsMyLikeTaneId = (
+          rtnData.myLike.likeProfile.taneLikeList || []
+        ).some((x) => x?.taneId === taneId);
+        if (!existsMyLikeTaneId) {
+          rtnData.myLike.likeProfile.taneLikeList =
+            rtnData.myLike.likeProfile.taneLikeList || [];
+          rtnData.myLike.likeProfile.taneLikeList.push(rtnData.record);
+        }
+        // likes[].likeProfileに追加。二重追加防止（同じ userId が既に並んでいれば追加しない）
+        const myUid = rtnData.myLike?.likeProfile?.userId;
+        const exists = (rtnData.likes || []).some(
+          (x) => x?.likeProfile?.userId === myUid
+        );
+        rtnData.likes = exists
+          ? [...prevLikes]
+          : [...prevLikes, rtnData.myLike];
 
-      //   setLiked(); // ボタンを“いいね済み”に
-      //   renderLikes(rtnData.likes || []);
-      //   const likeProfiles = (rtnData.likes || []).map(
-      //     (x) => x.likeProfile || {}
-      //   );
-      //   addListenerProfileDetail(likeProfiles, "likesAvatar", true, true);
+        setLiked(); // ボタンを“いいね済み”に
+        renderLikes(rtnData.likes || []);
+        const likeProfiles = (rtnData.likes || []).map(
+          (x) => x.likeProfile || {}
+        );
+        addListenerProfileDetail(likeProfiles, "likesAvatar", true, true);
 
-      //   // ---- 非同期でサーバーへ投げっぱなし ----
-      //   const idt = liff.getIDToken();
-      //   const url = `${GAS_ENDPOINT}?action=like_tane&taneId=${encodeURIComponent(
-      //     taneId
-      //   )}&id_token=${encodeURIComponent(idt)}`;
+        // ---- 非同期でサーバーへ投げっぱなし ----
+        const idt = liff.getIDToken();
+        const url = `${GAS_ENDPOINT}?action=like_tane&taneId=${encodeURIComponent(
+          taneId
+        )}&id_token=${encodeURIComponent(idt)}`;
 
-      //   fetch(url)
-      //     .then((r) =>
-      //       r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))
-      //     )
-      //     .then((j) => {
-      //       if (!j.ok) throw new Error(j.error || "like failed");
-      //       // 成功なら何もしない（すでにUI更新済み）
-      //     })
-      //     .catch((err) => {
-      //       console.error(err);
-      //       toast("いいねに失敗しました");
+        fetch(url)
+          .then((r) =>
+            r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))
+          )
+          .then((j) => {
+            if (!j.ok) throw new Error(j.error || "like failed");
+            // 成功なら何もしない（すでにUI更新済み）
+          })
+          .catch((err) => {
+            console.error(err);
+            toast("いいねに失敗しました");
 
-      //       // ---- ロールバック ----
-      //       rtnData.ownerProfile = prevOwnerProfile;
-      //       rtnData.alreadyLiked = prevAlreadyLiked;
-      //       rtnData.likes = prevLikes;
-      //       rtnData.myLike = prevMyLike;
-      //       renderLikes(rtnData.likes || []);
-      //       addListenerProfileDetailSingle(
-      //         "ownerIcon",
-      //         rtnData.ownerProfile || {},
-      //         true,
-      //         true
-      //       );
-      //       const likeProfiles2 = (rtnData.likes || []).map(
-      //         (x) => x.likeProfile || {}
-      //       );
-      //       addListenerProfileDetail(likeProfiles2, "likesAvatar", true, true);
+            // ---- ロールバック ----
+            rtnData.ownerProfile = prevOwnerProfile;
+            rtnData.alreadyLiked = prevAlreadyLiked;
+            rtnData.likes = prevLikes;
+            rtnData.myLike = prevMyLike;
+            renderLikes(rtnData.likes || []);
+            addListenerProfileDetailSingle(
+              "ownerIcon",
+              rtnData.ownerProfile || {},
+              true,
+              true
+            );
+            const likeProfiles2 = (rtnData.likes || []).map(
+              (x) => x.likeProfile || {}
+            );
+            addListenerProfileDetail(likeProfiles2, "likesAvatar", true, true);
 
-      //       // ボタン表示も元へ
-      //       const btn = document.getElementById("likeBtn");
-      //       if (btn) {
-      //         btn.innerHTML =
-      //           '<span class="material-icons-round">favorite_border</span>いいね！';
-      //         btn.disabled = false;
-      //         btn.classList.remove("btn-secondary", "btn-liked");
-      //         btn.classList.add("like-btn");
-      //       }
-      //     });
-      // }
+            // ボタン表示も元へ
+            const btn = document.getElementById("likeBtn");
+            if (btn) {
+              btn.innerHTML =
+                '<span class="material-icons-round">favorite_border</span>いいね！';
+              btn.disabled = false;
+              btn.classList.remove("btn-secondary", "btn-liked");
+              btn.classList.add("like-btn");
+            }
+          });
+      }
 
-      // $(async function () {
-      //   try {
-      //     loading.on();
-      //     // 共通部分（プロフィール表示）の読み込み
-      //     const response1 = await fetch("profileDspCommHtml.html");
-      //     const commonSection1 = await response1.text();
-      //     document.getElementById(
-      //       "profiledsp_common_section_placeholder"
-      //     ).innerHTML = commonSection1;
-      //     await waiteCreateDom(PROFILE_DSP_COMM_HTML_DSP_IDS);
-      //     addEventListenerProfileDspTab();
+      $(async function () {
+        try {
+          loading.on();
+          // 共通部分（プロフィール表示）の読み込み
+          const response1 = await fetch("profileDspCommHtml.html");
+          const commonSection1 = await response1.text();
+          document.getElementById(
+            "profiledsp_common_section_placeholder"
+          ).innerHTML = commonSection1;
+          await waiteCreateDom(PROFILE_DSP_COMM_HTML_DSP_IDS);
+          addEventListenerProfileDspTab();
 
-      //     await liff.init({ liffId: LIFF_ID });
-      //     isLiff = liff.isInClient() || liff.isLoggedIn();
-      //     if (isLiff && !liff.isLoggedIn()) {
-      //       const ready = await ensureLoginAndScopes();
-      //       if (!ready) return;
-      //     }
+          await liff.init({ liffId: LIFF_ID });
+          isLiff = liff.isInClient() || liff.isLoggedIn();
+          if (isLiff && !liff.isLoggedIn()) {
+            const ready = await ensureLoginAndScopes();
+            if (!ready) return;
+          }
 
-      //     await loadPage();
-      //     $("#likeBtn").on("click", likeAction);
-      //   } catch (e) {
-      //     console.error("LIFF init failed", e);
-      //     toast("LIFFの初期化に失敗しました");
-      //   } finally {
-      //     loading.off(); // 最後に閉じる
-      //   }
-      // });
+          await loadPage();
+          $("#likeBtn").on("click", likeAction);
+        } catch (e) {
+          console.error("LIFF init failed", e);
+          toast("LIFFの初期化に失敗しました");
+        } finally {
+          loading.off(); // 最後に閉じる
+        }
+      });
     </script>
   </body>
 </html>
