@@ -802,6 +802,7 @@
           liff
             .sendMessages([{ type: "text", text: msg }])
             .then(() => {
+              loading.off();
               $("#doneModal").modal({ backdrop: "static", keyboard: false }).modal("show"); // 成功したらモーダル
             })
             .catch((err) => {
@@ -809,7 +810,6 @@
               console.error(err);
               showErrorAndClose("送信に失敗しました：" + err);
             });
-          loading.off();
         });
 
         $("#closeLiffBtn").on("click", function () {
