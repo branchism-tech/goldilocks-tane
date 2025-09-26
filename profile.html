@@ -796,6 +796,7 @@
         $("#profileForm").on("submit", function (e) {
           e.preventDefault();
 
+          loading.on();
           // 値の取得
           const lineicon = $('input[name="lineicon"]:checked').val();
           const name = $("#name").val().trim();
@@ -872,7 +873,10 @@
             hasError = true;
           }
 
-          if (hasError) return;
+          if (hasError){
+              loading.off();
+              return;
+            }
 
           const msg =
             `こちらの情報でプロフィール登録しました。\n` +
@@ -891,9 +895,11 @@
               $("#doneModal").modal("show"); // 成功したらモーダル
             })
             .catch((err) => {
+              loading.off();
               console.error(err);
               showErrorAndClose("送信に失敗しました：" + err);
             });
+            loading.off();
         });
 
         $("#closeLiffBtn").on("click", function () {

@@ -734,7 +734,7 @@
       function bindFormSubmit() {
         $("#taneForm").on("submit", async function (e) {
           e.preventDefault();
-
+          loading.on();
           // 値取得
           const category = $('input[name="category"]:checked').val();
           const title = $("#title").val().trim();
@@ -783,7 +783,10 @@
               .text("こんな人にきて欲しい、集まれ！を入力してください");
             hasError = true;
           }
-          if (hasError) return;
+          if (hasError) {
+            loading.off();
+            return;
+          }
 
           const msg =
             (taneId != null
@@ -802,9 +805,11 @@
               $("#doneModal").modal("show"); // 成功したらモーダル
             })
             .catch((err) => {
+              loading.off();
               console.error(err);
               showErrorAndClose("送信に失敗しました：" + err);
             });
+          loading.off();
         });
 
         $("#closeLiffBtn").on("click", function () {
