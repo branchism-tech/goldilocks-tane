@@ -802,7 +802,7 @@
           liff
             .sendMessages([{ type: "text", text: msg }])
             .then(() => {
-              $("#doneModal").modal("show"); // 成功したらモーダル
+              $("#doneModal").modal({ backdrop: "static", keyboard: false }).modal("show"); // 成功したらモーダル
             })
             .catch((err) => {
               loading.off();
