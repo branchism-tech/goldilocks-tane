@@ -250,7 +250,7 @@
 }
 
 #profile-tane-like-list > div, #profile-tane-list > div {
-  padding-bottom: 8px;
+  padding: 0 0 8px;
 }
 
 /* Mobile */
