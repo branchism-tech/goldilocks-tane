@@ -237,8 +237,8 @@
 }
 .card-body p.small {
   font-size: 14px;
-  line-height: 20px;
-  color: var(--md-sys-color-on-surface-variant);
+  line-height: 20px;    
+  color: var(--md-sys-color-outline);
   margin: 0;
 }
 .avatar {

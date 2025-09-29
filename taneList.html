@@ -72,13 +72,13 @@
         color: var(--md-sys-color-on-surface);
         line-height: 1.5;
         margin: 0;
-        padding: 0 0 88px 0;
+        padding: 0;
       }
       .card-like {
         max-width: 800px;
         margin: 0 auto;
         border-radius: var(--md-sys-shape-corner-large);
-        padding: 32px 24px;
+        padding: 32px 24px 88px;
       }
 
       .brand {
@@ -294,11 +294,8 @@
 
       /* Desktop adjustments */
       @media (min-width: 768px) {
-        body {
-          padding-bottom: 96px;
-        }
         .card-like {
-          padding: 32px 24px;
+          padding: 32px 24px 88px;
           max-width: 800px;
           border-radius: var(--md-sys-shape-corner-large);
         }
@@ -312,11 +309,8 @@
 
       /* Mobile adjustments */
       @media (max-width: 767px) {
-        body {
-          padding: 0 0 88px 0;
-        }
         .card-like {
-          padding: 24px 16px;
+          padding: 24px 16px 88px;
           border-radius: var(--md-sys-shape-corner-medium);
         }
         .brand {
@@ -532,7 +526,7 @@
               <div class="card-body">
                 <p class="text-xsmall">${d.category || ""}</p>
                 <h6>${d.title || ""}</h6>
-                <div class="d-flex align-items-center mb-3">
+                <div class="d-flex align-items-center justify-content-end mb-3">
                   <img class="avatar" src="${
                     d.ownerIcon || DUMMY_ICON_URL
                   }"/>
@@ -618,9 +612,9 @@
           if (isLiff && !liff.isLoggedIn()) await liff.login();
           
           // LIFFではない場合はナビゲーションバーを非表示
-          if (!isLiff) {
-            $(".bottom-nav").addClass("hidden");
-          }
+          // if (!isLiff) {
+          //   $(".bottom-nav").addClass("hidden");
+          // }
           
           try {
             await fetchTanes();
