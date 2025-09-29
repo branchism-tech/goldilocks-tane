@@ -348,7 +348,7 @@ const PROFILE_DSP_COMM_HTML_DSP_IDS = [
   "profile-age",
   "profile-sex",
   "profile-address",
-  "profile-like-btn-row",
+  // "profile-like-btn-row",
   "profile-rtn-btn-row",
   "tab-posts",
   "tab-likes",
