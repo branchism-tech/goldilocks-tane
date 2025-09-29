@@ -612,9 +612,9 @@
           if (isLiff && !liff.isLoggedIn()) await liff.login();
           
           // LIFFではない場合はナビゲーションバーを非表示
-          // if (!isLiff) {
-          //   $(".bottom-nav").addClass("hidden");
-          // }
+          if (!isLiff) {
+            $(".bottom-nav").addClass("hidden");
+          }
           
           try {
             await fetchTanes();
