@@ -37,7 +37,7 @@
         --md-sys-color-on-surface: #1d1b20;
         --md-sys-color-surface-variant: #ebebeb;
         --md-sys-color-on-surface-variant: #525252;
-        --md-sys-color-outline: #79747e;
+        --md-sys-color-outline: #7a7a7a;
         --md-sys-color-outline-variant: #cac4d0;
         --md-sys-color-error: #e60312;
         --md-sys-color-on-error: #ffffff;
@@ -68,20 +68,17 @@
 
       body {
         font-family: "Roboto", sans-serif;
-        background-color: var(--md-sys-color-hada);
+        background-color: var(--md-sys-color-surface);
         color: var(--md-sys-color-on-surface);
         line-height: 1.5;
         margin: 0;
-        padding:8px 8px 88px 8px;
+        padding: 0 0 88px 0;
       }
       .card-like {
         max-width: 800px;
         margin: 0 auto;
-        background-color: var(--md-sys-color-surface);
         border-radius: var(--md-sys-shape-corner-large);
-        padding: 24px;
-        box-shadow: var(--md-sys-elevation-level1);
-        padding-bottom: 100px !important;
+        padding: 32px 24px;
       }
 
       .brand {
@@ -103,7 +100,7 @@
         color: var(--md-sys-color-on-surface);
       }
       #list > div{
-        padding-bottom: 8px;
+        padding-bottom:8px;
       }
 
       .sort-btn,
@@ -157,7 +154,7 @@
       .card-body p.small {
         font-size: 14px;
         line-height: 20px;
-        color: var(--md-sys-color-on-surface-variant);
+        color: var(--md-sys-color-outline);
         margin: 0;
       }
       .avatar {
@@ -298,11 +295,10 @@
       /* Desktop adjustments */
       @media (min-width: 768px) {
         body {
-          padding: 16px;
           padding-bottom: 96px;
         }
         .card-like {
-          padding: 24px;
+          padding: 32px 24px;
           max-width: 800px;
           border-radius: var(--md-sys-shape-corner-large);
         }
@@ -317,10 +313,10 @@
       /* Mobile adjustments */
       @media (max-width: 767px) {
         body {
-          padding: 8px 8px 88px 8px;
+          padding: 0 0 88px 0;
         }
         .card-like {
-          padding: 16px;
+          padding: 24px 16px;
           border-radius: var(--md-sys-shape-corner-medium);
         }
         .brand {
@@ -350,7 +346,7 @@
         align-items: stretch;
         z-index: 1000;
         box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.1);
-        padding: 4px;
+        padding: 8px 8px 16px;
       }
 
       .bottom-nav.hidden {
@@ -413,11 +409,7 @@
   </head>
   <body>
     <div class="card-like">
-      <div class="brand">
-        <img class="logo" src="logo.png" alt="ロゴ" />
-        <strong>みんなのタネ</strong>
-      </div>
-      <p>やってみたいことを投稿して、一緒にチャレンジする仲間を見つけよう！</p>
+      <p>何でもOK、やってみたいことを投稿してみよう！</p>
 
       <div class="mb-2">
         <button class="cat-btn" data-cat="all">

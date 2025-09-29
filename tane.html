@@ -38,7 +38,7 @@
         --md-sys-color-on-surface: #1d1b20;
         --md-sys-color-surface-variant: #ebebeb;
         --md-sys-color-on-surface-variant: #525252;
-        --md-sys-color-outline: #79747e;
+        --md-sys-color-outline: #7a7a7a;
         --md-sys-color-outline-variant: #cac4d0;
         --md-sys-color-error: #e60312;
         --md-sys-color-on-error: #ffffff;
@@ -81,9 +81,8 @@
         margin: 0 auto;
         background-color: var(--md-sys-color-surface);
         border-radius: var(--md-sys-shape-corner-large);
-        padding: 24px;
+        padding: 32px 24px;
         box-shadow: var(--md-sys-elevation-level1);
-        padding-bottom: 100px !important;
       }
 
       .brand {
@@ -332,7 +331,7 @@
         align-items: stretch;
         z-index: 1000;
         box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.1);
-        padding: 4px;
+        padding: 8px 8px 16px;
       }
 
       .nav-item {
@@ -383,7 +382,7 @@
         }
 
         .card-like {
-          padding: 16px;
+          padding: 24px 16px;
           border-radius: var(--md-sys-shape-corner-medium);
         }
 
@@ -446,16 +445,11 @@
   </head>
   <body>
     <div class="card-like">
-      <div class="brand">
-        <img class="logo" src="logo.png" alt="キュリオグラフ2025" />
-        <strong>キュリオグラフ2025</strong>
-      </div>
-
       <div id="pageTitle" class="section-title">タネ投稿ページ</div>
 
       <form id="taneForm" novalidate>
         <div class="form-group">
-          <label>カテゴリー </label>
+          <label>テーマ </label>
           <div class="custom-control custom-radio">
             <input
               type="radio"
@@ -506,6 +500,7 @@
             name="title"
             required
             maxlength="24"
+            placeholder="24文字以内で入力してください"
           />
           <div class="invalid-feedback"></div>
         </div>
@@ -522,6 +517,7 @@
             rows="5"
             required
             maxlength="250"
+            placeholder="250文字以内で入力してください"
           ></textarea>
           <div class="invalid-feedback"></div>
         </div>
@@ -535,6 +531,7 @@
             rows="3"
             required
             maxlength="100"
+            placeholder="100文字以内で入力してください"
           ></textarea>
           <div class="invalid-feedback"></div>
         </div>
@@ -751,7 +748,7 @@
             $group.addClass("is-invalid");
             $group
               .find(".invalid-feedback")
-              .text("カテゴリーを選択してください")
+              .text("テーマを選択してください")
               .show();
             hasError = true;
           }
@@ -790,9 +787,9 @@
 
           const msg =
             (taneId != null
-              ? `こちらの情報でタネを編集しました。\n`
-              : `こちらの情報でタネを投稿しました。\n`) +
-            `カテゴリー：${category}\n` +
+              ? `こちらの内容でタネを編集しました。\n`
+              : `こちらの内容でタネを投稿しました。\n`) +
+            `テーマ：${category}\n` +
             `タイトル：${title}\n` +
             `コメント：${comment}\n` +
             `こんな人にきて欲しい、集まれ！：${kind_person}\n` +

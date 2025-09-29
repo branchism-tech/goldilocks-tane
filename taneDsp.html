@@ -39,7 +39,7 @@
         --md-sys-color-on-surface: #1d1b20;
         --md-sys-color-surface-variant: #ebebeb;
         --md-sys-color-on-surface-variant: #525252;
-        --md-sys-color-outline: #79747e;
+        --md-sys-color-outline: #7a7a7a;
         --md-sys-color-outline-variant: #cac4d0;
         --md-sys-color-error: #e60312;
         --md-sys-color-on-error: #ffffff;
@@ -86,16 +86,14 @@
 
       .card-like {
         width: 100%;
-        min-height: 100vh;
         margin: 0;
         background-color: var(--md-sys-color-surface);
-        padding: 24px;
+        padding: 32px 24px;
         box-sizing: border-box;
         border-radius: var(--md-sys-shape-corner-large);
         box-shadow: var(--md-sys-elevation-level1);
         max-width: 600px;
         margin: 0 auto;
-        padding-bottom: 100px !important;
       }
 
       .brand {
@@ -131,6 +129,7 @@
       .seed-title-wrap {
         display: flex;
         align-items: center;
+        justify-content: flex-end;
         margin: 24px 0;
       }
 
@@ -245,6 +244,7 @@
       .likes-avatars {
         display: flex;
         flex-wrap: wrap;
+        justify-content: flex-end;
         gap: 12px;
       }
 
@@ -348,7 +348,7 @@
         border: 0;
         border-radius: var(--md-sys-shape-corner-large);
         background-color: var(--md-sys-color-surface);
-        padding: 24px;
+        padding: 32px 24px;
         box-shadow: var(--md-sys-elevation-level1);
       }
 
@@ -424,9 +424,8 @@
         }
 
         .card-like {
-          padding: 16px;
+          padding: 24px 16px;
           border-radius: var(--md-sys-shape-corner-medium);
-          min-height: calc(100vh - 16px);
         }
 
         .brand {
@@ -534,7 +533,7 @@
         align-items: stretch;
         z-index: 1000;
         box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.1);
-        padding: 4px;
+        padding: 8px 8px 16px;
       }
 
       .nav-item {
@@ -605,11 +604,6 @@
   </head>
   <body>
     <div class="card-like" id="screen1">
-      <div class="brand">
-        <img class="logo" src="logo.png" alt="キュリオグラフ2025" />
-        <strong>キュリオグラフ2025</strong>
-      </div>
-
       <div class="mb-2" id="categoryText">読み込み中・・</div>
       <div id="titleText">
         読み込み中・・
@@ -623,7 +617,7 @@
       <div class="field-label">投稿者コメント</div>
       <div id="commentText">読み込み中・・</div>
 
-      <div class="field-label">こんな人に来て欲しい、集まれ！</div>
+      <div class="field-label">こんな人にきて欲しい、集まれ！</div>
       <div id="kindText">読み込み中・・</div>
 
       <hr />
@@ -750,7 +744,7 @@
           }
 
           // 本体表示
-          $("#categoryText").text(`カテゴリ：${rtnData.record.category || ""}`);
+          $("#categoryText").text(`${rtnData.record.category || ""}`);
           $("#titleText").text(rtnData.record.title || "");
           $("#commentText").text(rtnData.record.comment || "");
           $("#kindText").text(rtnData.record.kind_person || "");

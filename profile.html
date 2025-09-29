@@ -38,7 +38,7 @@
         --md-sys-color-on-surface: #1d1b20;
         --md-sys-color-surface-variant: #ebebeb;
         --md-sys-color-on-surface-variant: #525252;
-        --md-sys-color-outline: #79747e;
+        --md-sys-color-outline: #7a7a7a;
         --md-sys-color-outline-variant: #cac4d0;
         --md-sys-color-error: #e60312;
         --md-sys-color-on-error: #ffffff;
@@ -81,9 +81,8 @@
         margin: 0 auto;
         background-color: var(--md-sys-color-surface);
         border-radius: var(--md-sys-shape-corner-large);
-        padding: 24px;
+        padding: 32px 24px;
         box-shadow: var(--md-sys-elevation-level1);
-        padding-bottom: 100px !important;
       }
 
       .brand {
@@ -283,7 +282,7 @@
         align-items: stretch;
         z-index: 1000;
         box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.1);
-        padding: 4px;
+        padding: 8px 8px 16px;
       }
 
       .nav-item {
@@ -367,7 +366,7 @@
         }
 
         .card-like {
-          padding: 16px;
+          padding: 24px 16px;
           border-radius: var(--md-sys-shape-corner-medium);
         }
 
@@ -432,11 +431,6 @@
   </head>
   <body>
     <div class="card-like">
-      <div class="brand">
-        <img class="logo" src="logo.png" alt="キュリオグラフ2025" />
-        <strong>キュリオグラフ2025</strong>
-      </div>
-
       <div class="section-title">プロフィールページ</div>
 
       <form id="profileForm" novalidate>
@@ -481,6 +475,7 @@
             name="name"
             required
             maxlength="24"
+            placeholder="24文字以内で入力してください"
           />
           <div class="invalid-feedback"></div>
         </div>
@@ -493,9 +488,9 @@
             id="job"
             name="job"
             required
-            maxlength="2000"
+            maxlength="100"
             aria-describedby="jobHelp"
-            placeholder="例：営業職／システムエンジニア"
+            placeholder="例：営業職／システムエンジニア 100文字以内で入力してください"
           />
           <div class="invalid-feedback"></div>
         </div>
@@ -508,7 +503,8 @@
             id="hobby"
             name="hobby"
             required
-            maxlength="2000"
+            maxlength="250"
+            placeholder="250文字以内で入力してください"
           />
           <div class="invalid-feedback"></div>
         </div>
@@ -569,7 +565,7 @@
         </div>
 
         <div class="form-group">
-          <label for="address">お住まい </label>
+          <label for="address">出身県 </label>
           <select class="form-control" id="address" name="address" required>
             <option value="" selected disabled>選択してください</option>
             <option>北海道</option>
@@ -867,7 +863,7 @@
             $("#address").addClass("is-invalid");
             $("#address")
               .siblings(".invalid-feedback")
-              .text("お住まいを選択してください");
+              .text("出身県を選択してください");
             hasError = true;
           }
 
@@ -877,14 +873,14 @@
             }
 
           const msg =
-            `こちらの情報でプロフィール登録しました。\n` +
+            `こちらの内容でプロフィール登録しました。\n` +
             `LINEアイコン表示：${lineicon}\n` +
             `名前：${name}\n` +
             `職業：${job}\n` +
             `推し＆趣味：${hobby}\n` +
             `年代：${age}\n` +
             `性別：${sex}\n` +
-            `お住まい：${address}`;
+            `出身県：${address}`;
 
           // 送信
           liff
