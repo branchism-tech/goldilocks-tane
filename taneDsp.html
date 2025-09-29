@@ -538,6 +538,10 @@
         padding: 8px 8px 16px;
       }
 
+      .bottom-nav.hidden {
+        display: none;
+      }
+      
       .nav-item {
         display: flex;
         flex-direction: column;
@@ -907,6 +911,11 @@
           if (isLiff && !liff.isLoggedIn()) {
             const ready = await ensureLoginAndScopes();
             if (!ready) return;
+          }
+
+          // LIFFではない場合はナビゲーションバーを非表示
+          if (!isLiff) {
+            $(".bottom-nav").addClass("hidden");
           }
 
           await loadPage();
