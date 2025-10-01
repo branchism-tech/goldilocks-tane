@@ -69,6 +69,7 @@ function fillProfileDetail(kbn, profile) {
   setText("profile-age", profile.age);
   setText("profile-sex", profile.sex);
   setText("profile-address", profile.address);
+  setText("profile-place_of_work", profile.placeOfWork);
   renderTaneList("profile-tane-list", profile.taneList || []);
   renderTaneList("profile-tane-like-list", profile.taneLikeList || []);
 
@@ -95,7 +96,11 @@ function renderTaneList(containerId, list) {
   list.forEach((d) => {
     const card = $(`
     <div class="col-md-6 col-12">
-      <div class="card card-tane" data-id="${d.taneId}" style="cursor: pointer;" onclick="window.location.href='taneDsp.html?taneId=${encodeURIComponent(d.taneId)}'">
+      <div class="card card-tane" data-id="${
+        d.taneId
+      }" style="cursor: pointer;" onclick="window.location.href='taneDsp.html?taneId=${encodeURIComponent(
+      d.taneId
+    )}'">
         <div class="card-body">
           <p class="text-xsmall">${d.category || ""}</p>
           <h6>${d.title || ""}</h6>
@@ -104,7 +109,7 @@ function renderTaneList(containerId, list) {
       </div>
     </div>
   `);
-    
+
     $(wrap).append(card);
   });
 }
@@ -145,9 +150,9 @@ function addListenerProfileDetail(
       fillProfileDetail("tane", prof);
       // if (likeBtnRowShowFlg) $("#profile-like-btn-row").show();
       // else {
-        // $("#profile-like-btn-row").hide();
-        // いいねをなしに
-        // document.getElementById("profile-like-btn-row").style.display = "none";
+      // $("#profile-like-btn-row").hide();
+      // いいねをなしに
+      // document.getElementById("profile-like-btn-row").style.display = "none";
       // }
       if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();
       else {
@@ -176,8 +181,8 @@ function addListenerProfileDetailSingle(
     fillProfileDetail("tane", profile);
     // if (likeBtnRowShowFlg) $("#profile-like-btn-row").show();
     // else {
-      // $("#profile-like-btn-row").hide();
-      // document.getElementById("profile-like-btn-row").style.display = "none";
+    // $("#profile-like-btn-row").hide();
+    // document.getElementById("profile-like-btn-row").style.display = "none";
     // }
     if (rtnBtnRowShowFlg) $("#profile-rtn-btn-row").show();
     else {
@@ -348,6 +353,7 @@ const PROFILE_DSP_COMM_HTML_DSP_IDS = [
   "profile-age",
   "profile-sex",
   "profile-address",
+  "profile-place_of_work",
   // "profile-like-btn-row",
   "profile-rtn-btn-row",
   "tab-posts",
