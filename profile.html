@@ -22,7 +22,7 @@
         /* Material Design 3 color tokens */
         --md-sys-color-primary: #2a51b3;
         --md-sys-color-on-primary: #ffffff;
-        --md-sys-color-primary-container:#f9f4ee;
+        --md-sys-color-primary-container: #f9f4ee;
         --md-sys-color-on-primary-container: #21005d;
         --md-sys-color-secondary: #757575;
         --md-sys-color-on-secondary: #ffffff;
@@ -31,10 +31,10 @@
         --md-sys-color-hada: #f3e9df;
         --md-sys-color-yellow: #efc800;
         --md-sys-color-red: #e60312;
-        --md-sys-color-orange: #ED0300;
+        --md-sys-color-orange: #ed0300;
         --md-sys-color-green: #268454;
         --md-sys-color-surface: #fff;
-        --md-sys-color-blue: #AFCCD1;
+        --md-sys-color-blue: #afccd1;
         --md-sys-color-on-surface: #1d1b20;
         --md-sys-color-surface-variant: #ebebeb;
         --md-sys-color-on-surface-variant: #525252;
@@ -47,7 +47,7 @@
 
         /* Elevation tokens */
         --md-sys-elevation-level0: 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
-          0px 1px 3px 1px rgba(0, 0, 0, 0.10);
+          0px 1px 3px 1px rgba(0, 0, 0, 0.1);
         --md-sys-elevation-level1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
           0px 1px 3px 1px rgba(0, 0, 0, 0.15);
         --md-sys-elevation-level2: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
@@ -355,8 +355,12 @@
       }
 
       @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
 
       /* Mobile adjustments */
@@ -414,20 +418,18 @@
       src="https://js.sentry-cdn.com/fa3cc6e69226d871d4beefa6fc73865d.min.js"
       crossorigin="anonymous"
     ></script>
-<script>
-  Sentry.init({
-    dsn: "https://fa3cc6e69226d871d4beefa6fc73865d@o4510082026045440.ingest.us.sentry.io/4510082027683840goldirocks / javascript",
-    // Adds request headers and IP for users, for more info visit:
-    // https://docs.sentry.io/platforms/javascript/configuration/options/#sendDefaultPii
-    sendDefaultPii: true,
-    // Alternatively, use `process.env.npm_package_version` for a dynamic release version
-    // if your build tool supports it.
-    release: "my-project-name@2.3.12",
-    integrations: [
-    ],
-
-  });
-</script>
+    <script>
+      Sentry.init({
+        dsn: "https://fa3cc6e69226d871d4beefa6fc73865d@o4510082026045440.ingest.us.sentry.io/4510082027683840goldirocks / javascript",
+        // Adds request headers and IP for users, for more info visit:
+        // https://docs.sentry.io/platforms/javascript/configuration/options/#sendDefaultPii
+        sendDefaultPii: true,
+        // Alternatively, use `process.env.npm_package_version` for a dynamic release version
+        // if your build tool supports it.
+        release: "my-project-name@2.3.12",
+        integrations: [],
+      });
+    </script>
   </head>
   <body>
     <div class="card-like">
@@ -619,6 +621,24 @@
           <div class="invalid-feedback"></div>
         </div>
 
+        <div class="form-group">
+          <label for="place_of_work">通勤・通学先 </label>
+          <select
+            class="form-control"
+            id="place_of_work"
+            name="place_of_work"
+            required
+          >
+            <option value="" selected disabled>選択してください</option>
+            <option>日本橋エリア</option>
+            <option>東京都中央区</option>
+            <option>23区内</option>
+            <option>23区外</option>
+            <option>東京都以外</option>
+          </select>
+          <div class="invalid-feedback"></div>
+        </div>
+
         <div class="footer-button">
           <button type="submit" class="btn btn-dark">
             <span class="material-icons-round">person_add</span>
@@ -685,8 +705,7 @@
         class="spinner-border text-primary"
         role="status"
         style="width: 3rem; height: 3rem"
-      >
-      </div>
+      ></div>
     </div>
 
     <!-- Bottom Navigation Bar -->
@@ -799,6 +818,7 @@
           const age = $("#age").val();
           const sex = $('input[name="sex"]:checked').val();
           const address = $("#address").val();
+          const placeOfWork = $("#place_of_work").val();
 
           $(".invalid-feedback").text("");
           $(".form-control, .custom-control-input").removeClass("is-invalid");
@@ -866,11 +886,18 @@
               .text("出身県を選択してください");
             hasError = true;
           }
+          if (!placeOfWork) {
+            $("#place_of_work").addClass("is-invalid");
+            $("#place_of_work")
+              .siblings(".invalid-feedback")
+              .text("通勤・通学先を選択してください");
+            hasError = true;
+          }
 
-          if (hasError){
-              loading.off();
-              return;
-            }
+          if (hasError) {
+            loading.off();
+            return;
+          }
 
           const msg =
             `こちらの内容でプロフィール登録しました。\n` +
@@ -880,14 +907,17 @@
             `推し＆趣味：${hobby}\n` +
             `年代：${age}\n` +
             `性別：${sex}\n` +
-            `出身県：${address}`;
+            `出身県：${address}\n` +
+            `通勤・通学先：${placeOfWork}`;
 
           // 送信
           liff
             .sendMessages([{ type: "text", text: msg }])
             .then(() => {
               loading.off();
-              $("#doneModal").modal({ backdrop: "static", keyboard: false }).modal("show"); // 成功したらモーダル
+              $("#doneModal")
+                .modal({ backdrop: "static", keyboard: false })
+                .modal("show"); // 成功したらモーダル
             })
             .catch((err) => {
               loading.off();
