@@ -19,7 +19,7 @@
         /* Material Design 3 color tokens */
         --md-sys-color-primary: #2a51b3;
         --md-sys-color-on-primary: #ffffff;
-        --md-sys-color-primary-container:#f9f4ee;
+        --md-sys-color-primary-container: #f9f4ee;
         --md-sys-color-on-primary-container: #21005d;
         --md-sys-color-secondary: #757575;
         --md-sys-color-on-secondary: #ffffff;
@@ -28,10 +28,10 @@
         --md-sys-color-hada: #f3e9df;
         --md-sys-color-yellow: #efc800;
         --md-sys-color-red: #e60312;
-        --md-sys-color-orange: #ED0300;
+        --md-sys-color-orange: #ed0300;
         --md-sys-color-green: #268454;
         --md-sys-color-surface: #fff;
-        --md-sys-color-blue: #AFCCD1;
+        --md-sys-color-blue: #afccd1;
         --md-sys-color-on-surface: #1d1b20;
         --md-sys-color-surface-variant: #ebebeb;
         --md-sys-color-on-surface-variant: #525252;
@@ -44,7 +44,7 @@
 
         /* Elevation tokens */
         --md-sys-elevation-level0: 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
-          0px 1px 3px 1px rgba(0, 0, 0, 0.10);
+          0px 1px 3px 1px rgba(0, 0, 0, 0.1);
         --md-sys-elevation-level1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
           0px 1px 3px 1px rgba(0, 0, 0, 0.15);
         --md-sys-elevation-level2: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
@@ -570,23 +570,21 @@
     </style>
     <link rel="stylesheet" href="./profileDspSub.css" />
     <script
-  src="https://js.sentry-cdn.com/fa3cc6e69226d871d4beefa6fc73865d.min.js"
-  crossorigin="anonymous"
-></script>
-<script>
-  Sentry.init({
-    dsn: "https://fa3cc6e69226d871d4beefa6fc73865d@o4510082026045440.ingest.us.sentry.io/4510082027683840goldirocks / javascript",
-    // Adds request headers and IP for users, for more info visit:
-    // https://docs.sentry.io/platforms/javascript/configuration/options/#sendDefaultPii
-    sendDefaultPii: true,
-    // Alternatively, use `process.env.npm_package_version` for a dynamic release version
-    // if your build tool supports it.
-    release: "my-project-name@2.3.12",
-    integrations: [
-    ],
-
-  });
-</script>
+      src="https://js.sentry-cdn.com/fa3cc6e69226d871d4beefa6fc73865d.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      Sentry.init({
+        dsn: "https://fa3cc6e69226d871d4beefa6fc73865d@o4510082026045440.ingest.us.sentry.io/4510082027683840goldirocks / javascript",
+        // Adds request headers and IP for users, for more info visit:
+        // https://docs.sentry.io/platforms/javascript/configuration/options/#sendDefaultPii
+        sendDefaultPii: true,
+        // Alternatively, use `process.env.npm_package_version` for a dynamic release version
+        // if your build tool supports it.
+        release: "my-project-name@2.3.12",
+        integrations: [],
+      });
+    </script>
   </head>
   <body>
     <div class="card-like" id="screen1">
@@ -598,8 +596,7 @@
         class="spinner-border text-primary"
         role="status"
         style="width: 3rem; height: 3rem"
-      >
-      </div>
+      ></div>
     </div>
 
     <div id="errToast"><span id="errText"></span></div>

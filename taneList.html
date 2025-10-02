@@ -21,7 +21,7 @@
         /* Material Design 3 color tokens */
         --md-sys-color-primary: #2a51b3;
         --md-sys-color-on-primary: #ffffff;
-        --md-sys-color-primary-container:#f9f4ee;
+        --md-sys-color-primary-container: #f9f4ee;
         --md-sys-color-on-primary-container: #21005d;
         --md-sys-color-secondary: #757575;
         --md-sys-color-on-secondary: #ffffff;
@@ -30,10 +30,10 @@
         --md-sys-color-hada: #f3e9df;
         --md-sys-color-yellow: #efc800;
         --md-sys-color-red: #e60312;
-        --md-sys-color-orange: #ED0300;
+        --md-sys-color-orange: #ed0300;
         --md-sys-color-green: #268454;
         --md-sys-color-surface: #fff;
-        --md-sys-color-blue: #AFCCD1;
+        --md-sys-color-blue: #afccd1;
         --md-sys-color-on-surface: #1d1b20;
         --md-sys-color-surface-variant: #ebebeb;
         --md-sys-color-on-surface-variant: #525252;
@@ -46,7 +46,7 @@
 
         /* Elevation tokens */
         --md-sys-elevation-level0: 0px 1px 2px 0px rgba(0, 0, 0, 0.2),
-          0px 1px 3px 1px rgba(0, 0, 0, 0.10);
+          0px 1px 3px 1px rgba(0, 0, 0, 0.1);
         --md-sys-elevation-level1: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
           0px 1px 3px 1px rgba(0, 0, 0, 0.15);
         --md-sys-elevation-level2: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
@@ -99,8 +99,8 @@
         font-size: 20px;
         color: var(--md-sys-color-on-surface);
       }
-      #list > div{
-        padding-bottom:8px;
+      #list > div {
+        padding-bottom: 8px;
       }
 
       .sort-btn,
@@ -122,6 +122,11 @@
         text-decoration: none;
       }
       .cat-btn:hover {
+        background-color: var(--md-sys-color-hada);
+        border-color: var(--md-sys-color-on-error-container);
+        color: var(--md-sys-color-on-error-container);
+      }
+      .cat-btn.active {
         background-color: var(--md-sys-color-hada);
         border-color: var(--md-sys-color-on-error-container);
         color: var(--md-sys-color-on-error-container);
@@ -178,7 +183,7 @@
         cursor: pointer;
         transition: all 0.2s ease;
         font-family: "Roboto", sans-serif;
-        margin: 4px 16px 16px auto;     
+        margin: 4px 16px 16px auto;
         border: none;
       }
       .like-btn:hover:not(:disabled) {
@@ -255,16 +260,27 @@
         word-wrap: break-word;
       }
 
+      .category-row {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
       .text-xsmall {
         font-size: 12px;
         line-height: 16px;
-        color:var(--md-sys-color-on-surface);
+        color: var(--md-sys-color-on-surface);
         font-weight: 500;
         letter-spacing: 0.4px;
         margin-bottom: 4px;
         padding: 8px 16px;
-        background-color:#efefef;
+        background-color: #efefef;
         border-radius: var(--md-sys-shape-corner-extra-large);
+      }
+      .text-xsmall-2 {
+        font-size: 10px;
+        color: var(--md-sys-color-on-surface-variant);
+        display: inline;
+        margin-left: 2px;
       }
 
       /* Form control styling */
@@ -281,7 +297,8 @@
         cursor: pointer;
       }
 
-      .form-control:focus,.form-control:hover {
+      .form-control:focus,
+      .form-control:hover {
         background-color: var(--md-sys-color-blue) !important;
         color: var(--md-sys-color-on-surface) !important;
       }
@@ -384,33 +401,30 @@
         line-height: 10px;
         letter-spacing: 0.4px;
       }
-    </style><script
-  src="https://js.sentry-cdn.com/fa3cc6e69226d871d4beefa6fc73865d.min.js"
-  crossorigin="anonymous"
-></script>
-<script>
-  Sentry.init({
-    dsn: "https://fa3cc6e69226d871d4beefa6fc73865d@o4510082026045440.ingest.us.sentry.io/4510082027683840goldirocks / javascript",
-    // Adds request headers and IP for users, for more info visit:
-    // https://docs.sentry.io/platforms/javascript/configuration/options/#sendDefaultPii
-    sendDefaultPii: true,
-    // Alternatively, use `process.env.npm_package_version` for a dynamic release version
-    // if your build tool supports it.
-    release: "my-project-name@2.3.12",
-    integrations: [
-    ],
-
-  });
-</script>
+    </style>
+    <script
+      src="https://js.sentry-cdn.com/fa3cc6e69226d871d4beefa6fc73865d.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      Sentry.init({
+        dsn: "https://fa3cc6e69226d871d4beefa6fc73865d@o4510082026045440.ingest.us.sentry.io/4510082027683840goldirocks / javascript",
+        // Adds request headers and IP for users, for more info visit:
+        // https://docs.sentry.io/platforms/javascript/configuration/options/#sendDefaultPii
+        sendDefaultPii: true,
+        // Alternatively, use `process.env.npm_package_version` for a dynamic release version
+        // if your build tool supports it.
+        release: "my-project-name@2.3.12",
+        integrations: [],
+      });
+    </script>
   </head>
   <body>
     <div class="card-like">
       <p>何でもOK、やってみたいことを投稿してみよう！</p>
 
       <div class="mb-2">
-        <button class="cat-btn" data-cat="all">
-          全て
-        </button>
+        <button class="cat-btn active" data-cat="all">全て</button>
         <button
           class="cat-btn"
           data-cat="テーマ①日本橋での表現活動（アート・音楽など自由に！）"
@@ -423,12 +437,7 @@
         >
           テーマ②
         </button>
-        <button
-          class="cat-btn"
-          data-cat="テーマ③その他"
-        >
-          テーマ③
-        </button>
+        <button class="cat-btn" data-cat="テーマ③その他">テーマ③</button>
       </div>
 
       <div class="mb-2">
@@ -443,7 +452,7 @@
         </select>
       </div>
 
-      <div id="list" class="row"></div>
+      <div id="list" class="row g-4"></div>
     </div>
 
     <!-- ローディングオーバーレイ -->
@@ -452,20 +461,19 @@
         class="spinner-border text-primary"
         role="status"
         style="width: 3rem; height: 3rem"
-      >
-      </div>
+      ></div>
     </div>
 
     <!-- Bottom Navigation Bar -->
     <nav class="bottom-nav">
-      <a
-        href="https://liff.line.me/2008071727-vLPLr6Gx"
-        class="nav-item"
-      >
+      <a href="https://liff.line.me/2008071727-vLPLr6Gx" class="nav-item">
         <span class="material-icons-round">person</span>
         <span>マイページ</span>
       </a>
-      <a href="https://liff.line.me/2008071727-JWxnby8r" class="nav-item active">
+      <a
+        href="https://liff.line.me/2008071727-JWxnby8r"
+        class="nav-item active"
+      >
         <span class="material-icons-round">view_list</span>
         <span>タネ一覧</span>
       </a>
@@ -522,17 +530,26 @@
         const wrap = $("#list");
         wrap.empty();
         data.forEach((d) => {
+          const categoryLabel = d.category || "";
+          const theme1 = categoryLabel.substring(0, 4);
+          const theme2 = categoryLabel.substring(4);
+          const categoryHtml = `
+            <div class="category-row">
+              <span class="text-xsmall">${theme1}</span>
+              <span class="text-xsmall-2">${theme2}</span>
+            </div>
+          `;
           const card = $(`
           <div class="col-md-6 col-12">
             <div class="card card-tane" data-id="${d.taneId}">
               <div class="card-body">
-                <p class="text-xsmall">${d.category || ""}</p>
+                ${categoryHtml}
                 <h6>${d.title || ""}</h6>
                 <div class="d-flex align-items-center justify-content-end mb-3">
-                  <img class="avatar" src="${
-                    d.ownerIcon || DUMMY_ICON_URL
-                  }"/>
-                  <div style="font-size: 14px; color: var(--md-sys-color-on-surface);">${d.name || "名無し"}</div>
+                  <img class="avatar" src="${d.ownerIcon || DUMMY_ICON_URL}"/>
+                  <div style="font-size: 14px; color: var(--md-sys-color-on-surface);">${
+                    d.name || "名無し"
+                  }</div>
                 </div>
                 <p class="small">${d.comment || ""}</p>
               </div>
@@ -599,7 +616,8 @@
               // ---- ロールバック ----
               tane.likeCount -= 1;
               tane.alreadyLiked = false;
-              btn.addClass("liked").text(`♥ ${tane.likeCount}`);
+              btn.removeClass("liked").text(`♥ ${tane.likeCount}`);
+              btn.prop("disabled", false);
             });
         } catch (e) {
           toast("いいねに失敗しました");
@@ -612,20 +630,23 @@
           await liff.init({ liffId: LIFF_ID });
           isLiff = liff.isInClient() || liff.isLoggedIn();
           if (isLiff && !liff.isLoggedIn()) await liff.login();
-          
+
           // LIFFではない場合はナビゲーションバーを非表示
           if (!isLiff) {
             $(".bottom-nav").addClass("hidden");
           }
-          
+
           try {
             await fetchTanes();
             renderList();
             $(".cat-btn").on("click", function () {
+              $(".cat-btn").removeClass("active");
+              $(this).addClass("active");
               renderList($(this).data("cat"), $("#sortSel").val());
             });
             $("#sortSel").on("change", function () {
-              renderList($("sortSel").data("cat"), this.value);
+              const cat = $(".cat-btn.active").data("cat") || "all";
+              renderList(cat, this.value);
             });
           } catch (e) {
             toast("読み込み失敗");

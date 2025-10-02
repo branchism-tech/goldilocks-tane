@@ -92,8 +92,16 @@ function renderTaneList(containerId, list) {
   const wrap = document.getElementById(containerId);
   if (!wrap) return;
   wrap.innerHTML = "";
-
   list.forEach((d) => {
+    const categoryLabel = d.category || "";
+    const theme1 = categoryLabel.substring(0, 4);
+    const theme2 = categoryLabel.substring(4);
+    const categoryHtml = `
+    <div class="category-row">
+      <span class="text-xsmall">${theme1}</span>
+      <span class="text-xsmall-2">${theme2}</span>
+    </div>
+  `;
     const card = $(`
     <div class="col-md-6 col-12">
       <div class="card card-tane" data-id="${
@@ -102,7 +110,7 @@ function renderTaneList(containerId, list) {
       d.taneId
     )}'">
         <div class="card-body">
-          <p class="text-xsmall">${d.category || ""}</p>
+          ${categoryHtml}
           <h6>${d.title || ""}</h6>
           <p class="small">${d.comment || ""}</p>
         </div>
