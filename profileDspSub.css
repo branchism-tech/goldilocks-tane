@@ -198,16 +198,27 @@
   margin: 0;
 }
 
+.category-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 .text-xsmall {
   font-size: 12px;
   line-height: 16px;
-  color:var(--md-sys-color-on-surface);
+  color: var(--md-sys-color-on-surface);
   font-weight: 500;
   letter-spacing: 0.4px;
   margin: 0 0 4px 0;
   padding: 8px 16px;
-  background-color:#efefef;
+  background-color: #efefef;
   border-radius: var(--md-sys-shape-corner-extra-large);
+}
+.text-xsmall-2 {
+  font-size: 10px;
+  color: var(--md-sys-color-on-surface-variant);
+  display: inline;
+  margin-left: 2px;
 }
 
 .card-tane {
@@ -236,7 +247,7 @@
 }
 .card-body p.small {
   font-size: 14px;
-  line-height: 20px;    
+  line-height: 20px;
   color: var(--md-sys-color-outline);
   margin: 0;
 }
@@ -248,7 +259,8 @@
   margin-right: 8px;
 }
 
-#profile-tane-like-list > div, #profile-tane-list > div {
+#profile-tane-like-list > div,
+#profile-tane-list > div {
   padding: 0 0 8px;
 }
 
@@ -332,7 +344,7 @@
 /* Desktop (explicit tweaks) */
 @media (min-width: 768px) {
   .card-like-sub .profile-info-compact {
-    padding: 0px 8px
+    padding: 0px 8px;
   }
   .card-like-sub .info-item {
     font-size: 16px;
