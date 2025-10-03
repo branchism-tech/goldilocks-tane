@@ -112,7 +112,7 @@ function renderTaneList(containerId, list) {
         <div class="card-body">
           ${categoryHtml}
           <h6>${d.title || ""}</h6>
-          <p class="small">${d.comment || ""}</p>
+          <p class="small style="white-space: pre-line;">${d.comment || ""}</p>
         </div>
       </div>
     </div>
