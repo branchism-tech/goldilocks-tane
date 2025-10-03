@@ -643,11 +643,14 @@
         }
       }
 
-      // BFCache復帰対策
-      window.addEventListener("pageshow", () => {
-        const { cat, sort } = getSavedState();
-        applyUIState(cat, sort);
-        renderList(cat, sort);
+      // BFCache復帰時のみ：既存の allTanes を使って即座に復元描画
+      window.addEventListener("pageshow", (e) => {
+        if (!e.persisted) return;
+        if (allTanes && allTanes.length > 0) {
+          const { cat, sort } = getSavedState();
+          applyUIState(cat, sort);
+          renderList(cat, sort);
+        }
       });
 
       $(async function () {
