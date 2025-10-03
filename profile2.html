@@ -823,6 +823,8 @@
           }
           fillProfileDetail("profile", rtnData.profile);
           addEventListenerProfileDspTab();
+          $("#profile-rtn-btn-row").hide();
+          document.getElementById("profile-rtn-btn-row").style.display = "none";
           showProfileScreen();
         } catch (e) {
           console.error(e);
