@@ -249,6 +249,37 @@
         border-color: var(--md-sys-color-primary);
       }
 
+      #screen2 {
+        position: fixed;
+        inset: 0;
+        z-index: 1200;
+        background-color: var(--md-sys-color-hada);
+        display: none;
+        overflow: auto;
+        padding: 16px;
+      }
+
+      #screen2 .card-like {
+        max-width: 600px;
+        width: 100%;
+        height: auto;
+        min-height: calc(100vh - 32px);
+        margin: 0 auto;
+        border: 0;
+        border-radius: var(--md-sys-shape-corner-large);
+        background-color: var(--md-sys-color-surface);
+        padding: 32px 24px;
+        box-shadow: var(--md-sys-elevation-level1);
+      }
+
+      #screen2 .brand {
+        /* position: sticky; */
+        /* top: 0; */
+        background-color: var(--md-sys-color-surface);
+        padding-top: 8px;
+        /* z-index: 1; */
+      }
+
       /* Modal styling */
       .modal-content {
         border: none;
@@ -412,8 +443,19 @@
         .footer-button {
           margin-top: 4px;
         }
+
+        #screen2 {
+          padding: 8px;
+        }
+
+        #screen2 .card-like {
+          padding: 16px;
+          border-radius: var(--md-sys-shape-corner-medium);
+          min-height: calc(100vh - 16px);
+        }
       }
     </style>
+    <link rel="stylesheet" href="./profileDspSub.css" />
     <script
       src="https://js.sentry-cdn.com/fa3cc6e69226d871d4beefa6fc73865d.min.js"
       crossorigin="anonymous"
@@ -432,7 +474,7 @@
     </script>
   </head>
   <body>
-    <div class="card-like">
+    <div class="card-like" id="screen1">
       <div class="section-title">プロフィールページ</div>
 
       <form id="profileForm" novalidate>
@@ -648,6 +690,10 @@
       </form>
     </div>
 
+    <div id="screen2" style="display: none">
+      <div id="profiledsp_common_section_placeholder"></div>
+    </div>
+
     <!-- 完了モーダル -->
     <div
       class="modal fade"
@@ -740,6 +786,11 @@
     <script src="./utils.js?ver=1.02"></script>
 
     <script>
+      const LIFF_ID = "2008071727-vLPLr6Gx";
+      const GAS_ENDPOINT =
+        "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
+      const DUMMY_ICON_URL = "logo.png";
+
       // URL パラメータが必要なら使う
       const params = new URL(document.location).searchParams;
       const key = params.get("key"); // 使わないなら削除OK
@@ -758,44 +809,48 @@
           });
       }
 
-      async function checkRegisteredAndMaybeRedirect() {
-        const GAS_ENDPOINT =
-          "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
-        const destLiffUrl = "https://liff.line.me/2008071727-LPVKe7GZ";
-
-        const idToken = liff.getIDToken();
-        if (!idToken) return false;
-
-        const res = await fetch(
-          `${GAS_ENDPOINT}?action=profile_check&id_token=${encodeURIComponent(
-            idToken
-          )}`
-        );
-        if (!res.ok) return false;
-
-        const json = await res.json();
-        if (json.registered) {
-          // カードは見せない
-          const card = document.querySelector(".card-like");
-          if (card) card.style.display = "none";
-
-          liff.openWindow({ url: destLiffUrl, external: false });
-          return true;
+      async function setProfile() {
+        try {
+          const idToken = liff.getIDToken();
+          const r = await fetch(
+            `${GAS_ENDPOINT}?action=get_profile&userId=&id_token=${encodeURIComponent(
+              idToken
+            )}`
+          );
+          rtnData = r.ok ? await r.json() : { ok: false };
+          if (!rtnData.ok || !rtnData.profile || !rtnData.profile.address) {
+            return false;
+          }
+          fillProfileDetail("profile", rtnData.profile);
+          addEventListenerProfileDspTab();
+          $("#profile-rtn-btn-row").hide();
+          document.getElementById("profile-rtn-btn-row").style.display = "none";
+          showProfileScreen();
+        } catch (e) {
+          console.error(e);
+          alert(e);
+          toast("読み込みエラーが発生しました");
         }
-        return false;
       }
 
       $(async function () {
-        const LIFF_ID = "2008071727-vLPLr6Gx";
         try {
           loading.on();
+          const response1 = await fetch("profileDspCommHtml.html");
+          const commonSection1 = await response1.text();
+          document.getElementById(
+            "profiledsp_common_section_placeholder"
+          ).innerHTML = commonSection1;
+          await waiteCreateDom(PROFILE_DSP_COMM_HTML_DSP_IDS);
+
           await liff.init({ liffId: LIFF_ID });
           const ready = await ensureLoginAndScopes();
           if (!ready) return;
 
-          const redirected = await checkRegisteredAndMaybeRedirect();
-          if (redirected) return;
-          bindFormSubmit();
+          const profileFlg = await setProfile();
+          if (!profileFlg) {
+            bindFormSubmit();
+          }
         } catch (e) {
           console.error("LIFF init failed", e);
           showErrorAndClose("LIFFの初期化に失敗しました");
