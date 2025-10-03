@@ -821,7 +821,7 @@
           if (!rtnData.ok || !rtnData.profile) {
             return false;
           }
-          fillProfileDetail(!kbn ? "profile" : "tane", rtnData.profile);
+          fillProfileDetail("profile", rtnData.profile);
           showProfileScreen();
         } catch (e) {
           console.error(e);
