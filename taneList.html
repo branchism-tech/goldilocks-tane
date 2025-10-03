@@ -494,6 +494,23 @@
         "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
       const DUMMY_ICON_URL = "logo.png";
       let allTanes = [];
+      const STORAGE_CAT_KEY = "tanes.cat";
+      const STORAGE_SORT_KEY = "tanes.sort";
+
+      function getSavedState() {
+        return {
+          cat: sessionStorage.getItem(STORAGE_CAT_KEY) || "all",
+          sort: sessionStorage.getItem(STORAGE_SORT_KEY) || "reco",
+        };
+      }
+
+      function applyUIState(cat, sort) {
+        const $btn = $(`.cat-btn[data-cat="${cat}"]`);
+        $(".cat-btn").removeClass("active");
+        ($btn.length ? $btn : $(`.cat-btn[data-cat="all"]`)).addClass("active");
+        $("#sortSel").val(sort);
+      }
+
       let isLiff = false;
 
       function toast(msg) {
@@ -626,6 +643,13 @@
         }
       }
 
+      // BFCache復帰対策
+      window.addEventListener("pageshow", () => {
+        const { cat, sort } = getSavedState();
+        applyUIState(cat, sort);
+        renderList(cat, sort);
+      });
+
       $(async function () {
         try {
           loading.on();
@@ -640,15 +664,24 @@
 
           try {
             await fetchTanes();
-            renderList();
+            // 直前の状態を復元して描画
+            const { cat, sort } = getSavedState();
+            applyUIState(cat, sort);
+            renderList(cat, sort);
+
             $(".cat-btn").on("click", function () {
               $(".cat-btn").removeClass("active");
               $(this).addClass("active");
-              renderList($(this).data("cat"), $("#sortSel").val());
+              const cat = $(this).data("cat");
+              const sort = $("#sortSel").val() || "reco";
+              sessionStorage.setItem(STORAGE_CAT_KEY, cat); // 保存
+              renderList(cat, sort);
             });
             $("#sortSel").on("change", function () {
               const cat = $(".cat-btn.active").data("cat") || "all";
-              renderList(cat, this.value);
+              const sort = this.value;
+              sessionStorage.setItem(STORAGE_SORT_KEY, sort); // 保存
+              renderList(cat, sort);
             });
           } catch (e) {
             toast("読み込み失敗");
