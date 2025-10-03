@@ -818,7 +818,7 @@
             )}`
           );
           rtnData = r.ok ? await r.json() : { ok: false };
-          if (!rtnData.ok || !rtnData.profile) {
+          if (!rtnData.ok || !rtnData.profile || !rtnData.profile.address) {
             return false;
           }
           fillProfileDetail("profile", rtnData.profile);
