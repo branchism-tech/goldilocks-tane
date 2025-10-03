@@ -786,6 +786,11 @@
     <script src="./utils.js?ver=1.02"></script>
 
     <script>
+      const LIFF_ID = "2008071727-PWojkDR5";
+      const GAS_ENDPOINT =
+        "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
+      const DUMMY_ICON_URL = "logo.png";
+
       // URL パラメータが必要なら使う
       const params = new URL(document.location).searchParams;
       const key = params.get("key"); // 使わないなら削除OK
@@ -826,7 +831,6 @@
       }
 
       $(async function () {
-        const LIFF_ID = "2008071727-PWojkDR5";
         try {
           loading.on();
           const response1 = await fetch("profileDspCommHtml.html");
