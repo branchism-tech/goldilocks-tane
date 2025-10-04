@@ -386,9 +386,6 @@ function addEventListenerProfileDspTab() {
   });
 }
 
-const STORAGE_CAT_KEY = "tanes.cat";
-const STORAGE_SORT_KEY = "tanes.sort";
-
 function bindNavClear() {
   $(".bottom-nav .nav-item").on("click", clearTaneSession);
 }
