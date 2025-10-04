@@ -387,7 +387,10 @@ function addEventListenerProfileDspTab() {
 }
 
 function bindNavClear() {
-  $(".bottom-nav .nav-item").on("click", clearTaneSession);
+  $('.bottom-nav .nav-item[href*="2008071727-JWxnby8r"]').on(
+    "click",
+    clearTaneSession
+  );
 }
 function clearTaneSession() {
   sessionStorage.removeItem(STORAGE_CAT_KEY);
