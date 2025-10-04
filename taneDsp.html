@@ -932,6 +932,7 @@
 
           await loadPage();
           $("#likeBtn").on("click", likeAction);
+          bindNavClear();
         } catch (e) {
           console.error("LIFF init failed", e);
           toast("LIFFの初期化に失敗しました");

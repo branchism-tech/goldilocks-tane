@@ -686,6 +686,7 @@
               sessionStorage.setItem(STORAGE_SORT_KEY, sort); // 保存
               renderList(cat, sort);
             });
+            bindNavClear();
           } catch (e) {
             toast("読み込み失敗");
           }
