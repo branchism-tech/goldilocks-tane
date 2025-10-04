@@ -385,3 +385,11 @@ function addEventListenerProfileDspTab() {
     if (target) target.classList.add("active");
   });
 }
+
+function bindNavClear() {
+  $(".bottom-nav .nav-item").on("click", clearTaneSession);
+}
+function clearTaneSession() {
+  sessionStorage.removeItem(STORAGE_CAT_KEY);
+  sessionStorage.removeItem(STORAGE_SORT_KEY);
+}
