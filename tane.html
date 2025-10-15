@@ -2,6 +2,20 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-T4VP8W27PL"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-T4VP8W27PL");
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>タネ投稿</title>
     <link
@@ -425,22 +439,6 @@
         }
       }
     </style>
-    <script
-      src="https://js.sentry-cdn.com/fa3cc6e69226d871d4beefa6fc73865d.min.js"
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      Sentry.init({
-        dsn: "https://fa3cc6e69226d871d4beefa6fc73865d@o4510082026045440.ingest.us.sentry.io/4510082027683840goldirocks / javascript",
-        // Adds request headers and IP for users, for more info visit:
-        // https://docs.sentry.io/platforms/javascript/configuration/options/#sendDefaultPii
-        sendDefaultPii: true,
-        // Alternatively, use `process.env.npm_package_version` for a dynamic release version
-        // if your build tool supports it.
-        release: "my-project-name@2.3.12",
-        integrations: [],
-      });
-    </script>
   </head>
   <body>
     <div class="card-like">
