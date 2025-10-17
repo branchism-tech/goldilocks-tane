@@ -647,7 +647,7 @@
             // ネットワーク一時エラーなどは握りつぶす
             // console.warn(e);
           } finally {
-            // 前回処理が完全に終わってから次回予約 → リクエストが重ならない
+            // 前回処理が完全に終わってから次回予約
             pollTimer = setTimeout(pollData, POLL_MS);
           }
         }
