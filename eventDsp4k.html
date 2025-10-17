@@ -112,7 +112,7 @@
       }
       .right .header {
         position: absolute;
-        top: 23%; /* 上から25%に配置 */
+        top: 25%; /* 上から25%に配置 */
         width: 100%;
         text-align: center;
       }
@@ -122,11 +122,11 @@
       }
       .header .title {
         font-weight: 800;
-        font-size: clamp(16px, 2.2vh, 24px);
+        font-size: clamp(32px, 32px, 32px);
         letter-spacing: 0.02em;
       }
       .right .stage {
-        padding-top: 28vh; /* ヘッダーの高さ */
+        padding-top: 29vh; /* ヘッダーの高さ */
       }
 
       /* 表示エリア（一覧 or 詳細）を切替 */
@@ -155,7 +155,7 @@
         gap: 6px 10px;
         align-items: start;
         overflow: hidden;
-        font-size: clamp(12px, 12px, 12px);
+        font-size: clamp(24px, 24px, 24px);
         border-bottom: 1px solid #eee;
       }
       .headGrid > div {
@@ -174,9 +174,9 @@
       #listGrid .gridRow {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 1px 1px; /* 列間の余白 */
+        gap: 2px 2px; /* 列間の余白 */
         align-items: start;
-        padding: 1px 1px; /* 行の上下左右パディング */
+        padding: 2px 2px; /* 行の上下左右パディング */
         border-bottom: 1px solid #f2f2f2; /* 横の罫線は“行”に一本だけ */
       }
       /* 1行=4セルを素直に流す */
@@ -189,12 +189,12 @@
         line-height: 1.1;
         white-space: pre-wrap;
         overflow: visible;
-        font-size: clamp(6px, 6px, 6px);
+        font-size: 16px;
       }
       #listGrid .cell:first-child {
         display: flex;
         align-items: center; /* 縦中央揃え */
-        gap: 6px;
+        gap: 16px;
       }
       /* コメントは最大3行まで綺麗に折返し表示 */
       #listGrid .cell.comment {
@@ -226,11 +226,11 @@
         background: transparent;
       }
       .avatar1 {
-        width: 12px;
-        height: 12px;
+        width: 24px;
+        height: 24px;
         border-radius: 50%;
         object-fit: cover;
-        /* margin-right: 2px; */
+        margin-right: 4px;
       }
 
       /* ===== 詳細カード（Top3を順番表示） ===== */
@@ -242,14 +242,13 @@
         box-sizing: border-box;
         border-radius: var(--md-sys-shape-corner-large);
         box-shadow: var(--md-sys-elevation-level1);
-        /* max-width: 600px; */
         margin: 0 auto;
       }
       .seed-title-wrap {
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        margin: 24px 0;
+        margin: 48px 0;
       }
       .avatar2 {
         width: 56px;
@@ -263,83 +262,83 @@
 
       .field-label {
         font-weight: 900;
-        font-size: 14px;
-        line-height: 20px;
+        font-size: 28px;
+        line-height: 40px;
         letter-spacing: 0.1px;
         color: var(--md-sys-color-on-surface-variant);
-        margin-top: 16px;
-        margin-bottom: 8px;
+        margin-top: 32px;
+        margin-bottom: 16px;
         text-transform: uppercase;
       }
 
       .field-row {
         display: flex;
         align-items: center;
-        gap: 12px;
-        margin-top: 8px;
-        padding: 12px 16px;
+        gap: 24px;
+        margin-top: 16px;
+        padding: 24px 32px;
         background-color: var(--md-sys-color-surface-variant);
         border-radius: var(--md-sys-shape-corner-small);
-        font-size: 16px;
-        line-height: 24px;
-        letter-spacing: 0.5px;
+        font-size: 32px;
+        line-height: 48px;
+        letter-spacing: 1px;
       }
 
       .field-label-2 {
         font-weight: 500;
-        font-size: 14px;
-        line-height: 20px;
-        letter-spacing: 0.1px;
+        font-size: 24px;
+        line-height: 40px;
+        letter-spacing: 0.2px;
         color: var(--md-sys-color-on-surface-variant);
-        min-width: 80px;
-        margin-top: 16px;
-        margin-bottom: 8px;
+        min-width: 160px;
+        margin-top: 32px;
+        margin-bottom: 16px;
         text-transform: uppercase;
       }
 
       .category-row {
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 8px;
       }
 
       #categoryText {
-        font-size: 12px;
-        line-height: 16px;
+        font-size: 24px;
+        line-height: 32px;
         color: var(--md-sys-color-on-surface);
         font-weight: 500;
-        letter-spacing: 0.4px;
-        padding: 8px 16px;
+        letter-spacing: 0.8px;
+        padding: 16px 32px;
         background-color: #efefef;
         border-radius: var(--md-sys-shape-corner-extra-large);
       }
 
       #categoryText-2 {
-        font-size: 10px;
+        font-size: 20px;
         color: var(--md-sys-color-on-surface-variant);
         display: inline;
-        margin-left: 2px;
+        margin-left: 4px;
       }
 
       #titleText {
-        font-size: 24px !important;
+        font-size: 48px !important;
         font-weight: 900 !important;
-        line-height: 32px;
+        line-height: 64px;
         color: var(--md-sys-color-on-surface);
-        padding: 8px 0;
+        padding: 16px 0;
       }
 
       #commentText {
-        font-size: 16px;
-        line-height: 24px;
-        letter-spacing: 0.5px;
+        font-size: 32px;
+        line-height: 48px;
+        letter-spacing: 1px;
         white-space: pre-wrap;
       }
 
       #kindText {
-        font-size: 16px;
-        line-height: 24px;
-        letter-spacing: 0.5px;
+        font-size: 32px;
+        line-height: 48px;
+        letter-spacing: 1px;
         white-space: pre-wrap;
       }
 
@@ -352,12 +351,12 @@
 
       .likes-title {
         font-weight: 900;
-        font-size: 14px;
-        line-height: 20px;
-        letter-spacing: 0.1px;
+        font-size: 28px;
+        line-height: 40px;
+        letter-spacing: 0.2px;
         color: var(--md-sys-color-on-surface-variant);
-        margin-top: 8px;
-        margin-bottom: 16px;
+        margin-top: 16px;
+        margin-bottom: 32px;
         text-transform: uppercase;
       }
 
@@ -365,13 +364,13 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-end;
-        gap: 12px;
-        margin-bottom: 24px;
+        gap: 24px;
+        margin-bottom: 48px;
       }
 
       .likes-avatars img {
-        width: 48px;
-        height: 48px;
+        width: 96px;
+        height: 96px;
         object-fit: cover;
         border-radius: 50%;
         box-shadow: var(--md-sys-elevation-level1);
@@ -445,7 +444,6 @@
     <div id="errToast"><span id="errText"></span></div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://static.line-scdn.net/liff/edge/versions/2.27.2/sdk.js"></script>
     <script src="./utils.js?ver=1.03"></script>
     <script>
       const GAS_ENDPOINT =
@@ -491,7 +489,8 @@
       //   ];
       // }
 
-      const sortByCreatedDesc = (a, b) => +b.createdAt - +a.createdAt;
+      const sortByCreatedDesc = (a, b) =>
+        new Date(b.createdAt) - new Date(a.createdAt);
       const escapeHTML = (s) =>
         String(s ?? "")
           .replace(/&/g, "&amp;")
