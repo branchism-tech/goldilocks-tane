@@ -55,7 +55,15 @@ async function waiteCreateDom(ids, timeoutMs = 4000, intervalMs = 50) {
 function fillProfileDetail(kbn, profile) {
   // 画像
   const icon = document.getElementById("profile-owner-icon");
-  if (icon) icon.src = profile.ownerIcon || "logo.png";
+  if (icon) {
+    icon.src = profile.ownerIcon || "logo.png";
+    icon.loading = "lazy";
+    icon.referrerPolicy = "no-referrer";
+    icon.onerror = () => {
+      icon.onerror = null; // 無限ループ防止
+      icon.src = "logo.png"; // フォールバック
+    };
+  }
 
   // テキスト
   const setText = (id, val) => {

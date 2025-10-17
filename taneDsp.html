@@ -720,6 +720,12 @@
           img.src =
             (x.likeProfile && x.likeProfile.ownerIcon) || DUMMY_ICON_URL;
           img.alt = "like-user";
+          img.loading = "lazy";
+          img.referrerPolicy = "no-referrer";
+          img.onerror = () => {
+            img.onerror = null;
+            img.src = DUMMY_ICON_URL; // 404などで失敗したときはロゴに切替
+          };
           wrap.appendChild(img);
 
           // クリック時に引くためのプロフィールを記録
@@ -767,11 +773,18 @@
           $("#titleText").text(rtnData.record.title || "");
           $("#commentText").text(rtnData.record.comment || "");
           $("#kindText").text(rtnData.record.kind_person || "");
-          $("#ownerIcon").attr(
-            "src",
-            (rtnData.ownerProfile && rtnData.ownerProfile.ownerIcon) ||
-              DUMMY_ICON_URL
-          );
+          $("#ownerIcon")
+            .attr(
+              "src",
+              (rtnData.ownerProfile && rtnData.ownerProfile.ownerIcon) ||
+                DUMMY_ICON_URL
+            )
+            .attr("loading", "lazy")
+            .attr("referrerpolicy", "no-referrer")
+            .on("error", function () {
+              $(this).off("error").attr("src", DUMMY_ICON_URL);
+            });
+
           $("#ownerName").text(
             (rtnData.ownerProfile && rtnData.ownerProfile.name) || ""
           );

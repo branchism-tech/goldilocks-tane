@@ -558,7 +558,11 @@
                 ${categoryHtml}
                 <h6>${d.title || ""}</h6>
                 <div class="d-flex align-items-center justify-content-end mb-3">
-                  <img class="avatar" src="${d.ownerIcon || DUMMY_ICON_URL}"/>
+                  <img class="avatar"
+                    src="${d.ownerIcon || DUMMY_ICON_URL}"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                    onerror="this.onerror=null; this.src='logo.png';"/>                  
                   <div style="font-size: 14px; color: var(--md-sys-color-on-surface);">${
                     d.name || "名無し"
                   }</div>
