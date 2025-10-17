@@ -632,7 +632,7 @@
       /** ========== 起動と定期更新 ========== */
       async function boot() {
         try {
-          loading.on();
+          // loading.on();
           const initial = await fetchTanes();
           state.all = [...initial].sort(sortByCreatedDesc);
           state.top3 = topLikes(state.all, 3);
@@ -653,7 +653,7 @@
         } catch (e) {
           toast("読み込み失敗");
         } finally {
-          loading.off(); // 最後に閉じる
+          // loading.off(); // 最後に閉じる
         }
       }
 
