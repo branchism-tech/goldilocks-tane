@@ -630,31 +630,44 @@
       }
 
       /** ========== 起動と定期更新 ========== */
-      async function boot() {
-        try {
-          // loading.on();
-          const initial = await fetchTanes();
-          state.all = [...initial].sort(sortByCreatedDesc);
-          state.top3 = topLikes(state.all, 3);
-          startCycle();
+      function boot() {
+        const POLL_MS = 60 * 1000; // 1分ごと
 
-          // 1分ごとにデータ更新（描画は次のサイクルからスナップショットで反映）
-          setInterval(async () => {
-            try {
-              const fresh = await fetchTanes();
-              if (fresh && fresh.length) {
-                state.all = [...fresh].sort(sortByCreatedDesc);
-                state.top3 = topLikes(state.all, 3);
-              }
-            } catch (e) {
-              /* ネットワーク一時エラーなどは無視 */
+        let pollTimer = null;
+
+        async function pollData() {
+          try {
+            const fresh = await fetchTanes();
+            if (Array.isArray(fresh) && fresh.length) {
+              state.all = [...fresh].sort(sortByCreatedDesc);
+              state.top3 = topLikes(state.all, 3);
+              // 次のサイクルで自動的に最新スナップショットが表示される
             }
-          }, 1 * 60 * 1000);
-        } catch (e) {
-          toast("読み込み失敗");
-        } finally {
-          // loading.off(); // 最後に閉じる
+          } catch (e) {
+            // ネットワーク一時エラーなどは握りつぶす
+            // console.warn(e);
+          } finally {
+            // 前回処理が完全に終わってから次回予約 → リクエストが重ならない
+            pollTimer = setTimeout(pollData, POLL_MS);
+          }
         }
+
+        (async () => {
+          try {
+            // 初回ロード
+            const initial = await fetchTanes();
+            state.all = [...initial].sort(sortByCreatedDesc);
+            state.top3 = topLikes(state.all, 3);
+
+            // 画面ローテーション開始
+            startCycle();
+          } catch (e) {
+            toast("読み込み失敗");
+          } finally {
+            // 初回描画後にポーリング開始
+            pollData();
+          }
+        })();
       }
 
       boot();
