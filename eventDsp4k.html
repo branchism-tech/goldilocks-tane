@@ -464,31 +464,6 @@
         return j.list;
       }
 
-      // async function fetchTanes() {
-      //   // ここを実データ取得に差し替え：
-      //   // 返す配列の例：
-      //   // { id, user, userName, title, comment, likes, createdAt }
-      //   // createdAtはDate文字列またはエポックでもOK
-      //   return [
-      //     // ダミー 30件
-      //     ...Array.from({ length: 30 }, (_, i) => ({
-      //       category: "テーマ①日本橋での表現活動（アート・音楽など自由に！）",
-      //       ownerIcon: "",
-      //       name: ["山田", "佐藤", "鈴木", "田中", "高橋", "伊藤", "渡辺"][
-      //         i % 7
-      //       ],
-      //       title: `サンプルのタネタイトル ${i + 1}`,
-      //       comment: `これはダミーの説明テキストです。
-      // 可変長で折り返します。${"テキスト ".repeat((i % 6) + 4)}`,
-      //       kind_person: `これはダミーの集まれです。
-      // 可変長で折り返します。${"テキスト ".repeat((i % 6) + 4)}`,
-      //       likeCount: Math.floor(Math.random() * 150),
-      //       createdAt: Date.now() - i * 3600 * 1000,
-      //       top3: true,
-      //     })),
-      //   ];
-      // }
-
       const sortByCreatedDesc = (a, b) =>
         new Date(b.createdAt) - new Date(a.createdAt);
       const escapeHTML = (s) =>
@@ -530,7 +505,11 @@
             (r) => `
           <div class="gridRow">
             <div class="cell">
-              <img class="avatar1" src="${r.ownerIcon || DUMMY_ICON_URL}"/>
+              <img class="avatar1"
+                    src="${r.ownerIcon || DUMMY_ICON_URL}"
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                    onerror="this.onerror=null; this.src='logo.png';"/>
               <div>${escapeHTML(r.name) || "名無し"}</div>
             </div>
             <div class="cell title">${escapeHTML(r.title || "")}</div>
@@ -561,6 +540,12 @@
           img.src =
             (x.likeProfile && x.likeProfile.ownerIcon) || DUMMY_ICON_URL;
           img.alt = "like-user";
+          img.loading = "lazy";
+          img.referrerPolicy = "no-referrer";
+          img.onerror = () => {
+            img.onerror = null;
+            img.src = DUMMY_ICON_URL; // 404などで失敗したときはロゴに切替
+          };
           wrap.appendChild(img);
         });
       }
@@ -578,7 +563,13 @@
         $("#titleText").text(item.title || "");
         $("#commentText").text(item.comment || "");
         $("#kindText").text(item.kind_person || "");
-        $("#ownerIcon").attr("src", item.ownerIcon || DUMMY_ICON_URL);
+        $("#ownerIcon")
+          .attr("src", item.ownerIcon || DUMMY_ICON_URL)
+          .attr("loading", "lazy")
+          .attr("referrerpolicy", "no-referrer")
+          .on("error", function () {
+            $(this).off("error").attr("src", DUMMY_ICON_URL);
+          });
         $("#ownerName").text(item.name || "");
 
         // いいね一覧
