@@ -415,7 +415,6 @@
       const GAS_ENDPOINT =
         "https://script.google.com/macros/s/AKfycbzAno1Dw2ikstvC9exjQyYLs3X8K_st48GGXooE8SqqcTuMNq6H_M4jW8E5CDlphN0-cg/exec";
       const DUMMY_ICON_URL = "logo.png";
-      let allTanes = [];
 
       function toast(msg) {
         $("#errToast").text(msg).fadeIn(200);
@@ -424,16 +423,14 @@
 
       async function fetchTanes() {
         const idt = "";
-        const url = `${GAS_ENDPOINT}?action=tane_list_all_for_event_dsp&id_token=${encodeURIComponent(
-          idt
-        )}`;
+        const url = `${GAS_ENDPOINT}?action=tane_list_all_for_event_dsp`;
         alert("--1--");
         const r = await fetch(url);
+
         const j = await r.json();
-        alert(j.error);
         if (!j.ok) throw new Error(j.error || "fail");
-        allTanes = j.list;
         alert("--2--");
+        return j.list;
       }
 
       // async function fetchTanes() {
