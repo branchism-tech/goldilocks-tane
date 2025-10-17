@@ -638,7 +638,7 @@
           state.top3 = topLikes(state.all, 3);
           startCycle();
 
-          // 5分ごとにデータ更新（描画は次のサイクルからスナップショットで反映）
+          // 1分ごとにデータ更新（描画は次のサイクルからスナップショットで反映）
           setInterval(async () => {
             try {
               const fresh = await fetchTanes();
@@ -649,7 +649,7 @@
             } catch (e) {
               /* ネットワーク一時エラーなどは無視 */
             }
-          }, 5 * 60 * 1000);
+          }, 1 * 60 * 1000);
         } catch (e) {
           toast("読み込み失敗");
         } finally {
