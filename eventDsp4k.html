@@ -117,16 +117,16 @@
         text-align: center;
       }
       .header {
-        margin-top: 3px;
-        padding: 7px 9px 4px 9px;
+        margin-top: 4.5px;
+        padding: 10.5px 13.5px 6px 13.5px;
       }
       .header .title {
         font-weight: 800;
-        font-size: clamp(16px, 16px, 16px);
+        font-size: clamp(24px, 24px, 24px);
         letter-spacing: 0.02em;
       }
       .right .stage {
-        padding-top: 28vh; /* ヘッダーの高さ */
+        padding-top: 29vh; /* ヘッダーの高さ */
       }
 
       /* 表示エリア（一覧 or 詳細）を切替 */
@@ -144,7 +144,7 @@
       .listWrap {
         display: flex;
         flex-direction: column;
-        gap: 5px;
+        gap: 7.5px;
         overflow: hidden; /* スクロールバー無し */
       }
 
@@ -152,14 +152,14 @@
       .headGrid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 3px 5px;
+        gap: 4.5px 7.5px;
         align-items: start;
         overflow: hidden;
-        font-size: clamp(12px, 12px, 12px);
+        font-size: clamp(18px, 18px, 18px);
         border-bottom: 0.5px solid #eee;
       }
       .headGrid > div {
-        padding: 0.5px 0.5px;
+        padding: 0.75px 0.75px;
       }
 
       /* データ本体 */
@@ -174,10 +174,10 @@
       #listGrid .gridRow {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 1px 1px; /* 列間の余白 */
+        gap: 1.5px 1.5px; /* 列間の余白 */
         align-items: start;
-        padding: 1px 1px; /* 行の上下左右パディング */
-        border-bottom: 0.5px solid #f2f2f2; /* 横の罫線は“行”に一本だけ */
+        padding: 1.5px 1.5px; /* 行の上下左右パディング */
+        border-bottom: 0.75px solid #f2f2f2; /* 横の罫線は“行”に一本だけ */
       }
       /* 1行=4セルを素直に流す */
       #listGrid .item {
@@ -186,15 +186,15 @@
 
       /* 共通セル */
       #listGrid .cell {
-        line-height: 1.1;
+        line-height: 1.2;
         white-space: pre-wrap;
         overflow: visible;
-        font-size: 8px;
+        font-size: 12px;
       }
       #listGrid .cell:first-child {
         display: flex;
         align-items: center; /* 縦中央揃え */
-        gap: 8px;
+        gap: 12px;
       }
       /* コメントは最大3行まで綺麗に折返し表示 */
       #listGrid .cell.comment {
@@ -226,11 +226,11 @@
         background: transparent;
       }
       .avatar1 {
-        width: 12px;
-        height: 12px;
+        width: 18px;
+        height: 18px;
         border-radius: 50%;
         object-fit: cover;
-        margin-right: 2px;
+        margin-right: 3px;
       }
 
       /* ===== 詳細カード（Top3を順番表示） ===== */
@@ -495,12 +495,14 @@
 
       /** ========== 描画 ========== */
 
-      /* 一覧（新着順 上位25件） */
-      function renderListGrid(snapshot) {
+      /* 一覧（新着順 15件づつ） */
+      function renderListGrid(snapshot, startIdx) {
         const host = document.getElementById("listGrid");
-        const top25 = [...snapshot].sort(sortByCreatedDesc).slice(0, 25);
+        const topDt15 = [...snapshot]
+          .sort(sortByCreatedDesc)
+          .slice(startIdx, startIdx + 15);
 
-        const html = top25
+        const html = topDt15
           .map(
             (r) => `
           <div class="gridRow">
@@ -579,7 +581,7 @@
       /** ========== 表示切替のローテーション ========== */
       let cycleTimer = null;
 
-      function showList(snapshot) {
+      function showList(snapshot, startIdx) {
         // タイトル切り替え
         document.getElementById("viewTitle").textContent = "最新タネ一覧";
 
@@ -587,7 +589,7 @@
         document.getElementById("listView").style.display = "block";
         document.getElementById("detailView").style.display = "none";
 
-        renderListGrid(snapshot);
+        renderListGrid(snapshot, startIdx);
       }
 
       function showDetail(snapshotTop3, idx) {
@@ -610,23 +612,27 @@
         const snapAll = [...state.all];
         const snapTop3 = [...state.top3];
 
-        // 0) 一覧 30秒
-        showList(snapAll);
+        // 0-1) 一覧最初の15件 15秒
+        showList(snapAll, 0);
         cycleTimer = setTimeout(() => {
-          // 1) Top1 10秒
-          showDetail(snapTop3, 0);
+          // 0-2) 一覧次の15件 15秒
+          showList(snapAll, 15);
           cycleTimer = setTimeout(() => {
-            // 2) Top2 10秒
-            showDetail(snapTop3, 1);
+            // 1) Top1 10秒
+            showDetail(snapTop3, 0);
             cycleTimer = setTimeout(() => {
-              // 3) Top3 10秒 → ループ
-              showDetail(snapTop3, 2);
+              // 2) Top2 10秒
+              showDetail(snapTop3, 1);
               cycleTimer = setTimeout(() => {
-                startCycle(); // 再帰ループ
+                // 3) Top3 10秒 → ループ
+                showDetail(snapTop3, 2);
+                cycleTimer = setTimeout(() => {
+                  startCycle(); // 再帰ループ
+                }, 10 * 1000);
               }, 10 * 1000);
             }, 10 * 1000);
-          }, 10 * 1000);
-        }, 30 * 1000);
+          }, 15 * 1000);
+        }, 15 * 1000);
       }
 
       /** ========== 起動と定期更新 ========== */
