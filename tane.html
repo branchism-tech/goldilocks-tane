@@ -125,8 +125,16 @@
         font-size: 24px;
         line-height: 32px;
         color: var(--md-sys-color-on-surface);
-        margin: 0 0 24px 0;
+        margin: 0 0 8px 0;
         letter-spacing: 0;
+      }
+
+      .tane-info {
+        font-size: 16px;
+        line-height: 1;
+        color: var(--md-sys-color-on-surface-variant);
+        margin-bottom: 8px;
+        white-space: pre-wrap;
       }
 
       .form-group {
@@ -418,7 +426,12 @@
         .section-title {
           font-size: 20px;
           line-height: 28px;
-          margin-bottom: 20px;
+          margin-bottom: 7px;
+        }
+
+        .tane-info {
+          font-size: 13px;
+          margin-bottom: 7px;
         }
 
         .form-group {
@@ -443,6 +456,12 @@
   <body>
     <div class="card-like">
       <div id="pageTitle" class="section-title">タネ投稿ページ</div>
+      <div class="tane-info">
+        タネ投稿すると…<br />
+        ◼︎ いいね！もらえるかも！<br />
+        ◼︎ 気の合う仲間が見つかるかも！<br />
+        ◼︎ 何なら実現しちゃうかも！？
+      </div>
 
       <form id="taneForm" novalidate>
         <div class="form-group">
