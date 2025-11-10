@@ -1,20 +1,47 @@
 // ====== 共通：ログイン＆スコープ確認 ======
 async function ensureLoginAndScopes() {
+  const requiredScopes = ["profile", "openid", "chat_message.write"];
+
+  // まだログインしていない場合
   if (!liff.isLoggedIn()) {
-    await liff.login({ scope: ["profile", "openid"], prompt: "consent" });
+    await liff.login({
+      scope: requiredScopes,
+      prompt: "consent", // 毎回でもいいなら consentのままでOK
+    });
     return false;
   }
+
+  // すでにログインしている場合：持っているスコープを確認
+  const granted = await liff.getGrantedScopes();
+  const missing = requiredScopes.filter((s) => !granted.includes(s));
+  // 足りないスコープがあれば、再ログインして consent させる
+  if (missing.length > 0) {
+    await liff.login({
+      scope: requiredScopes,
+      prompt: "consent",
+    });
+    return false;
+  }
+
   const idToken = liff.getIDToken();
   if (!idToken) {
-    await liff.login({ scope: ["profile", "openid"], prompt: "consent" });
+    await liff.login({
+      scope: requiredScopes,
+      prompt: "consent",
+    });
     return false;
   }
+
   try {
     await liff.getProfile();
   } catch {
-    await liff.login({ scope: ["profile", "openid"], prompt: "consent" });
+    await liff.login({
+      scope: requiredScopes,
+      prompt: "consent",
+    });
     return false;
   }
+
   return true;
 }
 
