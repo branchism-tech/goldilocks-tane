@@ -813,7 +813,7 @@
 
       async function setProfile() {
         try {
-          const idToken = liff.getDecodedIDToken();
+          const idToken = liff.getIDToken();
           const r = await fetch(
             `${GAS_ENDPOINT}?action=get_profile&userId=&id_token=${encodeURIComponent(
               idToken
@@ -984,7 +984,7 @@
 
             try {
               // ② sendMessages 失敗時のみ、GAS に直接保存
-              const idToken = liff.getDecodedIDToken();
+              const idToken = liff.getIDToken();
 
               // ★ トークン期限チェック
               const payload = JSON.parse(atob(idToken.split(".")[1]));
