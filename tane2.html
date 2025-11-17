@@ -695,7 +695,7 @@
             );
 
             // 既存データ取得
-            const idToken = liff.getIDToken();
+            const idToken = liff.getDecodedIDToken();
             const url = `${GAS_ENDPOINT}?action=tane_get&taneId=${encodeURIComponent(
               taneId
             )}&id_token=${encodeURIComponent(idToken)}`;
@@ -832,7 +832,7 @@
 
             // ② sendMessages 失敗時のみ、GAS に直接保存
             try {
-              const idToken = liff.getIDToken();
+              const idToken = liff.getDecodedIDToken();
 
               // ★ トークン期限チェック
               const payload = JSON.parse(atob(idToken.split(".")[1]));
@@ -841,6 +841,7 @@
               if (payload.exp < now) {
                 // 期限切れ → 再ログイン
                 alert("セッションの有効期限が切れました。再度ログインします。");
+                await liff.logout();
                 await liff.login({ redirectUri: window.location.href });
                 return;
               }
