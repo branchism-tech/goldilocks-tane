@@ -834,6 +834,17 @@
             try {
               const idToken = liff.getIDToken();
 
+              // ★ トークン期限チェック
+              const payload = JSON.parse(atob(idToken.split(".")[1]));
+              const now = Math.floor(Date.now() / 1000);
+
+              if (payload.exp < now) {
+                // 期限切れ → 再ログイン
+                alert("セッションの有効期限が切れました。再度ログインします。");
+                await liff.login({ redirectUri: window.location.href });
+                return;
+              }
+
               // ★ application/x-www-form-urlencoded 形式に変更
               const body = new URLSearchParams({
                 action: "tane_save",
@@ -856,6 +867,15 @@
 
               const json = await res.json();
               if (!json.ok) {
+                // トークン期限切れエラーの場合
+                if (json.error === "token_expired") {
+                  alert(
+                    "セッションの有効期限が切れました。再度ログインします。"
+                  );
+                  await liff.login({ redirectUri: window.location.href });
+                  return;
+                }
+
                 throw new Error(json.error || "unknown error");
               }
               console.log("GAS への直接保存 成功");
