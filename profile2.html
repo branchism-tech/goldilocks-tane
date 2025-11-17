@@ -986,21 +986,27 @@
               // ② sendMessages 失敗時のみ、GAS に直接保存
               const idToken = liff.getIDToken();
 
+              // ★ application/x-www-form-urlencoded 形式に変更
+              const body = new URLSearchParams({
+                action: "profile_save",
+                id_token: idToken,
+                lineicon: lineicon,
+                name: name,
+                job: job,
+                hobby: hobby,
+                age: age,
+                sex: sex,
+                address: address,
+                placeOfWork: placeOfWork,
+              }).toString();
+
               const res = await fetch(GAS_ENDPOINT, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  action: "profile_save", // GAS 側で見分けるフラグ
-                  id_token: idToken,
-                  lineicon,
-                  name,
-                  job,
-                  hobby,
-                  age,
-                  sex,
-                  address,
-                  placeOfWork,
-                }),
+                headers: {
+                  "Content-Type":
+                    "application/x-www-form-urlencoded; charset=UTF-8",
+                },
+                body: body,
               });
 
               const json = await res.json();

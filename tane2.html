@@ -834,18 +834,24 @@
             try {
               const idToken = liff.getIDToken();
 
+              // ★ application/x-www-form-urlencoded 形式に変更
+              const body = new URLSearchParams({
+                action: "tane_save",
+                id_token: idToken,
+                taneId: taneId || "",
+                category: category,
+                title: title,
+                comment: comment,
+                kind_person: kind_person,
+              }).toString();
+
               const res = await fetch(GAS_ENDPOINT, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  action: "tane_save", // GAS 側で判別するフラグ
-                  id_token: idToken,
-                  taneId: taneId, // 新規なら null / 空でもOK
-                  category,
-                  title,
-                  comment,
-                  kind_person,
-                }),
+                headers: {
+                  "Content-Type":
+                    "application/x-www-form-urlencoded; charset=UTF-8",
+                },
+                body: body,
               });
 
               const json = await res.json();
