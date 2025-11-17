@@ -814,6 +814,19 @@
       async function setProfile() {
         try {
           const idToken = liff.getIDToken();
+
+          // ★ トークン期限チェック
+          const payload = JSON.parse(atob(idToken.split(".")[1]));
+          const now = Math.floor(Date.now() / 1000);
+
+          if (payload.exp < now) {
+            // 期限切れ → 再ログイン
+            alert("セッションの有効期限が切れました。再度ログインします。");
+            await liff.logout();
+            await liff.login({ redirectUri: window.location.href });
+            return;
+          }
+
           const r = await fetch(
             `${GAS_ENDPOINT}?action=get_profile&userId=&id_token=${encodeURIComponent(
               idToken
@@ -1028,6 +1041,7 @@
                   alert(
                     "セッションの有効期限が切れました。再度ログインします。"
                   );
+                  await liff.logout();
                   await liff.login({ redirectUri: window.location.href });
                   return;
                 }
