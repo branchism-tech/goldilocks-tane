@@ -815,18 +815,6 @@
         try {
           const idToken = liff.getIDToken();
 
-          // ★ トークン期限チェック
-          const payload = JSON.parse(atob(idToken.split(".")[1]));
-          const now = Math.floor(Date.now() / 1000);
-
-          if (payload.exp < now) {
-            // 期限切れ → 再ログイン
-            alert("セッションの有効期限が切れました。再度ログインします。");
-            await liff.logout();
-            await liff.login({ redirectUri: window.location.href });
-            return;
-          }
-
           const r = await fetch(
             `${GAS_ENDPOINT}?action=get_profile&userId=&id_token=${encodeURIComponent(
               idToken
@@ -971,95 +959,43 @@
             return;
           }
 
-          // Webhook 用のメッセージ
-          const msg =
-            `こちらの内容でプロフィール登録しました。\n` +
-            `LINEアイコン表示：${lineicon}\n` +
-            `名前：${name}\n` +
-            `職業：${job}\n` +
-            `推し＆趣味：${hobby}\n` +
-            `年代：${age}\n` +
-            `性別：${sex}\n` +
-            `出身県：${address}\n` +
-            `通勤・通学先：${placeOfWork}`;
-
           try {
-            // ① まずは従来どおり Webhook 経由で処理
-            await liff.sendMessages([{ type: "text", text: msg }]);
-            console.log(
-              "sendMessages 成功 → 既存 Webhook ロジックで保存＆返信"
-            );
-          } catch (err) {
-            console.warn(
-              "sendMessages でエラー。GAS への直接 POST にフォールバックします:",
-              err
-            );
+            const idToken = liff.getIDToken();
 
-            try {
-              // ② sendMessages 失敗時のみ、GAS に直接保存
-              const idToken = liff.getIDToken();
+            // ★ application/x-www-form-urlencoded 形式に変更
+            const body = new URLSearchParams({
+              action: "profile_save",
+              id_token: idToken,
+              lineicon: lineicon,
+              name: name,
+              job: job,
+              hobby: hobby,
+              age: age,
+              sex: sex,
+              address: address,
+              placeOfWork: placeOfWork,
+            }).toString();
 
-              // ★ トークン期限チェック
-              const payload = JSON.parse(atob(idToken.split(".")[1]));
-              const now = Math.floor(Date.now() / 1000);
+            const res = await fetch(GAS_ENDPOINT, {
+              method: "POST",
+              headers: {
+                "Content-Type":
+                  "application/x-www-form-urlencoded; charset=UTF-8",
+              },
+              body: body,
+            });
 
-              if (payload.exp < now) {
-                // 期限切れ → 再ログイン
-                alert("セッションの有効期限が切れました。再度ログインします。");
-                await liff.logout();
-                await liff.login({ redirectUri: window.location.href });
-                return;
-              }
-
-              // ★ application/x-www-form-urlencoded 形式に変更
-              const body = new URLSearchParams({
-                action: "profile_save",
-                id_token: idToken,
-                lineicon: lineicon,
-                name: name,
-                job: job,
-                hobby: hobby,
-                age: age,
-                sex: sex,
-                address: address,
-                placeOfWork: placeOfWork,
-              }).toString();
-
-              const res = await fetch(GAS_ENDPOINT, {
-                method: "POST",
-                headers: {
-                  "Content-Type":
-                    "application/x-www-form-urlencoded; charset=UTF-8",
-                },
-                body: body,
-              });
-
-              const json = await res.json();
-              if (!json.ok) {
-                // トークン期限切れエラーの場合
-                if (json.error === "token_expired") {
-                  alert(
-                    "セッションの有効期限が切れました。再度ログインします。"
-                  );
-                  await liff.logout();
-                  await liff.login({ redirectUri: window.location.href });
-                  return;
-                }
-
-                throw new Error(json.error || "unknown error");
-              }
-              console.log("GAS への直接保存 成功");
-            } catch (err2) {
-              console.error("GAS 直接保存も失敗:", err2);
-              showErrorAndClose("送信に失敗しました：" + err2);
-              loading.off();
-              return;
+            const json = await res.json();
+            if (!json.ok) {
+              throw new Error(json.error || "unknown error");
             }
-          } finally {
+          } catch (err) {
+            showErrorAndClose("送信に失敗しました：" + err);
             loading.off();
+            return;
           }
+          loading.off();
 
-          // どちらの経路でも成功したらモーダル表示
           $("#doneModal")
             .modal({ backdrop: "static", keyboard: false })
             .modal("show");
