@@ -814,6 +814,7 @@
       async function setProfile() {
         try {
           const idToken = liff.getIDToken();
+
           const r = await fetch(
             `${GAS_ENDPOINT}?action=get_profile&userId=&id_token=${encodeURIComponent(
               idToken
@@ -864,10 +865,11 @@
 
       // 送信ハンドラ
       function bindFormSubmit() {
-        $("#profileForm").on("submit", function (e) {
+        $("#profileForm").on("submit", async function (e) {
           e.preventDefault();
 
           loading.on();
+
           // 値の取得
           const lineicon = $('input[name="lineicon"]:checked').val();
           const name = $("#name").val().trim();
@@ -957,31 +959,46 @@
             return;
           }
 
-          const msg =
-            `こちらの内容でプロフィール登録しました。\n` +
-            `LINEアイコン表示：${lineicon}\n` +
-            `名前：${name}\n` +
-            `職業：${job}\n` +
-            `推し＆趣味：${hobby}\n` +
-            `年代：${age}\n` +
-            `性別：${sex}\n` +
-            `出身県：${address}\n` +
-            `通勤・通学先：${placeOfWork}`;
+          try {
+            const idToken = liff.getIDToken();
 
-          // 送信
-          liff
-            .sendMessages([{ type: "text", text: msg }])
-            .then(() => {
-              loading.off();
-              $("#doneModal")
-                .modal({ backdrop: "static", keyboard: false })
-                .modal("show"); // 成功したらモーダル
-            })
-            .catch((err) => {
-              loading.off();
-              console.error(err);
-              showErrorAndClose("送信に失敗しました：" + err);
+            // ★ application/x-www-form-urlencoded 形式に変更
+            const body = new URLSearchParams({
+              action: "profile_save",
+              id_token: idToken,
+              lineicon: lineicon,
+              name: name,
+              job: job,
+              hobby: hobby,
+              age: age,
+              sex: sex,
+              address: address,
+              placeOfWork: placeOfWork,
+            }).toString();
+
+            const res = await fetch(GAS_ENDPOINT, {
+              method: "POST",
+              headers: {
+                "Content-Type":
+                  "application/x-www-form-urlencoded; charset=UTF-8",
+              },
+              body: body,
             });
+
+            const json = await res.json();
+            if (!json.ok) {
+              throw new Error(json.error || "unknown error");
+            }
+          } catch (err) {
+            showErrorAndClose("送信に失敗しました：" + err);
+            loading.off();
+            return;
+          }
+          loading.off();
+
+          $("#doneModal")
+            .modal({ backdrop: "static", keyboard: false })
+            .modal("show");
         });
 
         $("#closeLiffBtn").on("click", function () {
