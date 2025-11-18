@@ -696,6 +696,7 @@
 
             // 既存データ取得
             const idToken = liff.getIDToken();
+
             const url = `${GAS_ENDPOINT}?action=tane_get&taneId=${encodeURIComponent(
               taneId
             )}&id_token=${encodeURIComponent(idToken)}`;
@@ -750,15 +751,20 @@
         $("#taneForm").on("submit", async function (e) {
           e.preventDefault();
           loading.on();
+
           // 値取得
           const category = $('input[name="category"]:checked').val();
           const title = $("#title").val().trim();
           const comment = $("#comment").val().trim();
           const kind_person = $("#kind_person").val().trim();
 
-          // バリデーション簡易
+          // バリデーション
           $(".invalid-feedback").text("");
           $(".form-control").removeClass("is-invalid");
+          $('input[name="category"]')
+            .closest(".form-group")
+            .removeClass("is-invalid");
+
           let hasError = false;
 
           if (!category) {
@@ -798,35 +804,50 @@
               .text("こんな人にきて欲しい、集まれ！を入力してください");
             hasError = true;
           }
+
           if (hasError) {
             loading.off();
             return;
           }
 
-          const msg =
-            (taneId != null
-              ? `こちらの内容でタネを編集しました。\n`
-              : `こちらの内容でタネを投稿しました。\n`) +
-            `テーマ：${category}\n` +
-            `タイトル：${title}\n` +
-            `コメント：${comment}\n` +
-            `こんな人にきて欲しい、集まれ！：${kind_person}\n` +
-            (taneId != null ? `ID：${taneId}\n` : ``);
+          try {
+            const idToken = liff.getIDToken();
 
-          // 送信
-          liff
-            .sendMessages([{ type: "text", text: msg }])
-            .then(() => {
-              loading.off();
-              $("#doneModal")
-                .modal({ backdrop: "static", keyboard: false })
-                .modal("show"); // 成功したらモーダル
-            })
-            .catch((err) => {
-              loading.off();
-              console.error(err);
-              showErrorAndClose("送信に失敗しました：" + err);
+            // ★ application/x-www-form-urlencoded 形式に変更
+            const body = new URLSearchParams({
+              action: "tane_save",
+              id_token: idToken,
+              taneId: taneId || "",
+              category: category,
+              title: title,
+              comment: comment,
+              kind_person: kind_person,
+            }).toString();
+
+            const res = await fetch(GAS_ENDPOINT, {
+              method: "POST",
+              headers: {
+                "Content-Type":
+                  "application/x-www-form-urlencoded; charset=UTF-8",
+              },
+              body: body,
             });
+
+            const json = await res.json();
+            if (!json.ok) {
+              throw new Error(json.error || "unknown error");
+            }
+          } catch (err) {
+            showErrorAndClose("送信に失敗しました：" + err);
+            loading.off();
+            return;
+          }
+
+          loading.off();
+
+          $("#doneModal")
+            .modal({ backdrop: "static", keyboard: false })
+            .modal("show");
         });
 
         $("#closeLiffBtn").on("click", function () {
