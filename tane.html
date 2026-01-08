@@ -552,6 +552,68 @@
           <div class="invalid-feedback"></div>
         </div>
 
+        <div class="form-group" id="degreeGroup">
+          <label>やってみたい度合いを教えてください</label>
+
+          <div class="custom-control custom-radio">
+            <input
+              type="radio"
+              id="degree-1"
+              name="degree"
+              value="実現の形が見えている"
+              class="custom-control-input"
+              required
+            />
+            <label class="custom-control-label" for="degree-1"
+              >実現の形が見えている</label
+            >
+          </div>
+
+          <div class="custom-control custom-radio">
+            <input
+              type="radio"
+              id="degree-2"
+              name="degree"
+              value="誰かと一緒ならやりたい"
+              class="custom-control-input"
+              required
+            />
+            <label class="custom-control-label" for="degree-2"
+              >誰かと一緒ならやりたい</label
+            >
+          </div>
+
+          <div class="custom-control custom-radio">
+            <input
+              type="radio"
+              id="degree-3"
+              name="degree"
+              value="誰かが実現してくれるなら参加したい"
+              class="custom-control-input"
+              required
+            />
+            <label class="custom-control-label" for="degree-3"
+              >誰かが実現してくれるなら参加したい</label
+            >
+          </div>
+
+          <div class="custom-control custom-radio">
+            <input
+              type="radio"
+              id="degree-4"
+              name="degree"
+              value="言ってみただけ"
+              class="custom-control-input"
+              required
+            />
+            <label class="custom-control-label" for="degree-4"
+              >言ってみただけ</label
+            >
+          </div>
+
+          <div class="invalid-feedback"></div>
+        </div>
+
         <div class="footer-button">
           <button id="submitBtn" type="submit" class="btn btn-dark">
             <span class="material-icons-round">edit</span>
@@ -719,6 +781,16 @@
                   $("#title").val(json.record.title || "");
                   $("#comment").val(json.record.comment || "");
                   $("#kind_person").val(json.record.kind_person || "");
+                  const deg = (json.record.degree || "").trim();
+                  if (deg) {
+                    $(
+                      'input[name="degree"][value="' +
+                        deg.replace(/"/g, '\\"') +
+                        '"]'
+                    )
+                      .prop("checked", true)
+                      .trigger("change");
+                  }
                 } else {
                   loading.off();
                   showErrorAndClose("タネ情報は非表示になっています");
@@ -757,11 +829,15 @@
           const title = $("#title").val().trim();
           const comment = $("#comment").val().trim();
           const kind_person = $("#kind_person").val().trim();
+          const degree = $('input[name="degree"]:checked').val();
 
           // バリデーション
           $(".invalid-feedback").text("");
           $(".form-control").removeClass("is-invalid");
           $('input[name="category"]')
+            .closest(".form-group")
+            .removeClass("is-invalid");
+          $('input[name="degree"]')
             .closest(".form-group")
             .removeClass("is-invalid");
 
@@ -804,6 +880,15 @@
               .text("こんな人にきて欲しい、集まれ！を入力してください");
             hasError = true;
           }
+          if (!degree) {
+            const $group = $('input[name="degree"]').closest(".form-group");
+            $group.addClass("is-invalid");
+            $group
+              .find(".invalid-feedback")
+              .text("やってみたい度合いを選択してください")
+              .show();
+            hasError = true;
+          }
 
           if (hasError) {
             loading.off();
@@ -822,6 +907,7 @@
               title: title,
               comment: comment,
               kind_person: kind_person,
+              degree: degree,
             }).toString();
 
             const res = await fetch(GAS_ENDPOINT, {
